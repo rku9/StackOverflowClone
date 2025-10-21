@@ -2,29 +2,29 @@ package com.mountblue.stackoverflowclone.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component
 @Entity
+@Table(name = "answers")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Question {
+public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
-
-    private String title;
 
     @Column(columnDefinition = "TEXT")
     private String body;
@@ -35,22 +35,10 @@ public class Question {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "view_count", nullable = false)
-    private Long viewCount = 0L;
-
     private int score = 0;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Answer> answers;
+    private boolean accepted = false;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
-
-    @ManyToMany
-    @JoinTable(
-            name = "question_tags",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private List<Tag> tags;
 }
