@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Table(name = "uploads")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Upload {
