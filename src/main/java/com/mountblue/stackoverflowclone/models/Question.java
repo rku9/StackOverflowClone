@@ -24,6 +24,8 @@ public class Question extends BaseModel {
     private Long viewCount = 0L;
 
     private int score = 0;
+    private int upvote = 0;
+    private int downvote = 0;
 
     @OneToMany(
             mappedBy = "question",

@@ -6,7 +6,7 @@ import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.TagRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 
@@ -36,7 +36,7 @@ public class QuestionService {
     }
 
     @Transactional
-    public Question saveQuestion(QuestionFormDto questionFormDto){
+    public Question saveQuestion(QuestionFormDto questionFormDto) {
         Question question = new Question();
         question.setTitle(questionFormDto.title());
         question.setBody(questionFormDto.body());

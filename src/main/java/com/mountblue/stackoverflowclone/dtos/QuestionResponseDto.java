@@ -9,7 +9,7 @@ public record QuestionResponseDto(
         String body,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        int viewCount,
+        Long viewCount,
         int score
 //        List<AnswerResponseDto> answers,
 //        List<CommentResponseDto> comments,

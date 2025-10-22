@@ -1,6 +1,7 @@
 package com.mountblue.stackoverflowclone.controllers;
 
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
+import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
 import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.services.QuestionService;
@@ -52,8 +53,14 @@ public class QuestionController {
 
         String tagString = question.getTags().stream().map(Tag::getName)
                         .collect(Collectors.joining(", "));
-        QuestionFormDto questionFormDto = new QuestionFormDto(id, question.getTitle(), question.getBody(), tagString, question.getAuthor().getId());
-        model.addAttribute("question", questionFormDto);
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto(id, question.getAuthor().getUsername(),
+                question.getTitle(),
+                question.getBody(),
+                question.getCreatedAt(),
+                question.getUpdatedAt(),
+                question.getViewCount(),
+                question.getScore());
+        model.addAttribute("question", questionResponseDto);
         // Load answers also if needed
         return "question-form";
     }
