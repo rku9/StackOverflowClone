@@ -52,7 +52,7 @@ public class QuestionController {
 
         String tagString = question.getTags().stream().map(Tag::getName)
                         .collect(Collectors.joining(", "));
-        QuestionFormDto questionFormDto = new QuestionFormDto((id, question.getTitle(), question.getBody(), tagString, question.getAuthor().getId());
+        QuestionFormDto questionFormDto = new QuestionFormDto(id, question.getTitle(), question.getBody(), tagString, question.getAuthor().getId());
         model.addAttribute("question", questionFormDto);
         // Load answers also if needed
         return "question-form";
@@ -67,8 +67,8 @@ public class QuestionController {
 
     @PostMapping("/{id}")
     public String upVoteQuestion(@PathVariable Long id, @RequestParam("choice") String choice, Model model){
-        Question question = questionService.findById(id);
-        questionService.upVoteQuestion(question);
+        Question question = questionService.findById(id).get();
+        questionService.upVoteQuestion(question, choice);
         return "redirect:/questions/" + question.getId();
     }
 }
