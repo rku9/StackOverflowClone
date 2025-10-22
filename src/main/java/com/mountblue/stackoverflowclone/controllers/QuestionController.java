@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+
 import java.util.stream.Collectors;
 
 @Controller
@@ -53,7 +56,8 @@ public class QuestionController {
 
         String tagString = question.getTags().stream().map(Tag::getName)
                         .collect(Collectors.joining(", "));
-        QuestionResponseDto questionResponseDto = new QuestionResponseDto(id, question.getAuthor().getUsername(),
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto(id,
+                question.getAuthor().getUsername(),
                 question.getTitle(),
                 question.getBody(),
                 question.getCreatedAt(),
@@ -61,8 +65,15 @@ public class QuestionController {
                 question.getViewCount(),
                 question.getScore());
         model.addAttribute("question", questionResponseDto);
+
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+
+        String markdown = questionResponseDto.body(); // your saved markdown string
+        String html = renderer.render(parser.parse(markdown));
+        model.addAttribute("questionHtml", html);
         // Load answers also if needed
-        return "question-form";
+        return "question-show";
     }
 
     @GetMapping("/edit/{id}")
