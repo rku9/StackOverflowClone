@@ -1,21 +1,14 @@
 package com.mountblue.stackoverflowclone.models;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "votes")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Vote {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Vote extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -29,7 +22,4 @@ public class Vote {
 
     @Column(name = "vote_value", nullable = false)
     private int voteValue; // +1 for upvote, -1 for downvote
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
 }

@@ -1,21 +1,14 @@
 package com.mountblue.stackoverflowclone.models;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "comments")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Comment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Comment extends BaseModel {
 
     @Column(name = "post_id", nullable = false)
     private Long postId;
@@ -29,10 +22,4 @@ public class Comment {
 
     @Column(columnDefinition = "TEXT")
     private String body;
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 }

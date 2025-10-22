@@ -1,21 +1,14 @@
 package com.mountblue.stackoverflowclone.models;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "follows")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Follow {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Follow extends BaseModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,7 +19,4 @@ public class Follow {
 
     @Column(name = "object_id", nullable = false)
     private Long objectId; // ID of the question or tag
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
 }
