@@ -10,15 +10,17 @@ import lombok.Setter;
 @Setter
 public class Comment extends BaseModel {
 
-    @Column(name = "post_id", nullable = false)
-    private Long postId;
-
-    @Column(name = "post_type", nullable = false)
-    private String postType; // "question" or "answer"
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "answer_id")
+    private Answer answer;
 
     @Column(columnDefinition = "TEXT")
     private String body;
