@@ -1,6 +1,7 @@
 package com.mountblue.stackoverflowclone.controllers;
 
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
+import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.services.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,13 @@ public class QuestionController {
         questionService.saveQuestion(questionForm);
 
         return "redirect:/questions/" + questionForm.id();
+    }
+
+
+    @DeleteMapping("/{id}")
+    public String deleteQuestion(@PathVariable Long id) {
+        questionService.deleteQuestion(id);
+        return "redirect:/questions";
     }
 
     @GetMapping("/{id}")
