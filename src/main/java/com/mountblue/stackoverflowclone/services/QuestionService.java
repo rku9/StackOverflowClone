@@ -36,7 +36,7 @@ public class QuestionService {
     }
 
     @Transactional
-    public void saveQuestion(QuestionFormDto questionFormDto){
+    public Question saveQuestion(QuestionFormDto questionFormDto){
         Question question = new Question();
         question.setTitle(questionFormDto.title());
         question.setBody(questionFormDto.body());
@@ -46,7 +46,7 @@ public class QuestionService {
         question.setAuthor(userRepository.findById(1L)
                 .orElseThrow(() -> new NoSuchElementException("Author not found")));
         // persist question with tags
-        questionRepository.save(question);
+        return questionRepository.save(question);
     }
 
     public Optional<Question> findById(Long id) {
