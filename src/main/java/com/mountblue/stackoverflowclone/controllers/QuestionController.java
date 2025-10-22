@@ -1,7 +1,6 @@
 package com.mountblue.stackoverflowclone.controllers;
 
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
-import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.services.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,11 +35,19 @@ public class QuestionController {
         return "redirect:/questions/" + questionForm.id();
     }
 
-//    @GetMapping("/{id}")
-//    public String showQuestionDetails(@PathVariable Long id, Model model){
-//        Question question = questionService.findById(id);
-//        model.addAttribute("question", question);
-//        // Load answers also if needed
-//        return "question-details";
-//    }
+    @GetMapping("/{id}")
+    public String showQuestionDetails(@PathVariable Long id, Model model){
+        QuestionFormDto questionFormDto = questionService.findById(id);
+        model.addAttribute("question", questionFormDto);
+        // Load answers also if needed
+        return "question-details";
+    }
+
+    @PatchMapping("/{id}")
+    public String editQuestionDetails(@PathVariable Long id, @ModelAttribute("questionForm") QuestionFormDto questionForm,
+                                      BindingResult result, Model model){
+        questionService.saveQuestion(questionForm);
+        return "redirecr:/questions/" + questionForm.id();
+    }
+
 }
