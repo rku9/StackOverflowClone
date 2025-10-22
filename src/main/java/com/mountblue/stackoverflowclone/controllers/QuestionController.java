@@ -65,10 +65,10 @@ public class QuestionController {
         return "redirect:/questions/" + questionForm.id();
     }
 
-    @PostMapping("/{id}")
-    public String upVoteQuestion(@PathVariable Long id, @RequestParam("choice") String choice, Model model){
+    @PostMapping("/vote/{id}")
+    public String voteQuestion(@PathVariable Long id, @RequestParam("choice") String choice, Model model){
         Question question = questionService.findById(id).get();
-        questionService.upVoteQuestion(question, choice);
+        questionService.voteQuestion(question, choice);
         return "redirect:/questions/" + question.getId();
     }
 }

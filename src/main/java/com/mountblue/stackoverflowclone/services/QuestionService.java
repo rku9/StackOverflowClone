@@ -80,7 +80,7 @@ public class QuestionService {
                 })
                 .collect(Collectors.toList());
     }
-    public void upVoteQuestion(Question question, String choice){
+    public void voteQuestion(Question question, String choice){
         question.setScore(choice.equals("upvote") ? question.getScore() + 1 : question.getScore() - 1);
         questionRepository.save(question);
     }
