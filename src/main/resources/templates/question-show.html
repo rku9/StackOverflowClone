@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'Question - ' + ${question.title}">Question Details</title>
+
+    <!-- Toast UI Editor CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <style>
+        body {
+            font-family: system-ui, Arial, sans-serif;
+            margin: 32px;
+            background: #fff;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        .question-content, .answer-content {
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 6px;
+            background: #f9f9f9;
+            margin-bottom: 18px;
+            white-space: pre-wrap;
+        }
+        .answers-section {
+            margin-top: 40px;
+        }
+        .answer {
+            margin-bottom: 24px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 16px;
+        }
+        label {
+            font-weight: 600;
+        }
+        button {
+            background: #0077cc;
+            color: white;
+            padding: 10px 24px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button.edit-btn {
+            background: #555;
+            margin-left: 8px;
+            font-size: 0.9rem;
+            padding: 6px 12px;
+        }
+        .editor-container {
+            margin-top: 12px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${question.title}">Question Title</h1>
+    <div>
+        <strong>Asked by:</strong> <span th:text="${question.authorName}">User Name</span> |
+        <strong>Posted on:</strong> <span th:text="${#dates.format(question.createdAt, 'dd MMM yyyy HH:mm')}">date</span>
+    </div>
+    <div class="question-content" th:utext="${questionHtml}">Question content goes here...</div>
+
+    <div style="display: flex; align-items: center;">
+        <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post" style="margin:0;">
+            <input type="hidden" name="choice" value="upvote" />
+            <button type="submit" style="background: none; border: none; cursor: pointer;">
+                <span style="font-size: 2rem; color: #222;">&#9650;</span>
+            </button>
+        </form>
+
+        <div style="margin: 0 10px; font-size: 1.5rem;" th:text="${question.score}">0</div>
+
+        <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post" style="margin:0;">
+            <input type="hidden" name="choice" value="downvote" />
+            <button type="submit" style="background: none; border: none; cursor: pointer;">
+                <span style="font-size: 2rem; color: #222;">&#9660;</span>
+            </button>
+        </form>
+    </div>
+
+
+
+
+        <!-- New answer form -->
+        <div class="editor-container" style="margin-top:40px;">
+            <h3>Your Answer</h3>
+            <form th:action="@{/answers/new}" method="post" onsubmit="prepareNewAnswerContent()">
+                <input type="hidden" name="questionId" th:value="${question.id}" />
+                <div id="new-answer-editor"></div>
+                <input type="hidden" name="content" id="newAnswerContent" />
+                <button type="submit">Post Your Answer</button>
+            </form>
+        </div>
+    </section>
+</div>
+
+<!-- Toast UI Editor JS -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    // Editor instance for new answer posting
+    const newAnswerEditor = new toastui.Editor({
+        el: document.querySelector('#new-answer-editor'),
+        height: '300px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        placeholder: 'Write your answer here...'
+    });
+
+    // Editor instance for editing existing answers (created lazily)
+    let answerEditor = null;
+
+    function prepareNewAnswerContent(){
+        document.getElementById('newAnswerContent').value = newAnswerEditor.getMarkdown();
+        return true; // continue form submission
+    }
+
+    function openEditorForAnswer(answerId){
+        const container = document.getElementById('answer-editor-container');
+        const form = document.getElementById('answer-edit-form');
+        const hiddenInput = document.getElementById('answerContent');
+        const idInput = document.getElementById('answerId');
+
+        // Find answer content text from displayed answer element
+        const answerDiv = document.querySelector(`.answer[data-answerid='${answerId}'] .answer-content`);
+        const content = answerDiv ? answerDiv.textContent : '';
+
+        idInput.value = answerId;
+
+        // Initialize editor if not already, else set content
+        if(!answerEditor){
+            answerEditor = new toastui.Editor({
+                el: document.querySelector('#answer-editor'),
+                height: '300px',
+                initialEditType: 'markdown',
+                previewStyle: 'vertical',
+            });
+        }
+        answerEditor.setMarkdown(content);
+
+        container.style.display = 'block';
+
+        // On form submit copy editor content
+        form.onsubmit = function(){
+            hiddenInput.value = answerEditor.getMarkdown();
+            return true;
+        };
+    }
+
+    function closeEditor(){
+        document.getElementById('answer-editor-container').style.display = 'none';
+    }
+</script>
+</body>
+</html>
