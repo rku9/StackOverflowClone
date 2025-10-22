@@ -62,7 +62,7 @@ public class QuestionController {
     public String editQuestionDetails(@PathVariable Long id, @ModelAttribute("questionForm") QuestionFormDto questionForm,
                                       BindingResult result, Model model){
         questionService.saveQuestion(questionForm);
-        return "redirecr:/questions/" + questionForm.id();
+        return "redirect:/questions/" + questionForm.id();
     }
 
     @PostMapping("/{id}")
