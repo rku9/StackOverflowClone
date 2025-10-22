@@ -58,4 +58,10 @@ public class QuestionController {
         return "redirecr:/questions/" + questionForm.id();
     }
 
+    @PostMapping("/{id}")
+    public String upVoteQuestion(@PathVariable Long id, @RequestParam("choice") String choice, Model model){
+        Question question = questionService.findById(id);
+        questionService.upVoteQuestion(question);
+        return "redirect:/questions/" + question.getId();
+    }
 }
