@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<!-- Navbar Fragment -->
+<nav th:fragment="navbar" class="navbar">
+    <div class="navbar-content">
+        <a href="/" class="logo">
+            <svg aria-hidden="true" width="150" height="30" viewBox="0 0 150 30">
+                <text x="0" y="20" font-family="Arial" font-size="20" font-weight="bold" fill="#222">stack<tspan fill="#f48225">overflow</tspan></text>
+            </svg>
+        </a>
+        <div class="nav-search">
+            <input type="text" placeholder="Search...">
+        </div>
+        <div class="nav-items">
+            <button class="nav-btn">Products</button>
+            <button class="nav-btn">Log in</button>
+            <button class="nav-btn primary">Sign up</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Left Sidebar Fragment -->
+<aside th:fragment="sidebar" class="left-sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav-list">
+            <li>
+                <a href="/" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 1L2 7v9h5V9h4v7h5V7L9 1z" fill="currentColor"/></svg>
+                    <span>Home</span>
+                    <span class="badge-new">NEW</span>
+                </a>
+            </li>
+            <li>
+                <a href="/questions" class="nav-item active">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="9" r="2" fill="currentColor"/></svg>
+                    <span>Questions</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 2l6-2 8 8-6 6-8-8V2z" fill="currentColor"/><circle cx="5" cy="5" r="1.5" fill="#fff"/></svg>
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="/saves" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><path d="M3 2h12v16l-6-4-6 4V2z" fill="currentColor"/></svg>
+                    <span>Saves</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-separator"></div>
+
+        <ul class="nav-list">
+            <li>
+                <a href="/challenges" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 9l7-7 7 7M3 10l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                    <span>Challenges</span>
+                </a>
+            </li>
+            <li>
+                <a href="/chat" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><rect x="2" y="4" width="14" height="10" rx="2" fill="currentColor"/><path d="M5 7h8M5 10h5" stroke="#fff" stroke-width="1.5"/></svg>
+                    <span>Chat</span>
+                </a>
+            </li>
+            <li>
+                <a href="/articles" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><rect x="3" y="2" width="12" height="14" rx="1" fill="currentColor"/><path d="M6 5h6M6 8h6M6 11h4" stroke="#fff" stroke-width="1"/></svg>
+                    <span>Articles</span>
+                </a>
+            </li>
+            <li>
+                <a href="/users" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="6" r="3" fill="currentColor"/><path d="M3 16c0-3.5 2.5-6 6-6s6 2.5 6 6" fill="currentColor"/></svg>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="/companies" class="nav-item">
+                    <svg width="18" height="18" viewBox="0 0 18 18"><rect x="2" y="4" width="14" height="12" fill="currentColor"/><rect x="5" y="7" width="2" height="2" fill="#fff"/><rect x="8" y="7" width="2" height="2" fill="#fff"/><rect x="11" y="7" width="2" height="2" fill="#fff"/></svg>
+                    <span>Companies</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="collectives-section">
+            <div class="section-header">
+                <span>COLLECTIVES</span>
+                <button class="expand-btn">+</button>
+            </div>
+            <p class="section-description">Communities for your favorite technologies.</p>
+        </div>
+
+        <div class="teams-section">
+            <div class="section-header">
+                <span>TEAMS</span>
+                <button class="close-btn">×</button>
+            </div>
+            <div class="teams-content">
+                <div class="teams-icons">
+                    <span class="icon">📋</span>
+                    <span class="icon">💻</span>
+                    <span class="icon">✓</span>
+                </div>
+                <p>Ask questions, find answers and collaborate at work with Stack Overflow for Teams.</p>
+                <button class="teams-cta">Try Teams for free</button>
+            </div>
+        </div>
+    </nav>
+</aside>
+
+<!-- Footer Fragment -->
+<footer th:fragment="footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            <svg aria-hidden="true" class="native svg-icon iconGlyphMd" width="32" height="37" viewBox="0 0 32 37">
+                <path fill="#F48024" d="M26 33v-9h4v13H0V24h4v9h22Z"></path>
+                <path fill="#BCBBBB" d="m21.5 0-2.7 2 9.9 13.3 2.7-2L21.5 0Z"></path>
+                <path fill="#F48024" d="M26 18.4 13.3 7.8l2.1-2.5 12.7 10.6-2.1 2.5Z"></path>
+                <path fill="#BCBBBB" d="M9.1 15.2 15 6 6 0 0 9.2l9.1 6Z"></path>
+                <path fill="#F48024" d="m19 34-9-6 3-4 9 6-3 4Z"></path>
+            </svg>
+        </div>
+        <div class="footer-section">
+            <h5>Stack Overflow</h5>
+            <ul>
+                <li><a href="#">Questions</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Chat</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h5>Products</h5>
+            <ul>
+                <li><a href="#">Teams</a></li>
+                <li><a href="#">Advertising</a></li>
+                <li><a href="#">Talent</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h5>Company</h5>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="#">Work Here</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div>Site design / logo © 2025 Stack Exchange Inc</div>
+        <div>user contributions licensed under CC BY-SA</div>
+    </div>
+</footer>
+
+<!-- Common Styles Fragment -->
+<th:block th:fragment="styles">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: #f1f2f3;
+            margin: 0;
+            position: relative;
+        }
+
+        /* Page wrapper - add padding for fixed navbar */
+        .page-wrapper {
+    position: relative;
+    margin-left: 164px;  /* Space for left sidebar */
+    padding-top: 50px;   /* Space for fixed navbar */
+    min-height: 100vh;
+    max-width: calc(1264px - 164px);  /* Max width minus sidebar */
+    margin-right: auto;  /* Center the content */
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+        /* Navbar */
+        .navbar {
+            background: #f8f9f9;
+            border-top: 3px solid #f48225;
+            border-bottom: 1px solid #d6d9dc;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            position: fixed;  /* Navbar stays fixed */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        .navbar-content {
+            max-width: 1264px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-left: 164px;  /* Offset for sidebar */
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            height: 100%;
+        }
+        .nav-search {
+            flex: 1;
+            max-width: 700px;
+        }
+        .nav-search input {
+            width: 100%;
+            padding: 8px 32px 8px 10px;
+            border: 1px solid #babfc4;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        .nav-items {
+            display: flex;
+            gap: 4px;
+            margin-left: auto;
+        }
+        .nav-btn {
+            padding: 8px 10px;
+            background: transparent;
+            border: none;
+            color: #525960;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+        .nav-btn:hover {
+            background: #e3e6e8;
+        }
+        .nav-btn.primary {
+            background: #0a95ff;
+            color: white;
+            border-radius: 3px;
+        }
+        .nav-btn.primary:hover {
+            background: #0074cc;
+        }
+
+        /* Left Sidebar - FIXED */
+        .left-sidebar {
+            width: 164px;
+            background: #f8f9f9;
+            border-right: 1px solid #d6d9dc;
+            position: absolute;  /* Changed from fixed to absolute */
+            top: 50px;
+            left: 0;
+            min-height: calc(100vh - 50px);
+            padding: 24px 0;
+            z-index: 100;
+        }
+        .sidebar-nav {
+            font-size: 13px;
+        }
+        .nav-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px 8px 8px;
+            color: #525960;
+            text-decoration: none;
+            border-right: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .nav-item:hover {
+            color: #0c0d0e;
+            background: #f1f2f3;
+        }
+        .nav-item.active {
+            background: #f1f2f3;
+            color: #0c0d0e;
+            font-weight: 700;
+            border-right-color: #f48225;
+        }
+        .nav-item svg {
+            flex-shrink: 0;
+        }
+        .badge-new {
+            background: #0a95ff;
+            color: white;
+            font-size: 10px;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        .nav-separator {
+            height: 1px;
+            background: #e3e6e8;
+            margin: 16px 8px;
+        }
+        .collectives-section, .teams-section {
+            padding: 16px 12px;
+            border-top: 1px solid #e3e6e8;
+            margin-top: 16px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #6a737c;
+            margin-bottom: 8px;
+        }
+        .expand-btn, .close-btn {
+            background: none;
+            border: none;
+            color: #6a737c;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+        }
+        .section-description {
+            font-size: 11px;
+            color: #6a737c;
+            margin: 4px 0 0 0;
+        }
+        .teams-section {
+            background: #f1f2f3;
+            border-radius: 3px;
+            margin: 16px 8px 0;
+        }
+        .teams-content {
+            text-align: center;
+        }
+        .teams-icons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 12px 0;
+            font-size: 24px;
+        }
+        .teams-content p {
+            font-size: 11px;
+            color: #3b4045;
+            margin: 12px 0;
+            line-height: 1.4;
+        }
+        .teams-cta {
+            background: #f48225;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 500;
+        }
+        .teams-cta:hover {
+            background: #da6e1c;
+        }
+
+        /* Main content area */
+        .page-container, .question-container {
+            padding-top: 70px;  /* 50px navbar + 20px spacing */
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        /* Footer - extend full width */
+        footer {
+            background: #232629;
+            color: #9199a1;
+            padding: 32px 12px;
+            margin-top: 48px;
+            margin-left: -164px;  /* Extend back to full width */
+            width: calc(100% + 164px);
+        }
+        .footer-content {
+            max-width: 1264px;
+            margin: 0 auto;
+            display: flex;
+            gap: 48px;
+        }
+        .footer-section h5 {
+            color: #babfc4;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .footer-section ul {
+            list-style: none;
+        }
+        .footer-section li {
+            margin-bottom: 8px;
+        }
+        .footer-section a {
+            color: #9199a1;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .footer-section a:hover {
+            color: #e3e6e8;
+        }
+        .footer-bottom {
+            max-width: 1264px;
+            margin: 24px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid #3c4146;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+        }
+    </style>
+</th:block>
+
+</body>
+</html>
