@@ -72,12 +72,11 @@ public class QuestionService {
                 .filter(s -> !s.isEmpty())
                 .map(s -> {
                     String normalized = s.toLowerCase();
-                    return tagRepository.findByNormalized(normalized)
+                    return tagRepository.findByName(normalized)
                             .orElseGet(() -> {
                                 // create Tag manually instead of using builder
                                 Tag tag = new Tag();
-                                tag.setName(s);
-                                tag.setNormalized(normalized);
+                                tag.setName(normalized);
                                 return tagRepository.save(tag);
                             });
                 })
@@ -88,7 +87,7 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    public Page<Question> getAllQuestions(@PageableDefault(size = 10) Pageable pageable){
-
-    }
+//    public Page<Question> getAllQuestions(@PageableDefault(size = 10) Pageable pageable){
+//
+//    }
 }

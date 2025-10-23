@@ -11,7 +11,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     Optional<Tag> findByName(String name);
 
-    Optional<Tag> findByNormalized(String normalized);
+//    Optional<Tag> findByNormalized(String normalized);
 
     List<Tag> findByNameIn(List<String> names);
 

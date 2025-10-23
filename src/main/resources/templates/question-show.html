@@ -255,11 +255,11 @@
             <div class="question-meta">
                     <span>
                         <strong>Asked</strong>
-                        <time th:text="${#dates.format(question.createdAt, 'MMM dd, yyyy')}">today</time>
+                        <time th:text="${#temporals.format(question.createdAt, 'MM dd, yyyy')}">today</time>
                     </span>
                 <span>
                         <strong>Modified</strong>
-                        <time th:text="${#dates.format(question.updatedAt, 'MMM dd, yyyy')}">today</time>
+                        <time th:text="${#temporals.format(question.updatedAt, 'MM dd, yyyy')}">today</time>
                     </span>
                 <span>
                         <strong>Viewed</strong>
@@ -302,7 +302,7 @@
                     <div class="post-signature">
                         <div class="user-info">
                             <div class="user-action-time">
-                                asked <time th:text="${#dates.format(question.createdAt, 'MMM dd, yyyy ''at'' HH:mm')}">Oct 23, 2025</time>
+                                asked <time th:text="${#temporals.format(question.createdAt, 'MM dd, yyyy')}">Oct 23, 2025</time>
                             </div>
                             <div class="user-details">
                                 <div class="user-avatar" th:text="${question.authorName.substring(0,1).toUpperCase()}">U</div>
