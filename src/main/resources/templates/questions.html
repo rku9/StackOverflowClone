@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StackOverflow Clone – Home</title>
+    <th:block th:replace="~{fragments/layout :: styles}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+<div class="page-wrapper">
+    <main>
+        <h2>Newest Questions</h2>
+        <div class="questions-list" style="display: flex; flex-direction: column; gap: 16px;">
+            <div th:each="question : ${questionResponseDtoList}" class="question-summary"
+                 style="background: #fff; border-radius: 4px; padding: 20px; display: flex; gap: 16px;">
+                <!-- Stats -->
+                <div style="width: 85px; text-align: right; color: #6a737c;">
+                    <div style="font-size: 18px; font-weight: 700;" th:text="${question.score}">0</div>
+                    <div style="font-size: 13px;">votes</div>
+                    <div style="font-size: 18px; font-weight: 700; margin-top: 8px;">0</div>
+                    <div style="font-size: 13px;">answers</div>
+                    <div th:text="${question.viewCount}" style="font-size: 13px; margin-top: 8px;">0</div>
+                    <div style="font-size: 13px;">views</div>
+                </div>
+                <!-- Main Content -->
+                <div style="flex: 1;">
+                    <h3 style="margin-bottom: 8px;">
+                        <a th:href="@{'/questions/' + ${question.id}}" th:text="${question.title}"
+                           style="color: #0074cc; text-decoration: none; font-size: 16px;"></a>
+                    </h3>
+                    <div th:text="${question.body}" style="margin-bottom: 10px; color: #232629; font-size: 14px;">
+                        <!-- question body -->
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <span th:each="tag : ${question.tags}" th:text="${tag.name}"
+                              class="tag"
+                              style="background: #e1ecf4; color: #39739d; border-radius: 3px; padding: 3px 6px; font-size: 12px; margin-right: 5px;">
+                        </span>
+                    </div>
+                    <div style="font-size: 13px; color: #888;">
+                        asked <span th:text="${#temporals.format(question.createdAt, 'MMM dd, yyyy HH:mm')}"></span>
+                        by <span th:text="${question.authorName}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>

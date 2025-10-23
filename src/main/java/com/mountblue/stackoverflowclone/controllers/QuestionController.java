@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +26,14 @@ public class QuestionController {
 
     public QuestionController(QuestionService questionService){
         this.questionService = questionService;
+    }
+
+    @GetMapping
+    public String questions(Model model){
+
+       List<QuestionResponseDto> questionResponseDtoList =  questionService.getAllQuestions();
+       model.addAttribute("questionResponseDtoList", questionResponseDtoList);
+       return "questions";
     }
 
     @GetMapping("/new")
