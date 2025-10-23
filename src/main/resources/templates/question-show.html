@@ -292,9 +292,11 @@
                     </div>
 
                     <div class="post-tags">
-                        <a href="#" class="post-tag">aws</a>
-                        <a href="#" class="post-tag">amazon-vpc</a>
-                        <a href="#" class="post-tag">openvpn</a>
+                        <a th:each="tag : ${question.tags}"
+                           th:href="@{/tags/{tagName}(tagName=${tag.name})}"
+                           th:text="${tag.name}"
+                           class="post-tag">
+                        </a>
                     </div>
 
                     <div class="post-signature">
