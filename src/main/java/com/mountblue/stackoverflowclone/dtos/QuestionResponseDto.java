@@ -1,6 +1,9 @@
 package com.mountblue.stackoverflowclone.dtos;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record QuestionResponseDto(
         Long id,
@@ -10,8 +13,10 @@ public record QuestionResponseDto(
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         Long viewCount,
-        int score
+        int score,
 //        List<AnswerResponseDto> answers,
 //        List<CommentResponseDto> comments,
-//        List<TagResponseDto> tags
+
+        @JsonManagedReference("question-tags")
+        List<TagResponseDto> tags
 ) {}

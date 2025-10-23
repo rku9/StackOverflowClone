@@ -6,6 +6,9 @@ import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.TagRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -83,5 +86,9 @@ public class QuestionService {
     public void voteQuestion(Question question, String choice){
         question.setScore(choice.equals("upvote") ? question.getScore() + 1 : question.getScore() - 1);
         questionRepository.save(question);
+    }
+
+    public Page<Question> getAllQuestions(@PageableDefault(size = 10) Pageable pageable){
+
     }
 }

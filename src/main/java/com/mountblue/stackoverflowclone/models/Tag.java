@@ -13,8 +13,6 @@ public class Tag extends BaseModel {
 
     private String name;
 
-    private String normalized;
-
     @ManyToMany(mappedBy = "tags")
     private List<Question> questions;
 }
