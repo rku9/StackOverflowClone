@@ -2,6 +2,7 @@ package com.mountblue.stackoverflowclone.controllers;
 
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
+import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
 import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.services.QuestionService;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -56,6 +60,12 @@ public class QuestionController {
 
         String tagString = question.getTags().stream().map(Tag::getName)
                         .collect(Collectors.joining(", "));
+
+        List<Tag> tags = question.getTags();
+        List<TagResponseDto> tagResponseDtoList = tags.stream()
+                .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
+                .collect(Collectors.toList());
+
         QuestionResponseDto questionResponseDto = new QuestionResponseDto(id,
                 question.getAuthor().getUsername(),
                 question.getTitle(),
@@ -63,7 +73,9 @@ public class QuestionController {
                 question.getCreatedAt(),
                 question.getUpdatedAt(),
                 question.getViewCount(),
-                question.getScore());
+                question.getScore(),
+                tagResponseDtoList
+                );
         model.addAttribute("question", questionResponseDto);
 
         Parser parser = Parser.builder().build();
