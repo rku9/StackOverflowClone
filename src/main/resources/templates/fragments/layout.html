@@ -173,6 +173,9 @@
             margin: 0;
             position: relative;
         }
+        :root {
+  --navbar-height: 50px; /* measure your actual navbar height and set here */
+}
 
         /* Page wrapper - add padding for fixed navbar */
         .page-wrapper {
@@ -185,7 +188,9 @@
     padding-left: 24px;
     padding-right: 24px;
 }
-
+.page-container {
+  padding-top: calc(var(--navbar-height) + 20px) !important;
+}
         /* Navbar */
         .navbar {
             background: #f8f9f9;

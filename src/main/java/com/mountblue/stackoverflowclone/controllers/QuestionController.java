@@ -28,13 +28,13 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-    @GetMapping
-    public String questions(Model model){
-
-       List<QuestionResponseDto> questionResponseDtoList =  questionService.getAllQuestions();
-       model.addAttribute("questionResponseDtoList", questionResponseDtoList);
-       return "questions";
-    }
+//    @GetMapping
+//    public String questions(Model model){
+//
+//       List<QuestionResponseDto> questionResponseDtoList =  questionService.getAllQuestions();
+//       model.addAttribute("questionResponseDtoList", questionResponseDtoList);
+//       return "questions";
+//    }
 
     @GetMapping("/new")
     public String showQuestionForm(Model model){

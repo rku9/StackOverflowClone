@@ -165,7 +165,7 @@
                     <label>Body <span class="required">*</span></label>
                     <span class="label-hint">Include all information someone would need to answer your question.</span>
                     <div id="editor"></div>
-                    <input type="hidden" name="body" id="hiddenBody">
+                    <input type="hidden" name="body" id="editorContent">
                 </div>
 
                 <div class="form-group">
@@ -234,11 +234,30 @@
         ['quote', 'ul', 'ol', 'task'],
         ['table', 'image', 'link'],
         ['code', 'codeblock']
-      ]
+      ],
+      hooks: {
+            addImageBlobHook: async (blob, callback) => {
+                const formData = new FormData();
+                formData.append('image', blob);
+
+                const response = await fetch('/api/images/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                callback(data.url, 'image');
+            }
+        }
     });
 
-    document.querySelector('form').addEventListener('submit', function(e){
-      document.getElementById('hiddenBody').value = editor.getMarkdown();
+    // Get the form element
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', function(e) {
+        // Get HTML content from editor and set it to hidden field
+        const htmlContent = editor.getHTML();
+        document.getElementById('editorContent').value = htmlContent;
     });
 </script>
 </body>
