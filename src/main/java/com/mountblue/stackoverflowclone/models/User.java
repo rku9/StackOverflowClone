@@ -1,5 +1,6 @@
 package com.mountblue.stackoverflowclone.models;
 
+import com.mountblue.stackoverflowclone.trash.Upload;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +15,8 @@ public class User extends BaseModel {
 
     private String username;
 
-    @Column(name = "email_hash")
-    private String emailHash;
+    @Column(name = "email")
+    private String email;
 
     private int reputation;
 
@@ -59,11 +60,4 @@ public class User extends BaseModel {
             orphanRemoval = true
     )
     private List<Follow> follows;
-
-    @OneToMany(
-            mappedBy = "owner",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            orphanRemoval = true
-    )
-    private List<Upload> uploads;
 }
