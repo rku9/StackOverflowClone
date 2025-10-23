@@ -2,111 +2,350 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title th:text="'Question - ' + ${question.title}">Question Details</title>
-
-    <!-- Toast UI Editor CSS -->
+    <title th:text="${question.title}">Question Details</title>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <th:block th:replace="~{fragments/layout :: styles}"></th:block>
+
     <style>
-        body {
-            font-family: system-ui, Arial, sans-serif;
-            margin: 32px;
-            background: #fff;
-        }
-        .container {
-            max-width: 900px;
+        .page-wrapper {
+            max-width: 1264px;
             margin: 0 auto;
+            padding: 24px 12px;
         }
-        h1 {
-            font-size: 2rem;
+        .question-container {
+            display: flex;
+            gap: 24px;
         }
-        .question-content, .answer-content {
-            border: 1px solid #ddd;
-            padding: 16px;
-            border-radius: 6px;
-            background: #f9f9f9;
-            margin-bottom: 18px;
-            white-space: pre-wrap;
+        .question-main {
+            flex: 1;
+            min-width: 0;
         }
-        .answers-section {
-            margin-top: 40px;
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
         }
-        .answer {
+        .question-title {
+            font-size: 27px;
+            font-weight: 400;
+            line-height: 1.35;
+            margin: 0 0 8px 0;
+            color: #3b4045;
+        }
+        .question-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: #6a737c;
+            padding: 8px 0;
+            border-bottom: 1px solid #e3e6e8;
+            margin-bottom: 16px;
+        }
+        .question-meta span {
+            display: flex;
+            gap: 4px;
+        }
+        .question-meta strong {
+            color: #0c0d0e;
+        }
+
+        .question-body {
+            display: flex;
+            gap: 16px;
+        }
+        .vote-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #6a737c;
+        }
+        .vote-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .vote-button:hover {
+            background: #f1f2f3;
+        }
+        .vote-button svg {
+            width: 36px;
+            height: 36px;
+            fill: #babfc4;
+        }
+        .vote-button:hover svg {
+            fill: #f48225;
+        }
+        .vote-count {
+            font-size: 21px;
+            font-weight: 400;
+            color: #6a737c;
+        }
+
+        .post-layout {
+            flex: 1;
+        }
+        .post-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #232629;
             margin-bottom: 24px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 16px;
+            word-wrap: break-word;
         }
-        label {
-            font-weight: 600;
+        .post-content p {
+            margin-bottom: 1em;
         }
-        button {
+        .post-content pre {
+            background: #f6f6f6;
+            padding: 12px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        .post-content code {
+            background: #f6f6f6;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, monospace;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+        }
+        .post-tag {
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 5px 6px;
+            font-size: 12px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+        .post-tag:hover {
+            background: #d0e3f1;
+            color: #2c5877;
+        }
+
+        .post-signature {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+        .user-info {
+            background: #d9eaf7;
+            padding: 6px 7px 7px;
+            border-radius: 3px;
+            width: 200px;
+        }
+        .user-action-time {
+            font-size: 12px;
+            color: #6a737c;
+            margin-bottom: 4px;
+        }
+        .user-details {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 3px;
             background: #0077cc;
             color: white;
-            padding: 10px 24px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .user-name {
+            color: #0074cc;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .answers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e3e6e8;
+            margin: 32px 0 16px;
+        }
+        .answers-header h2 {
+            font-size: 19px;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .answer-form {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e3e6e8;
+        }
+        .answer-form h3 {
+            font-size: 19px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+        .submit-button {
+            background: #0a95ff;
+            color: white;
+            border: 1px solid transparent;
+            box-shadow: inset 0 1px 0 0 rgba(255,255,255,.4);
+            padding: 10px 12px;
+            border-radius: 3px;
+            font-size: 13px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
         }
-        button.edit-btn {
-            background: #555;
-            margin-left: 8px;
-            font-size: 0.9rem;
-            padding: 6px 12px;
+        .submit-button:hover {
+            background: #0074cc;
         }
-        .editor-container {
-            margin-top: 12px;
-            margin-bottom: 20px;
+
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+        .sidebar-widget {
+            background: #fdf7e2;
+            border: 1px solid #f1e5bc;
+            border-radius: 3px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        .sidebar-widget h3 {
+            font-size: 13px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+        }
+        .sidebar-widget ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar-widget li {
+            font-size: 13px;
+            padding: 4px 0;
+            color: #3b4045;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1 th:text="${question.title}">Question Title</h1>
-    <div>
-        <strong>Asked by:</strong> <span th:text="${question.authorName}">User Name</span> |
-        <strong>Posted on:</strong> <span th:text="${#dates.format(question.createdAt, 'dd MMM yyyy HH:mm')}">date</span>
-    </div>
-    <div class="question-content" th:utext="${questionHtml}">Question content goes here...</div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div th:replace="~{fragments/layout :: sidebar}"></div>
 
-    <div style="display: flex; align-items: center;">
-        <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post" style="margin:0;">
-            <input type="hidden" name="choice" value="upvote" />
-            <button type="submit" style="background: none; border: none; cursor: pointer;">
-                <span style="font-size: 2rem; color: #222;">&#9650;</span>
-            </button>
-        </form>
+<div class="page-wrapper">
+    <div class="question-container">
+        <div class="question-main">
+            <div class="question-header">
+                <h1 class="question-title" th:text="${question.title}">Question Title</h1>
+            </div>
 
-        <div style="margin: 0 10px; font-size: 1.5rem;" th:text="${question.score}">0</div>
+            <div class="question-meta">
+                    <span>
+                        <strong>Asked</strong>
+                        <time th:text="${#dates.format(question.createdAt, 'MMM dd, yyyy')}">today</time>
+                    </span>
+                <span>
+                        <strong>Modified</strong>
+                        <time th:text="${#dates.format(question.updatedAt, 'MMM dd, yyyy')}">today</time>
+                    </span>
+                <span>
+                        <strong>Viewed</strong>
+                        <span th:text="${question.viewCount} + ' times'">7 times</span>
+                    </span>
+            </div>
 
-        <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post" style="margin:0;">
-            <input type="hidden" name="choice" value="downvote" />
-            <button type="submit" style="background: none; border: none; cursor: pointer;">
-                <span style="font-size: 2rem; color: #222;">&#9660;</span>
-            </button>
-        </form>
-    </div>
+            <div class="question-body">
+                <div class="vote-cell">
+                    <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post">
+                        <input type="hidden" name="choice" value="upvote" />
+                        <button type="submit" class="vote-button" title="This question is useful">
+                            <svg aria-hidden="true" width="36" height="36" viewBox="0 0 36 36"><path d="M2 25h32L18 9 2 25Z"/></svg>
+                        </button>
+                    </form>
 
+                    <div class="vote-count" th:text="${question.score}">1</div>
 
+                    <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post">
+                        <input type="hidden" name="choice" value="downvote" />
+                        <button type="submit" class="vote-button" title="This question is not useful">
+                            <svg aria-hidden="true" width="36" height="36" viewBox="0 0 36 36"><path d="M2 11h32L18 27 2 11Z"/></svg>
+                        </button>
+                    </form>
+                </div>
 
+                <div class="post-layout">
+                    <div class="post-content" th:utext="${questionHtml}">
+                        Question content goes here...
+                    </div>
 
-        <!-- New answer form -->
-        <div class="editor-container" style="margin-top:40px;">
-            <h3>Your Answer</h3>
-            <form th:action="@{/answers/new}" method="post" onsubmit="prepareNewAnswerContent()">
-                <input type="hidden" name="questionId" th:value="${question.id}" />
-                <div id="new-answer-editor"></div>
-                <input type="hidden" name="content" id="newAnswerContent" />
-                <button type="submit">Post Your Answer</button>
-            </form>
+                    <div class="post-tags">
+                        <a href="#" class="post-tag">aws</a>
+                        <a href="#" class="post-tag">amazon-vpc</a>
+                        <a href="#" class="post-tag">openvpn</a>
+                    </div>
+
+                    <div class="post-signature">
+                        <div class="user-info">
+                            <div class="user-action-time">
+                                asked <time th:text="${#dates.format(question.createdAt, 'MMM dd, yyyy ''at'' HH:mm')}">Oct 23, 2025</time>
+                            </div>
+                            <div class="user-details">
+                                <div class="user-avatar" th:text="${question.authorName.substring(0,1).toUpperCase()}">U</div>
+                                <div>
+                                    <a href="#" class="user-name" th:text="${question.authorName}">User Name</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="answers-header">
+                <h2>Answers</h2>
+            </div>
+
+            <!-- Answers will be listed here -->
+
+            <div class="answer-form">
+                <h3>Your Answer</h3>
+                <form th:action="@{/answers/new}" method="post" onsubmit="prepareNewAnswerContent()">
+                    <input type="hidden" name="questionId" th:value="${question.id}" />
+                    <div id="new-answer-editor"></div>
+                    <input type="hidden" name="content" id="newAnswerContent" />
+                    <button type="submit" class="submit-button">Post Your Answer</button>
+                </form>
+            </div>
         </div>
-    </section>
+
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <h3>The Overflow Blog</h3>
+                <ul>
+                    <li>→ Featured on Meta</li>
+                    <li>→ Community asks</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
 </div>
 
-<!-- Toast UI Editor JS -->
+<div th:replace="~{fragments/layout :: footer}"></div>
+
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
-    // Editor instance for new answer posting
     const newAnswerEditor = new toastui.Editor({
         el: document.querySelector('#new-answer-editor'),
         height: '300px',
@@ -115,48 +354,9 @@
         placeholder: 'Write your answer here...'
     });
 
-    // Editor instance for editing existing answers (created lazily)
-    let answerEditor = null;
-
     function prepareNewAnswerContent(){
         document.getElementById('newAnswerContent').value = newAnswerEditor.getMarkdown();
-        return true; // continue form submission
-    }
-
-    function openEditorForAnswer(answerId){
-        const container = document.getElementById('answer-editor-container');
-        const form = document.getElementById('answer-edit-form');
-        const hiddenInput = document.getElementById('answerContent');
-        const idInput = document.getElementById('answerId');
-
-        // Find answer content text from displayed answer element
-        const answerDiv = document.querySelector(`.answer[data-answerid='${answerId}'] .answer-content`);
-        const content = answerDiv ? answerDiv.textContent : '';
-
-        idInput.value = answerId;
-
-        // Initialize editor if not already, else set content
-        if(!answerEditor){
-            answerEditor = new toastui.Editor({
-                el: document.querySelector('#answer-editor'),
-                height: '300px',
-                initialEditType: 'markdown',
-                previewStyle: 'vertical',
-            });
-        }
-        answerEditor.setMarkdown(content);
-
-        container.style.display = 'block';
-
-        // On form submit copy editor content
-        form.onsubmit = function(){
-            hiddenInput.value = answerEditor.getMarkdown();
-            return true;
-        };
-    }
-
-    function closeEditor(){
-        document.getElementById('answer-editor-container').style.display = 'none';
+        return true;
     }
 </script>
 </body>

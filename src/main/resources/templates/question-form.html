@@ -2,175 +2,244 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Ask question</title>
-    <style>
-        body {
-            font-family: system-ui, Arial, sans-serif;
-            margin: 32px;
-            background: #fff;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        header {
-            margin-bottom: 32px;
-        }
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 25px;
-        }
-        .form-label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 8px;
-        }
-        .form-control, textarea {
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
-            font-size: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        .tags-input {
-            margin-top: 10px;
-        }
-        .btn-primary, .btn-secondary {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 5px;
-            margin-right: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: #0077cc;
-            color: #fff;
-        }
-        .btn-secondary {
-            background: #eee;
-            color: #333;
-        }
-        .section {
-            margin-top: 28px;
-            background: #fafbfc;
-            border: 1px solid #e3e6e8;
-            padding: 18px;
-            border-radius: 8px;
-        }
-        .radio-group label {
-            margin-right: 20px;
-            display: inline-block;
-        }
-        .required {
-            color: #c00;
-        }
-        .step-list {
-            margin-top: 12px;
-            font-size: 1rem;
-            color: #555;
-        }
-        .step-list li {
-            margin-bottom: 8px;
-        }
-        .help-links {
-            margin-top: 12px;
-            font-size: 0.95rem;
-        }
-        .help-links a {
-            color: #0077cc;
-            text-decoration: underline;
-        }
-    </style>
+    <title>Ask a question - Stack Overflow</title>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
-    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <!-- Include common styles from fragment -->
+    <th:block th:replace="~{fragments/layout :: styles}"></th:block>
+
+    <!-- Page-specific styles only -->
+    <style>
+        .page-container {
+            max-width: 1264px;
+            margin: 0 auto;
+            padding: 24px 12px;
+        }
+        .container {
+            display: flex;
+            gap: 24px;
+        }
+        .main-content {
+            flex: 1;
+            background: white;
+            padding: 24px;
+            border-radius: 3px;
+            border: 1px solid #d6d9dc;
+        }
+        h1 {
+            font-size: 27px;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        .label-hint {
+            display: block;
+            font-size: 12px;
+            color: #6a737c;
+            margin-bottom: 8px;
+            font-weight: normal;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #babfc4;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #6cbbf7;
+            box-shadow: 0 0 0 4px rgba(0, 116, 204, 0.15);
+        }
+        .required {
+            color: #c22e32;
+        }
+        .btn-primary {
+            background: #0a95ff;
+            color: white;
+            border: 1px solid transparent;
+            padding: 10px 12px;
+            border-radius: 3px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-primary:hover {
+            background: #0074cc;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #c22e32;
+            border: none;
+            padding: 10px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+        .sidebar {
+            width: 350px;
+            flex-shrink: 0;
+        }
+        .help-box {
+            background: #fdf7e2;
+            border: 1px solid #e1ce84;
+            border-radius: 3px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .help-box h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .help-box ol {
+            margin-left: 18px;
+        }
+        .help-box li {
+            font-size: 13px;
+            color: #3b4045;
+            margin-bottom: 8px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .radio-option {
+            flex: 1;
+            border: 1px solid #d6d9dc;
+            border-radius: 3px;
+            padding: 16px;
+            cursor: pointer;
+        }
+        .radio-option:hover {
+            border-color: #0a95ff;
+        }
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
+        }
+        .radio-option label {
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .radio-option ul {
+            list-style: none;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #6a737c;
+        }
+        .radio-option ul li {
+            margin-bottom: 4px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <header>
-        <h2>Ask question</h2>
-    </header>
-    <form th:action="@{/questions/new}" method="post" autocomplete="off">
-        <div class="form-group">
-            <label for="title" class="form-label">Title <span class="required">*</span></label>
-            <input type="text" id="title" name="title" class="form-control" minlength="15" required
-                   placeholder="Be specific and imagine you’re asking another person. Min 15 characters.">
-        </div>
-        <div class="form-group">
+<!-- Include navbar fragment -->
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div th:replace="~{fragments/layout :: sidebar}"></div>
 
-            <div id="editor"></div>
-            <input type="hidden" name="body" id="hiddenBody">
+<!-- Main Content -->
+<div class="page-container">
+    <div class="container">
+        <div class="main-content">
+            <h1>Ask a question</h1>
+            <form th:action="@{/questions/new}" method="post">
+                <!-- Your form fields here -->
+                <div class="form-group">
+                    <label for="title">Title <span class="required">*</span></label>
+                    <span class="label-hint">Be specific and imagine you're asking a question to another person. Min 15 characters.</span>
+                    <input type="text" id="title" name="title" required minlength="15"
+                           placeholder="e.g. Is there an R function for finding the index of an element in a vector?">
+                </div>
+
+                <div class="form-group">
+                    <label>Body <span class="required">*</span></label>
+                    <span class="label-hint">Include all information someone would need to answer your question.</span>
+                    <div id="editor"></div>
+                    <input type="hidden" name="body" id="hiddenBody">
+                </div>
+
+                <div class="form-group">
+                    <label for="tags">Tags <span class="required">*</span></label>
+                    <span class="label-hint">Add up to 5 tags to describe what your question is about.</span>
+                    <input type="text" id="tags" name="tags" placeholder="e.g. (java spring thymeleaf)">
+                </div>
+
+                <div class="form-group">
+                    <label>Select where your question should be posted: <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="private" name="post_option" value="private" checked>
+                            <label for="private">Get private feedback</label>
+                            <ul>
+                                <li>I want experienced community mentors</li>
+                                <li>I want to improve my question</li>
+                                <li>I can wait for answers</li>
+                            </ul>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="public" name="post_option" value="public">
+                            <label for="public">Post question now</label>
+                            <ul>
+                                <li>I'm sure my question follows guidelines</li>
+                                <li>I don't need private feedback</li>
+                                <li>I need answers immediately</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Review your question</button>
+                <button type="reset" class="btn-secondary">Discard draft</button>
+            </form>
         </div>
-        <script>
-            const editor = new toastui.Editor({
-              el: document.querySelector('#editor'),
-              height: '400px',
-              initialEditType: 'markdown', // or 'wysiwyg'
-              previewStyle: 'vertical',
-              placeholder: 'Write your question with markdown here...',
-              toolbarItems: [
-                ['heading', 'bold', 'italic', 'strike'],
-                ['hr'],
-                ['quote', 'ul', 'ol', 'task'],
-                ['table', 'image', 'link'],
-                ['code', 'codeblock']
-              ]
-            });
-            document.querySelector('form').addEventListener('submit', function(e){
-              document.getElementById('hiddenBody').value = editor.getMarkdown();
-            });
-        </script>
-        <div class="form-group">
-            <label class="form-label">Tags <span class="required">*</span></label>
-            <input type="text" name="tags" class="form-control tags-input" placeholder="Add up to 5 tags (e.g. java spring thymeleaf)">
-        </div>
-        <div class="form-group">
-            <label class="form-label">Select where your question should be posted:</label>
-            <div class="radio-group">
-                <input type="radio" id="private" name="post_option" th:value="private" checked>
-                <label for="private">Get private feedback in Staging Ground</label>
-                <input type="radio" id="public" name="post_option" th:value="public">
-                <label for="public">Post question on Stack Overflow now</label>
+
+        <div class="sidebar">
+            <div class="help-box">
+                <h3>Step 1: Draft your question</h3>
+                <p style="font-size: 13px; margin-bottom: 8px;">The community is here to help you with specific problems.</p>
+                <ol>
+                    <li>Summarize the problem</li>
+                    <li>Describe what you've tried</li>
+                    <li>Show some code</li>
+                </ol>
             </div>
-        </div>
-        <div style="margin-top:22px;">
-            <button type="submit" class="btn-primary">Review your question</button>
-            <button type="reset" class="btn-secondary">Discard draft</button>
-        </div>
-    </form>
-    <div class="section">
-        <strong>Step 1: Draft your question</strong>
-        <ol class="step-list">
-            <li>Summarize the problem</li>
-            <li>Describe what you’ve tried</li>
-            <li>Show some code</li>
-        </ol>
-        <div class="help-links">
-            Helpful links:<br>
-            <a href="#">How to ask a good question?</a> |
-            <a href="#">Help Center</a>
         </div>
     </div>
 </div>
+
+<!-- Include footer fragment -->
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
-    function insertMarkdown(text) {
-        var textarea = document.getElementById('body');
-        var start = textarea.selectionStart;
-        var end = textarea.selectionEnd;
-        var content = textarea.value;
-        textarea.value = content.substring(0, start) + text + content.substring(end);
-        textarea.focus();
-        textarea.selectionEnd = start + text.length;
-    }
+    const editor = new toastui.Editor({
+      el: document.querySelector('#editor'),
+      height: '400px',
+      initialEditType: 'markdown',
+      previewStyle: 'vertical',
+      placeholder: 'Write your question with markdown here...',
+      toolbarItems: [
+        ['heading', 'bold', 'italic', 'strike'],
+        ['hr'],
+        ['quote', 'ul', 'ol', 'task'],
+        ['table', 'image', 'link'],
+        ['code', 'codeblock']
+      ]
+    });
+
+    document.querySelector('form').addEventListener('submit', function(e){
+      document.getElementById('hiddenBody').value = editor.getMarkdown();
+    });
 </script>
 </body>
 </html>
