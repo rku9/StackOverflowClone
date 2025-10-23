@@ -28,6 +28,7 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
+<<<<<<< Updated upstream
 //    @GetMapping
 //    public String questions(Model model){
 //
@@ -35,6 +36,30 @@ public class QuestionController {
 //       model.addAttribute("questionResponseDtoList", questionResponseDtoList);
 //       return "questions";
 //    }
+=======
+    @GetMapping
+    public String getAllQuestions(Model model){
+
+       List<Question> questionResponseList =  questionService.getAllQuestions();
+       List<QuestionResponseDto> questionResponseDtoList = questionResponseList.stream()
+               .map(question -> new QuestionResponseDto(
+                       question.getId(),
+                       question.getAuthor().getUsername(),
+                       question.getTitle(),
+                       question.getBody(),
+                       question.getCreatedAt(),
+                       question.getUpdatedAt(),
+                       question.getViewCount(),
+                       question.getScore(),
+                       question.getTags().stream()
+                               .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
+                               .collect(Collectors.toList())
+               ))
+               .collect(Collectors.toList());
+       model.addAttribute("questionResponseDtoList", questionResponseDtoList);
+       return "questions";
+    }
+>>>>>>> Stashed changes
 
     @GetMapping("/new")
     public String showQuestionForm(Model model){
@@ -65,9 +90,6 @@ public class QuestionController {
     public String getQuestion(@PathVariable Long id, Model model){
         Question question = questionService.findById(id).get();
 
-        String tagString = question.getTags().stream().map(Tag::getName)
-                        .collect(Collectors.joining(", "));
-
         List<Tag> tags = question.getTags();
         List<TagResponseDto> tagResponseDtoList = tags.stream()
                 .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
@@ -88,7 +110,7 @@ public class QuestionController {
         Parser parser = Parser.builder().build();
         HtmlRenderer renderer = HtmlRenderer.builder().build();
 
-        String markdown = questionResponseDto.body(); // your saved markdown string
+        String markdown = questionResponseDto.body();
         String html = renderer.render(parser.parse(markdown));
         model.addAttribute("questionHtml", html);
         // Load answers also if needed

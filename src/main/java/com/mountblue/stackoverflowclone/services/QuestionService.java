@@ -1,6 +1,8 @@
 package com.mountblue.stackoverflowclone.services;
 
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
+import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
+import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
 import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
@@ -13,11 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,7 +85,7 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-//    public Page<Question> getAllQuestions(@PageableDefault(size = 10) Pageable pageable){
-//
-//    }
+    public List<Question> getAllQuestions() {
+        return questionRepository.findAll();
+    }
 }
