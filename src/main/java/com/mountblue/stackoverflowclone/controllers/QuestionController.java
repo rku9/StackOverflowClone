@@ -28,38 +28,38 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-<<<<<<< Updated upstream
-//    @GetMapping
-//    public String questions(Model model){
-//
-//       List<QuestionResponseDto> questionResponseDtoList =  questionService.getAllQuestions();
-//       model.addAttribute("questionResponseDtoList", questionResponseDtoList);
-//       return "questions";
-//    }
-=======
     @GetMapping
     public String getAllQuestions(Model model){
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
 
-       List<Question> questionResponseList =  questionService.getAllQuestions();
-       List<QuestionResponseDto> questionResponseDtoList = questionResponseList.stream()
-               .map(question -> new QuestionResponseDto(
-                       question.getId(),
-                       question.getAuthor().getUsername(),
-                       question.getTitle(),
-                       question.getBody(),
-                       question.getCreatedAt(),
-                       question.getUpdatedAt(),
-                       question.getViewCount(),
-                       question.getScore(),
-                       question.getTags().stream()
-                               .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
-                               .collect(Collectors.toList())
-               ))
-               .collect(Collectors.toList());
+        List<Question> questionResponseList =  questionService.getAllQuestions();
+        List<QuestionResponseDto> questionResponseDtoList = questionResponseList.stream()
+                .map(question -> {
+                    // Parse markdown body to HTML
+                    String markdown = question.getBody();
+                    String html = renderer.render(parser.parse(markdown));
+
+                    String truncatedHtml = truncateHtml(html, 150);
+
+                    return new QuestionResponseDto(
+                            question.getId(),
+                            question.getAuthor().getUsername(),
+                            question.getTitle(),
+                            truncatedHtml,  // Use parsed HTML instead of raw markdown
+                            question.getCreatedAt(),
+                            question.getUpdatedAt(),
+                            question.getViewCount(),
+                            question.getScore(),
+                            question.getTags().stream()
+                                    .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
+                                    .collect(Collectors.toList())
+                    );
+                })
+                .collect(Collectors.toList());
        model.addAttribute("questionResponseDtoList", questionResponseDtoList);
        return "questions";
     }
->>>>>>> Stashed changes
 
     @GetMapping("/new")
     public String showQuestionForm(Model model){
@@ -141,5 +141,20 @@ public class QuestionController {
         Question question = questionService.findById(id).get();
         questionService.voteQuestion(question, choice);
         return "redirect:/questions/" + question.getId();
+    }
+
+    private String truncateHtml(String html, int maxLength) {
+        // Replace img tags with dots
+        String htmlWithDots = html.replaceAll("<img[^>]*>", "••• ");
+
+        // Remove all HTML tags for plain text
+        String plainText = htmlWithDots.replaceAll("<[^>]+>", "");
+
+        if (plainText.length() <= maxLength) {
+            return "<p>" + plainText + "</p>";
+        }
+
+        String truncated = plainText.substring(0, maxLength).trim() + "...";
+        return "<p>" + truncated + "</p>";
     }
 }
