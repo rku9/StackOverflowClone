@@ -4,23 +4,23 @@ import com.mountblue.stackoverflowclone.dtos.AnswerFormDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
 import com.mountblue.stackoverflowclone.models.Answer;
 import com.mountblue.stackoverflowclone.models.Question;
+import com.mountblue.stackoverflowclone.repositories.AnswerRepository;
 import com.mountblue.stackoverflowclone.services.AnswerService;
 import com.mountblue.stackoverflowclone.services.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/answers")
 public class AnswerController {
     private final AnswerService answerService;
+    private final AnswerRepository answerRepository;
 
-    public AnswerController(AnswerService answerService){
+    public AnswerController(AnswerService answerService, AnswerRepository answerRepository){
         this.answerService = answerService;
+        this.answerRepository = answerRepository;
     }
 
     @PostMapping("/new")
@@ -31,6 +31,12 @@ public class AnswerController {
         }
         Answer savedQuestion = answerService.saveAnswer(answerFormDto, questionId);
 
+        return "redirect:/questions/" + questionId;
+    }
+    @PostMapping("/vote/{id}")
+    public String voteAnswer(@PathVariable Long id, @RequestParam("choice") String choice, @RequestParam("questionId") Long questionId, Model model){
+        Answer answer = answerRepository.findById(id).get();
+        answerService.voteAnswer(answer, choice);
         return "redirect:/questions/" + questionId;
     }
 }
