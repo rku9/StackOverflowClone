@@ -10,6 +10,7 @@ import com.mountblue.stackoverflowclone.repositories.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -46,5 +47,9 @@ public class AnswerService {
         answer.setAccepted(false);
 
         return answerRepository.save(answer);
+    }
+
+    public List<Answer> getAnswers(Long questionId) {
+        return answerRepository.getAnswersByQuestionId(questionId);
     }
 }

@@ -11,4 +11,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     Optional<Answer> findById(Long answerId);
 
     List<Answer> getAllByQuestionId(Long questionId);
+
+    List<Answer> getAnswersByQuestionId(Long questionId);
+
 }
