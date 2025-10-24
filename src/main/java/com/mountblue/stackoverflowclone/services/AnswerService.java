@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class AnswerService {
@@ -57,5 +58,34 @@ public class AnswerService {
     public void voteAnswer(Long answerId, String choice){
         Answer answer = answerRepository.findById(answerId).get();
         answer.setScore(choice.equals("upvote") ? answer.getScore() + 1 : answer.getScore() - 1);
+    }
+
+    @Transactional
+    public Answer editAnswer(AnswerFormDto answerFormDto, Long answerId, Long questionId) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new NoSuchElementException("Answer not found"));
+
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new NoSuchElementException("Question not found"));
+
+        if (!answer.getQuestion().getId().equals(questionId)) {
+            throw new IllegalArgumentException("Answer does not belong to the specified question");
+        }
+
+        if (answerFormDto.body() == null || answerFormDto.body().trim().isEmpty()) {
+            throw new IllegalArgumentException("Answer body cannot be empty");
+        }
+
+        answer.setBody(answerFormDto.body().trim());
+
+        return answerRepository.save(answer);
+    }
+
+    public void deleteAnswer(Long answerId) {
+        answerRepository.deleteById(answerId);
+    }
+
+    public Optional<Answer> findById(Long answerId) {
+        return answerRepository.findById(answerId);
     }
 }
