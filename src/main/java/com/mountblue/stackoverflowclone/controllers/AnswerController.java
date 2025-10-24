@@ -71,6 +71,5 @@ public class AnswerController {
                                @RequestParam("questionId") Long questionId) {
             answerService.deleteAnswer(answerId);
             return "redirect:/questions/" + questionId;
-        }
     }
 }
