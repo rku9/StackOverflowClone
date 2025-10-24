@@ -187,6 +187,24 @@
             white-space: pre;
         }
 
+        /* Restore list bullets and indentation in rendered content */
+        .question-body ul,
+        .answer-body ul {
+            list-style: disc;
+            margin-left: 1.25rem;
+            padding-left: 1.25rem;
+        }
+        .question-body ol,
+        .answer-body ol {
+            list-style: decimal;
+            margin-left: 1.25rem;
+            padding-left: 1.25rem;
+        }
+        .question-body li,
+        .answer-body li {
+            margin: 6px 0;
+        }
+
         .tag-list {
             display: flex;
             flex-wrap: wrap;
