@@ -21,13 +21,11 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionService {
 
-    /*
-    temp
-     */
-    UserRepository userRepository;
+    //temp userRepo
+    private final UserRepository userRepository;
+    private final QuestionRepository questionRepository;
+    private final TagRepository tagRepository;
 
-    QuestionRepository questionRepository;
-    TagRepository tagRepository;
     public QuestionService(QuestionRepository questionRepository,
                            UserRepository userRepository,
                            TagRepository tagRepository) {
