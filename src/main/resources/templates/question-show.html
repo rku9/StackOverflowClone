@@ -410,11 +410,16 @@
             </div>
 
             <div class="post-actions">
+                <button type="button" class="btn btn-outline">Follow</button>
                 <button type="button" class="btn btn-outline">Share</button>
                 <form th:action="@{/questions/edit/{id}(id=${question.id})}" method="get" style="display:inline">
                     <button type="submit" class="btn btn-outline">Edit</button>
                 </form>
-                <button type="button" class="btn btn-outline">Follow</button>
+                <form th:action="@{/questions/{id}(id=${question.id})}" method="post"
+                      style="display:inline">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-outline">Delete</button>
+                </form>
             </div>
 
             <!-- Answers will be listed here -->
