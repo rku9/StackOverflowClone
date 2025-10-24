@@ -95,8 +95,7 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public String getQuestion(@PathVariable Long id,
-                              Model model){
+    public String getQuestion(@PathVariable Long id, Model model){
         Question question = questionService.findById(id).get();
 
         List<Tag> tags = question.getTags();
@@ -116,21 +115,18 @@ public class QuestionController {
                 );
         model.addAttribute("question", questionResponseDto);
         List<Answer> answers = answerService.getAnswers(question.getId());
-        Parser parser = Parser.builder().build();
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        List<AnswerResponseDto> answerResponseDtos = answers.stream().map(answer -> {
-            String markdownBody = answer.getBody() != null ? answer.getBody() : "";
-            String htmlBody = renderer.render(parser.parse(markdownBody));
-            return new AnswerResponseDto(
+        List<AnswerResponseDto> answerResponseDtos = answers.stream().map(answer ->
+            new AnswerResponseDto(
                     answer.getQuestion().getId(),
                     answer.getId(),
-                    markdownBody,
-                    htmlBody,
+                    answer.getBody(),
                     answer.getAuthor() != null ? answer.getAuthor().getUsername() : "Unknown",
                     answer.getCreatedAt(),
                     answer.getUpdatedAt(),
-                    answer.getScore());
-        }).toList();
+                    answer.getScore())
+        ).toList();
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
 
         String markdown = questionResponseDto.body();
         String html = renderer.render(parser.parse(markdown));
