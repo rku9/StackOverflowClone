@@ -1,16 +1,14 @@
 package com.mountblue.stackoverflowclone.controllers;
 
-import com.mountblue.stackoverflowclone.dtos.QuestionFilterRequestDto;
+import com.mountblue.stackoverflowclone.dtos.AnswerResponseDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
 import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
+import com.mountblue.stackoverflowclone.models.Answer;
 import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.Tag;
+import com.mountblue.stackoverflowclone.services.AnswerService;
 import com.mountblue.stackoverflowclone.services.QuestionService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,9 +26,11 @@ import java.util.stream.Collectors;
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final AnswerService answerService;
 
-    public QuestionController(QuestionService questionService){
+    public QuestionController(QuestionService questionService, AnswerService answerService) {
         this.questionService = questionService;
+        this.answerService = answerService;
     }
 
     @GetMapping
@@ -84,6 +84,7 @@ public class QuestionController {
         return "redirect:/questions/" + savedQuestion.getId();
     }
 
+
     @DeleteMapping("/{id}")
     public String deleteQuestion(@PathVariable Long id) {
         questionService.deleteQuestion(id);
@@ -110,13 +111,24 @@ public class QuestionController {
                 tagResponseDtoList
                 );
         model.addAttribute("question", questionResponseDto);
-
+        List<Answer> answers = answerService.getAnswers(question.getId());
+        List<AnswerResponseDto> answerResponseDtos = answers.stream().map(answer ->
+            new AnswerResponseDto(
+                    answer.getQuestion().getId(),
+                    answer.getId(),
+                    answer.getBody(),
+                    answer.getAuthor() != null ? answer.getAuthor().getUsername() : "Unknown",
+                    answer.getCreatedAt(),
+                    answer.getUpdatedAt(),
+                    answer.getScore())
+        ).toList();
         Parser parser = Parser.builder().build();
         HtmlRenderer renderer = HtmlRenderer.builder().build();
 
         String markdown = questionResponseDto.body();
         String html = renderer.render(parser.parse(markdown));
         model.addAttribute("questionHtml", html);
+        model.addAttribute("answers", answerResponseDtos);
         // Load answers also if needed
         return "question-show";
     }
@@ -160,30 +172,5 @@ public class QuestionController {
 
         String truncated = plainText.substring(0, maxLength).trim() + "...";
         return "<p>" + truncated + "</p>";
-    }
-    @GetMapping("/search")
-    public String searchAll(
-            @RequestParam(value = "q", required = false, defaultValue = "") String query,
-            @PageableDefault(size = 15) Pageable pageable,
-            Model model) {
-
-        Page<QuestionResponseDto> searchResults = questionService.search(query, pageable);
-
-        model.addAttribute("query", query);
-        model.addAttribute("questions", searchResults.getContent());
-        model.addAttribute("currentPage", searchResults.getNumber());
-        model.addAttribute("totalPages", searchResults.getTotalPages());
-        model.addAttribute("hasNext", searchResults.hasNext());
-        model.addAttribute("hasPrevious", searchResults.hasPrevious());
-
-        return "search-results";
-    }
-
-    @PostMapping("/filter")
-    public ResponseEntity<List<QuestionResponseDto>> filterQuestions(
-            @RequestBody QuestionFilterRequestDto filterRequest) {
-
-        List<QuestionResponseDto> response = questionService.filterQuestions(filterRequest);
-        return ResponseEntity.ok(response);
     }
 }

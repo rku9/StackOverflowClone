@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public record AnswerResponseDto(Long questionId,
                                 Long answerId,
                                 String body,
+                                String authorName,
                                 LocalDateTime createdAt,
                                 LocalDateTime updatedAt,
                                 int score) {
