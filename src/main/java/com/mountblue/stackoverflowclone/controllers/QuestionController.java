@@ -63,7 +63,7 @@ public class QuestionController {
 
     @GetMapping("/new")
     public String showQuestionForm(Model model){
-        model.addAttribute("questionForm", new QuestionFormDto(0L, "", "", "", 0L));
+        model.addAttribute("questionForm", new QuestionFormDto(null, "", "", "", 0L));
         return "question-form";
     }
 
@@ -74,7 +74,7 @@ public class QuestionController {
             return "question-form";
         }
         System.out.println(questionFormDto);
-        Question savedQuestion = questionService.saveQuestion(questionFormDto);
+        Question savedQuestion = questionService.createQuestion(questionFormDto);
 
         return "redirect:/questions/" + savedQuestion.getId();
     }
@@ -124,7 +124,7 @@ public class QuestionController {
         String tagString = question.getTags().stream().map(Tag::getName)
                 .collect(Collectors.joining(", "));
         QuestionFormDto questionFormDto = new QuestionFormDto(id, question.getTitle(), question.getBody(), tagString, question.getAuthor().getId());
-        model.addAttribute("question", questionFormDto);
+        model.addAttribute("questionForm", questionFormDto);
         // Load answers also if needed
         return "question-form";
     }
@@ -132,8 +132,8 @@ public class QuestionController {
     @PatchMapping("/{id}")
     public String editQuestionDetails(@PathVariable Long id, @ModelAttribute("questionForm") QuestionFormDto questionForm,
                                       BindingResult result, Model model){
-        questionService.saveQuestion(questionForm);
-        return "redirect:/questions/" + questionForm.id();
+        Question updated = questionService.updateQuestion(id, questionForm);
+        return "redirect:/questions/" + updated.getId();
     }
 
     @PostMapping("/vote/{id}")

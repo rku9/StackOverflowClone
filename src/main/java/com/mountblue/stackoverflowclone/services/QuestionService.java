@@ -37,17 +37,27 @@ public class QuestionService {
     }
 
     @Transactional
-    public Question saveQuestion(QuestionFormDto questionFormDto) {
+    public Question createQuestion(QuestionFormDto questionFormDto) {
         Question question = new Question();
         question.setTitle(questionFormDto.title());
         question.setBody(questionFormDto.body());
-        // extract or create tags and associate with question
-        List<Tag> tags = extractTags(questionFormDto.tags());
-        question.setTags(tags);
-        question.setAuthor(userRepository.findById(1L)
+        question.setTags(extractTags(questionFormDto.tags()));
+        Long authorId = questionFormDto.authorId() != null && questionFormDto.authorId() > 0
+                ? questionFormDto.authorId()
+                : 1L;
+        question.setAuthor(userRepository.findById(authorId)
                 .orElseThrow(() -> new NoSuchElementException("Author not found")));
-        // persist question with tags
         return questionRepository.save(question);
+    }
+
+    @Transactional
+    public Question updateQuestion(Long id, QuestionFormDto questionFormDto) {
+        Question existing = questionRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Question not found"));
+        existing.setTitle(questionFormDto.title());
+        existing.setBody(questionFormDto.body());
+        existing.setTags(extractTags(questionFormDto.tags()));
+        return questionRepository.save(existing);
     }
 
     public Optional<Question> findById(Long id) {
