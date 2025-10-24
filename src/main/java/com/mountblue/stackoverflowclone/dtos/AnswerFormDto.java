@@ -1,5 +1,7 @@
 package com.mountblue.stackoverflowclone.dtos;
 
-public class AnswerFormDto {
-
-}
+    public record AnswerFormDto(
+            Long id,
+            String body
+    ) {
+    }
