@@ -52,4 +52,9 @@ public class AnswerService {
     public List<Answer> getAnswers(Long questionId) {
         return answerRepository.getAnswersByQuestionId(questionId);
     }
+
+    public void voteAnswer(Long answerId, String choice){
+        Answer answer = answerRepository.findById(answerId).get();
+        answer.setScore(choice.equals("upvote") ? answer.getScore() + 1 : answer.getScore() - 1);
+    }
 }

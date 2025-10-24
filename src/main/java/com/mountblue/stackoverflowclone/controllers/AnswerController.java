@@ -34,9 +34,9 @@ public class AnswerController {
         return "redirect:/questions/" + questionId;
     }
     @PostMapping("/vote/{id}")
-    public String voteAnswer(@PathVariable Long id, @RequestParam("choice") String choice, @RequestParam("questionId") Long questionId, Model model){
-        Answer answer = answerRepository.findById(id).get();
-        answerService.voteAnswer(answer, choice);
+    public String voteAnswer(@PathVariable Long id, @RequestParam("choice") String choice, @RequestParam(
+            "questionId") Long questionId, Model model){
+        answerService.voteAnswer(id, choice);
         return "redirect:/questions/" + questionId;
     }
 }
