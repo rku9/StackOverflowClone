@@ -10,7 +10,13 @@
 <div th:replace="~{fragments/layout :: sidebar}"></div>
 <div class="page-wrapper">
     <main>
-        <h2>Newest Questions</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Questions</h2>
+            <a th:href="@{/questions/new}"
+               style="background: #0a95ff; color: white; text-decoration: none; padding: 10px 16px; border-radius: 4px; font-size: 14px;">
+                Ask Question
+            </a>
+        </div>
         <div class="questions-list" style="display: flex; flex-direction: column; gap: 16px;">
             <div th:each="question : ${questionResponseDtoList}" class="question-summary"
                  style="background: #fff; border-radius: 4px; padding: 20px; display: flex; gap: 16px;">

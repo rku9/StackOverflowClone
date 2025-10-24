@@ -33,7 +33,7 @@ public class ImageUploadService {
             throw new IllegalArgumentException("File must be an image");
         }
 
-        Map uploadResult = cloudinary.uploader().upload(
+        Map<String, Object> uploadResult = cloudinary.uploader().upload(
                 image.getBytes(),
                 ObjectUtils.asMap(
                         "folder", "stackoverflow-clone",
