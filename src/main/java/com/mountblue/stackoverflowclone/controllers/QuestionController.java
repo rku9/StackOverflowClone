@@ -93,7 +93,6 @@ public class QuestionController {
 
     @GetMapping("/{id}")
     public String getQuestion(@PathVariable Long id,
-                              @RequestParam(value = "anchor", required = false) String anchor,
                               Model model){
         Question question = questionService.findById(id).get();
 
@@ -133,7 +132,6 @@ public class QuestionController {
         String markdown = questionResponseDto.body();
         String html = renderer.render(parser.parse(markdown));
         model.addAttribute("questionHtml", html);
-        model.addAttribute("scrollAnchor", anchor);
         model.addAttribute("answers", answerResponseDtos);
         // Load answers also if needed
         return "question-show";
@@ -162,7 +160,7 @@ public class QuestionController {
     public String voteQuestion(@PathVariable Long id, @RequestParam("choice") String choice, Model model){
         Question question = questionService.findById(id).get();
         questionService.voteQuestion(question, choice);
-        return "redirect:/questions/" + question.getId() + "?anchor=question-section";
+        return "redirect:/questions/" + question.getId();
     }
 
     private String truncateHtml(String html, int maxLength) {

@@ -366,7 +366,7 @@
     </style>
 </head>
 
-<body th:attr="data-scroll-anchor=${scrollAnchor}">
+<body>
 <!-- Include navbar fragment from layout -->
 <div th:replace="fragments/layout :: navbar"></div>
 <!-- Include left sidebar fragment from layout -->
@@ -609,19 +609,6 @@
     // Edit Answer Editor functionality
         let editAnswerEditor = null;
         let currentEditingAnswerId = null;
-
-        function ensureQuestionAnchor() {
-          const anchor = document.body.getAttribute('data-scroll-anchor');
-          if (!anchor) {
-            return;
-          }
-          const target = document.getElementById(anchor);
-          if (target) {
-            target.scrollIntoView({ behavior: 'auto', block: 'start' });
-          }
-        }
-
-        window.addEventListener('load', ensureQuestionAnchor);
 
         function initEditAnswerEditor(answerId, currentContent) {
         if (editAnswerEditor) {
