@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <title th:text="${question.title}">Question Details</title>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-dark.min.css">
 
     <!-- Include layout styles first -->
     <th:block th:replace="fragments/layout :: styles"></th:block>
@@ -18,17 +18,20 @@
         }
 
         .question-container {
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 300px;
+            grid-template-areas: "main side";
             gap: 24px;
-            max-width: 1000px;
             width: 100%;
-            margin-left: 50px;
+            margin: 0;
+            align-items: start;
         }
 
         .question-main {
             flex: 1;
             min-width: 0; /* CRITICAL FIX: Allow flex item to shrink */
             word-wrap: break-word;
+            grid-area: main;
         }
 
         .question-title {
@@ -145,34 +148,41 @@
             box-sizing: border-box;
         }
 
-        /* CODE BLOCK FIX - Preserve line breaks */
+        /* CODE BLOCKS — clearer, larger, exact whitespace */
         .question-body pre,
         .answer-body pre {
-            background: #f6f6f6;
-            border: 1px solid #e1e4e8;
-            border-radius: 4px;
-            padding: 12px;
-            overflow-x: auto;
-            white-space: pre;
-            line-height: 1.45;
-            font-size: 13px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px;
+            padding: 16px 18px;
+            margin: 12px 0;
+            overflow: auto;
+            white-space: pre; /* preserve exact spaces & newlines */
+            line-height: 1.55;
+            font-size: 14px;
+            tab-size: 4;
             max-width: 100%;
             box-sizing: border-box;
+            font-family: "Fira Code", "Source Code Pro", Consolas, monospace;
         }
 
+        /* Inline code (not inside pre) */
         .question-body code,
         .answer-body code {
-            font-family: 'Courier New', Consolas, monospace;
+            font-family: "Fira Code", "Source Code Pro", Consolas, monospace;
             white-space: pre-wrap;
-            background: #f6f6f6;
+            background: #f3f4f6;
             padding: 1px 4px;
             border-radius: 3px;
-            font-size: 12px;
+            font-size: 12.5px;
+            color: #2f3337;
         }
 
         .question-body pre code,
         .answer-body pre code {
             background: transparent;
+            color: inherit;
             padding: 0;
             white-space: pre;
         }
@@ -222,6 +232,7 @@
             height: fit-content;
             max-height: calc(100vh - var(--navbar-height) - 40px);
             overflow-y: auto;
+            grid-area: side;
         }
 
         .card {
@@ -278,56 +289,27 @@
         .submit-button:hover {
             background: #0074cc;
         }
-        pre code.hljs, code.hljs {
-          background: #000;       /* black */
-          color: #eee;            /* light text */
+        /* Let pre control colors; keep HLJS transparent inside blocks */
+        pre code.hljs,
+        .question-body code.hljs,
+        .answer-body code.hljs {
+          background: transparent;
+          color: inherit;
         }
 
         /* RESPONSIVE BREAKPOINTS */
         @media (max-width: 1200px) {
-            .question-container {
-                gap: 16px;
-            }
-            .sidebar {
-                width: 250px;
-                flex: 0 0 250px;
-            }
+            .question-container { gap: 16px; grid-template-columns: minmax(0,1fr) 260px; }
+            .sidebar { width: 260px; flex: 0 0 260px; }
         }
 
         @media (max-width: 980px) {
-            .question-body-container {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .vote-col {
-                flex-direction: row;
-                width: 100%;
-                justify-content: center;
-                gap: 16px;
-                padding: 8px 0;
-            }
-
-            .question-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .sidebar {
-                width: 100%;
-                flex: none;
-                position: static;
-                top: auto;
-                max-height: none;
-            }
-
-            .question-title {
-                font-size: 24px;
-            }
-
-            .question-meta {
-                gap: 12px;
-            }
+            .question-body-container { flex-direction: column; gap: 12px; }
+            .vote-col { flex-direction: row; width: auto; justify-content: flex-start; gap: 8px; padding: 0; }
+            .question-container { grid-template-columns: 1fr; grid-template-areas: "main" "side"; gap: 20px; }
+            .sidebar { width: auto; flex: none; position: static; top: auto; max-height: none; overflow: visible; }
+            .question-title { font-size: 24px; }
+            .question-meta { gap: 12px; }
         }
 
         @media (max-width: 640px) {
@@ -507,14 +489,7 @@
         }
     });
 
-    // Get the form element
-    const form = document.querySelector('form');
-
-    form.addEventListener('submit', function(e) {
-        // Get HTML content from editor and set it to hidden field
-        const htmlContent = editor.getHTML();
-        document.getElementById('newAnswerContent').value = htmlContent;
-    });
+    // Note: answer form uses onsubmit=prepareNewAnswerContent() below
 
     function prepareNewAnswerContent(){
         document.getElementById('newAnswerContent').value = newAnswerEditor.getMarkdown();
