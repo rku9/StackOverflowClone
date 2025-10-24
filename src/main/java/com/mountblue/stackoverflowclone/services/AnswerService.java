@@ -53,6 +53,7 @@ public class AnswerService {
         return answerRepository.getAnswersByQuestionId(questionId);
     }
 
+    @Transactional
     public void voteAnswer(Long answerId, String choice){
         Answer answer = answerRepository.findById(answerId).get();
         answer.setScore(choice.equals("upvote") ? answer.getScore() + 1 : answer.getScore() - 1);
