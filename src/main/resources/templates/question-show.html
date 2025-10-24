@@ -282,9 +282,12 @@
 
         /* Form styling */
         .answer-form {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e3e6e8;
+          margin-top: 30px;
+          padding-top: 20px;
+          border-top: 1px solid #e3e6e8;
+          width: 100%;
+          grid-column: 1; /* Force it to stay in first column */
+          max-width: 100%;
         }
 
         .answer-form h3 {
@@ -447,11 +450,11 @@
 
                         <div th:each="answer : ${answers}" class="answer" style="border-top: 1px solid #e3e6e8; padding: 20px 0;">
                             <!-- Display Mode -->
-                            <div th:id="'answer-display-' + ${answer.id}" class="answer-content">
+                            <div th:id="'answer-display-' + ${answer.answerId}" class="answer-content">
                                 <div style="display: flex; gap: 20px;">
                                     <!-- Votes -->
                                     <div class="answer-votes" style="display: flex; flex-direction: column; align-items: center;">
-                                        <form th:action="@{/answers/vote/{id}(id=${answer.id})}" method="post">
+                                        <form th:action="@{/answers/vote/{id}(id=${answer.answerId})}" method="post">
                                             <input type="hidden" name="choice" value="upvote" />
                                             <button type="submit" class="vote-button" title="This answer is useful">
                                                 <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18"><path d="M1 12h16L9 4 1 12Z"/></svg>
@@ -460,7 +463,7 @@
 
                                         <div class="vote-count" th:text="${answer.score}" style="font-size: 20px; font-weight: 500;">0</div>
 
-                                        <form th:action="@{/answers/vote/{id}(id=${answer.id})}" method="post">
+                                        <form th:action="@{/answers/vote/{id}(id=${answer.answerId})}" method="post">
                                             <input type="hidden" name="choice" value="downvote" />
                                             <button type="submit" class="vote-button" title="This answer is not useful">
                                                 <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18"><path d="M1 6h16L9 14 1 6Z"/></svg>
@@ -470,76 +473,74 @@
 
                                     <!-- Body -->
                                     <div class="answer-body" style="flex: 1;">
-                                        <article th:utext="${answer.content}"></article>
+                                        <article th:utext="${answer.body}"></article>
 
                                         <!-- Hidden original content for edit -->
-                                        <input type="hidden" th:id="'answer-markdown-' + ${answer.id}" th:value="${answer.content}" />
+                                        <input type="hidden" th:id="'answer-markdown-' + ${answer.answerId}" th:value="${answer.body}" />
 
                                         <div class="answer-meta" style="margin-top: 15px; color: #6a737c; font-size: 13px;">
                                             <span>answered </span>
                                             <span th:text="${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
                                             <span> by </span>
-                                            <a th:href="@{/users/{id}(id=${answer.user.id})}" th:text="${answer.user.username}">username</a>
+<!--                                            <a th:href="@{/users/{id}(id=${answer.user.id})}" th:text="${answer.user.username}">username</a>-->
                                         </div>
 
                                         <!-- Actions -->
-                                        <div class="answer-actions" style="margin-top: 10px;">
-                                            <button type="button"
-                                                    class="btn btn-outline"
-                                                    th:onclick="'showEditForm(' + ${answer.id} + ')'"
-                                                    th:if="${#authentication.name == answer.user.username}"
-                                                    style="font-size: 13px; padding: 5px 10px;">
-                                                Edit
-                                            </button>
+<!--                                        <div class="answer-actions" style="margin-top: 10px;">-->
+<!--                                            <button type="button"-->
+<!--                                                    class="btn btn-outline"-->
+<!--                                                    th:onclick="'showEditForm(' + ${answer.answerId} + ')'"-->
+<!--                                                    th:if="${#authentication.name == answer.user.username}"-->
+<!--                                                    style="font-size: 13px; padding: 5px 10px;">-->
+<!--                                                Edit-->
+<!--                                            </button>-->
 
-                                            <form th:action="@{/answers/{id}(id=${answer.id})}" method="post"
-                                                  th:if="${#authentication.name == answer.user.username}"
-                                                  style="display:inline; margin-left: 5px;">
-                                                <input type="hidden" name="_method" value="delete" />
-                                                <button type="submit" class="btn btn-outline"
-                                                        style="font-size: 13px; padding: 5px 10px;"
-                                                        onclick="return confirm('Are you sure you want to delete this answer?');">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </div>
+<!--                                            <form th:action="@{/answers/{id}(id=${answer.answerId})}" method="post"-->
+<!--                                                  th:if="${#authentication.name == answer.user.username}"-->
+<!--                                                  style="display:inline; margin-left: 5px;">-->
+<!--                                                <input type="hidden" name="_method" value="delete" />-->
+<!--                                                <button type="submit" class="btn btn-outline"-->
+<!--                                                        style="font-size: 13px; padding: 5px 10px;"-->
+<!--                                                        onclick="return confirm('Are you sure you want to delete this answer?');">-->
+<!--                                                    Delete-->
+<!--                                                </button>-->
+<!--                                            </form>-->
+<!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Edit Mode (hidden initially) -->
-                            <div th:id="'answer-edit-form-' + ${answer.id}" style="display:none;">
-                                <form th:action="@{/answers/edit/{id}(id=${answer.id})}" method="post"
-                                      th:onsubmit="'return prepareEditAnswerContent(' + ${answer.id} + ')'">
-                                    <div th:id="'edit-answer-editor-' + ${answer.id}"></div>
-                                    <input type="hidden" th:id="'editAnswerContent-' + ${answer.id}" name="content" />
-                                    <div class="form-actions" style="margin-top: 10px;">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        <button type="button" class="btn btn-outline" th:onclick="'cancelEdit(' + ${answer.id} + ')'"
-                                                style="margin-left: 10px;">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+<!--                            <div th:id="'answer-edit-form-' + ${answer.answerId}" style="display:none;">-->
+<!--                                <form th:action="@{/answers/edit/{id}(id=${answer.answerId})}" method="post"-->
+<!--                                      th:onsubmit="'return prepareEditAnswerContent(' + ${answer.answerId} + ')'">-->
+<!--                                    <div th:id="'edit-answer-editor-' + ${answer.answerId}"></div>-->
+<!--                                    <input type="hidden" th:id="'editAnswerContent-' + ${answer.answerId}" name="content" />-->
+<!--                                    <div class="form-actions" style="margin-top: 10px;">-->
+<!--                                        <button type="submit" class="btn btn-primary">Save Changes</button>-->
+<!--                                        <button type="button" class="btn btn-outline" th:onclick="'cancelEdit(' + ${answer.answerId} + ')'"-->
+<!--                                                style="margin-left: 10px;">-->
+<!--                                            Cancel-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
                     </div>
+                </div>
+                <!-- No answers -->
+                <div th:if="${answers == null or answers.isEmpty()}" style="padding: 20px; text-align: center; color: #6a737c;">
+                    <p>No answers yet. Be the first to answer!</p>
+                </div>
 
-                    <!-- No answers -->
-                    <div th:if="${answers == null or answers.isEmpty()}" style="padding: 20px; text-align: center; color: #6a737c;">
-                        <p>No answers yet. Be the first to answer!</p>
-                    </div>
-
-                    <div class="answer-form">
-                        <h3>Your Answer</h3>
-                        <form id="new-answer-form" th:action="@{/answers/new}" method="post" onsubmit="return prepareNewAnswerContent()">
-                            <input type="hidden" name="questionId" th:value="${question.id}" />
-                            <div id="new-answer-editor"></div>
-                            <input type="hidden" name="content" id="newAnswerContent" />
-                            <button type="submit" class="submit-button">Post Your Answer</button>
-                        </form>
-                    </div>
-
+                <div class="answer-form">
+                    <h3>Your Answer</h3>
+                    <form id="new-answer-form" th:action="@{/answers/new}" method="post" onsubmit="return prepareNewAnswerContent()">
+                        <input type="hidden" name="questionId" th:value="${question.id}" />
+                        <div id="new-answer-editor"></div>
+                        <input type="hidden" name="body" id="newAnswerContent" />
+                        <button type="submit" class="submit-button">Post Your Answer</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>>
