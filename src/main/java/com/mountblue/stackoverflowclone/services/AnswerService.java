@@ -81,6 +81,12 @@ public class AnswerService {
         return answerRepository.save(answer);
     }
 
+    @Transactional
+    public void editAnswerBody(Long answerId, Long questionId, String body) {
+        AnswerFormDto formDto = new AnswerFormDto(answerId, body);
+        editAnswer(formDto, answerId, questionId);
+    }
+
     public void deleteAnswer(Long answerId) {
         answerRepository.deleteById(answerId);
     }

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -42,27 +43,11 @@ public class AnswerController {
         return "redirect:/questions/" + questionId;
     }
 
-    @GetMapping("/edit/{answerId}")
-    public String showAnswerEditForm(@PathVariable Long answerId,
-                                     @RequestParam("questionId") Long questionId,
-                                     Model model) {
-        Answer answer = answerService.findById(answerId)
-                .orElseThrow(() -> new NoSuchElementException("Answer not found"));
-
-        AnswerFormDto answerFormDto = new AnswerFormDto(answer.getId(), answer.getBody());
-        model.addAttribute("answerForm", answerFormDto);
-        model.addAttribute("questionId", questionId);
-
-        return "answer-form";
-    }
-
     @PatchMapping("/edit/{answerId}")
     public String editAnswerDetails(@PathVariable Long answerId,
                                     @RequestParam("questionId") Long questionId,
-                                    @ModelAttribute("answerForm") AnswerFormDto answerFormDto,
-                                    BindingResult result,
-                                    Model model) {
-        Answer updated = answerService.editAnswer(answerFormDto, answerId, questionId);
+                                    @RequestParam("body") String body) {
+        answerService.editAnswerBody(answerId, questionId, body);
         return "redirect:/questions/" + questionId;
     }
 
