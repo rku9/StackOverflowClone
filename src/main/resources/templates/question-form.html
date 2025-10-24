@@ -140,6 +140,31 @@
         .radio-option ul li {
             margin-bottom: 4px;
         }
+
+        /* Toast UI preview code styling */
+        .toastui-editor-contents pre,
+        .toastui-editor-contents code {
+            font-family: "Fira Code", "Source Code Pro", "Consolas", "Monaco", "Courier New", monospace;
+        }
+
+        .toastui-editor-contents pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 6px;
+            padding: 16px;
+            white-space: pre; /* preserve exact newlines and spaces */
+            tab-size: 4;
+            line-height: 1.45;
+            font-size: 13.5px;
+            overflow: auto;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+        }
+
+        .toastui-editor-contents pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
     </style>
 </head>
 <body>
@@ -151,13 +176,17 @@
 <div class="page-container">
     <div class="container">
         <div class="main-content">
-            <h1>Ask a question</h1>
-            <form th:action="@{/questions/new}" method="post">
+            <h1 th:text="${questionForm != null and questionForm.id != null} ? 'Edit question' : 'Ask a question'">Ask a question</h1>
+            <form method="post"
+                  th:action="${questionForm != null and questionForm.id != null}
+                              ? @{/questions/{id}(id=${questionForm.id})}
+                              : @{/questions/new}">
                 <!-- Your form fields here -->
                 <div class="form-group">
                     <label for="title">Title <span class="required">*</span></label>
                     <span class="label-hint">Be specific and imagine you're asking a question to another person. Min 15 characters.</span>
                     <input type="text" id="title" name="title" required minlength="15"
+                           th:value="${(questionForm != null) ? questionForm.title : ''}"
                            placeholder="e.g. Is there an R function for finding the index of an element in a vector?">
                 </div>
 
@@ -165,13 +194,17 @@
                     <label>Body <span class="required">*</span></label>
                     <span class="label-hint">Include all information someone would need to answer your question.</span>
                     <div id="editor"></div>
+                    <textarea id="existing-body" hidden th:text="${(questionForm != null) ? questionForm.body : ''}"></textarea>
                     <input type="hidden" name="body" id="editorContent">
+                    <input type="hidden" name="bodyHtml" id="editorContentHtml">
+                    <input type="hidden" name="id" th:if="${questionForm != null and questionForm.id != null}" th:value="${questionForm.id}" />
                 </div>
 
                 <div class="form-group">
                     <label for="tags">Tags <span class="required">*</span></label>
                     <span class="label-hint">Add up to 5 tags to describe what your question is about.</span>
-                    <input type="text" id="tags" name="tags" placeholder="e.g. (java spring thymeleaf)">
+                    <input type="text" id="tags" name="tags" placeholder="e.g. (java spring thymeleaf)"
+                           th:value="${(questionForm != null) ? questionForm.tags : ''}">
                 </div>
 
                 <div class="form-group">
@@ -198,7 +231,8 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary">Review your question</button>
+                <input type="hidden" name="_method" value="patch" th:if="${questionForm != null and questionForm.id != null}" />
+                <button type="submit" class="btn-primary" th:text="${questionForm != null and questionForm.id != null} ? 'Save edits' : 'Review your question'">Review your question</button>
                 <button type="reset" class="btn-secondary">Discard draft</button>
             </form>
         </div>
@@ -251,13 +285,25 @@
         }
     });
 
+    // If editing, prefill the editor with existing markdown
+    (function prefillEditor(){
+        const el = document.getElementById('existing-body');
+        if (el) {
+            const content = el.textContent || '';
+            if (content.trim().length) {
+                editor.setMarkdown(content);
+            }
+        }
+    })();
+
     // Get the form element
     const form = document.querySelector('form');
 
     form.addEventListener('submit', function(e) {
-        // Get HTML content from editor and set it to hidden field
-        const htmlContent = editor.getHTML();
-        document.getElementById('editorContent').value = htmlContent;
+        const markdown = editor.getMarkdown();
+        const html = editor.getHTML();
+        document.getElementById('editorContent').value = markdown;
+        document.getElementById('editorContentHtml').value = html;
     });
 </script>
 </body>

@@ -177,6 +177,38 @@
   --navbar-height: 50px; /* measure your actual navbar height and set here */
 }
 
+/* Main container to center everything */
+.container-fluid {
+    max-width: 1264px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Flex layout for proper alignment */
+.d-flex.row {
+    display: flex;
+    justify-content: center;
+}
+
+/* Fixed widths for sidebars */
+.sidebar-left {
+    width: 164px;
+    min-width: 164px;
+    flex-shrink: 0;
+}
+
+.sidebar-right {
+    width: 300px;
+    min-width: 300px;
+    flex-shrink: 0;
+}
+
+/* Center content with proper width */
+.content-center {
+    max-width: 727px;
+    margin: 0 16px;
+}
+
         /* Page wrapper - add padding for fixed navbar */
         .page-wrapper {
     position: relative;
