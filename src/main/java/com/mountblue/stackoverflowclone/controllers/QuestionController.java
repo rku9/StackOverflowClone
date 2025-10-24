@@ -95,6 +95,9 @@ public class QuestionController {
     public String getQuestion(@PathVariable Long id, Model model){
         Question question = questionService.findById(id).get();
 
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+
         List<Tag> tags = question.getTags();
         List<TagResponseDto> tagResponseDtoList = tags.stream()
                 .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
@@ -112,24 +115,26 @@ public class QuestionController {
                 );
         model.addAttribute("question", questionResponseDto);
         List<Answer> answers = answerService.getAnswers(question.getId());
-        List<AnswerResponseDto> answerResponseDtos = answers.stream().map(answer ->
-            new AnswerResponseDto(
-                    answer.getQuestion().getId(),
-                    answer.getId(),
-                    answer.getBody(),
-                    answer.getAuthor() != null ? answer.getAuthor().getUsername() : "Unknown",
-                    answer.getCreatedAt(),
-                    answer.getUpdatedAt(),
-                    answer.getScore())
-        ).toList();
-        Parser parser = Parser.builder().build();
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        List<AnswerResponseDto> answerResponseDtos = answers.stream()
+                .map(answer -> {
+                    String markdownBody = answer.getBody();
+
+                    String htmlBody = renderer.render(parser.parse(markdownBody));
+
+                    return new AnswerResponseDto(
+                            answer.getQuestion().getId(),
+                            answer.getId(),
+                            htmlBody,
+                            answer.getCreatedAt(),
+                            answer.getUpdatedAt(),
+                            answer.getScore()
+                    );
+                }).toList();
 
         String markdown = questionResponseDto.body();
         String html = renderer.render(parser.parse(markdown));
         model.addAttribute("questionHtml", html);
         model.addAttribute("answers", answerResponseDtos);
-        // Load answers also if needed
         return "question-show";
     }
 
