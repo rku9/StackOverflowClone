@@ -16,7 +16,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -93,9 +92,63 @@ public class QuestionService {
                 })
                 .collect(Collectors.toList());
     }
+
     public void voteQuestion(Question question, String choice){
         question.setScore(choice.equals("upvote") ? question.getScore() + 1 : question.getScore() - 1);
         questionRepository.save(question);
+    }
+
+    public Page<Question> getQuestionsByAnswerCount(Pageable pageable, int answerCount) {
+        return questionRepository.findQuestionsByAnswerCount(answerCount, pageable);
+    }
+
+    public Page<Question> getQuestionsByMinScore(Pageable pageable, int minScore) {
+        return questionRepository.findQuestionsByMinScore(minScore, pageable);
+    }
+
+    public Page<Question> searchQuestionsByKeyword(Pageable pageable, String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return questionRepository.findAll(pageable);
+        }
+        return questionRepository.searchQuestionsByKeyword(keyword.trim(), pageable);
+    }
+
+    public Page<Question> searchQuestionsByTags(Pageable pageable, List<String> tags) {
+        if (tags == null || tags.isEmpty()) {
+            return questionRepository.findAll(pageable);
+        }
+
+        List<String> normalizedTags = tags.stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(String::toLowerCase)
+                .distinct()
+                .collect(Collectors.toList());
+
+        if (normalizedTags.isEmpty()) {
+            return questionRepository.findAll(pageable);
+        }
+
+        return questionRepository.findQuestionsByAllTags(normalizedTags, normalizedTags.size(), pageable);
+    }
+
+    public Page<Question> searchQuestionsWithFilters(Pageable pageable,
+                                                     String keyword,
+                                                     Integer minScore,
+                                                     boolean hasNoAnswers,
+                                                     boolean hasNoUpvotedOrAccepted,
+                                                     Integer daysOld) {
+        String sanitizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.trim();
+
+        return questionRepository.searchQuestionsWithFilters(
+                sanitizedKeyword,
+                minScore,
+                hasNoAnswers,
+                hasNoUpvotedOrAccepted,
+                daysOld,
+                pageable
+        );
     }
 
     //a pageable is received from the controller along with the filter dto.
@@ -117,18 +170,32 @@ public class QuestionService {
             return questionRepository.findAll(pageable);
         }
 
+        // key:value filters take precedence (e.g., user:alice)
         if (searchQuery.getStringFilters().containsKey("user")) {
-            return questionRepository.findAllByUser(pageable, searchQuery.getStringFilters().get("user"));
+            String username = searchQuery.getStringFilters().get("user");
+            return questionRepository.findByAuthor_Username(pageable, username);
         }
 
+        // unquoted tokens are tags; also honor tag:xyz if parser keeps it as a string filter
         if (searchQuery.getStringFilters().containsKey("tag")) {
-            return questionRepository.findAllByTags(pageable, new String[]{searchQuery.getStringFilters().get("tag")});
+            String tag = searchQuery.getStringFilters().get("tag");
+            return questionRepository.findQuestionsByAllTags(List.of(tag), 1, pageable);
+        }
+        if (!searchQuery.getTags().isEmpty()) {
+            List<String> tags = searchQuery.getTags();
+            return questionRepository.findQuestionsByAllTags(tags, tags.size(), pageable);
         }
 
+        // quoted phrases are keywords
         if (!searchQuery.getKeywords().isEmpty()) {
-            return questionRepository.findAllByKeyword(pageable, searchQuery.getKeywords().toArray(String[]::new));
+            // combine keywords by running keyword search for each term and aggregating results
+            return searchQuery.getKeywords().stream()
+                    .map(keyword -> questionRepository.searchQuestionsByKeyword(keyword, pageable))
+                    .findFirst()
+                    .orElse(questionRepository.findAll(pageable));
         }
-//        return questionRepository.findAll(pageable);
+
+        return questionRepository.findAll(pageable);
     }
 
 }
