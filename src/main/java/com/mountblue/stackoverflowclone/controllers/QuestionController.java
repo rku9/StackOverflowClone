@@ -1,5 +1,6 @@
 package com.mountblue.stackoverflowclone.controllers;
 
+import com.mountblue.stackoverflowclone.dtos.QuestionFilterRequestDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
 import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
@@ -9,6 +10,7 @@ import com.mountblue.stackoverflowclone.services.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -175,5 +177,13 @@ public class QuestionController {
         model.addAttribute("hasPrevious", searchResults.hasPrevious());
 
         return "search-results";
+    }
+
+    @PostMapping("/filter")
+    public ResponseEntity<List<QuestionResponseDto>> filterQuestions(
+            @RequestBody QuestionFilterRequestDto filterRequest) {
+
+        List<QuestionResponseDto> response = questionService.filterQuestions(filterRequest);
+        return ResponseEntity.ok(response);
     }
 }
