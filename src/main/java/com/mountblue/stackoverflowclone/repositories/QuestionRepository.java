@@ -16,12 +16,13 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Override
     Optional<Question> findById(Long questionId);
 
-    @Query("SELECT DISTINCT q FROM Question q " +
-            "LEFT JOIN q.tags t " +
-            "WHERE (:keyword IS NULL OR q.title LIKE %:keyword% OR q.body LIKE %:keyword%) " +
-            "AND (:tags IS NULL OR t.name IN :tags) " +
-            "AND (:username IS NULL OR q.author.name LIKE %:username%)"
-    )
+    @Query("""
+            SELECT DISTINCT q FROM Question q
+            LEFT JOIN q.tags t
+            WHERE (:keyword IS NULL OR q.title LIKE %:keyword% OR q.body LIKE %:keyword%)
+            AND (:tags IS NULL OR t.name IN :tags)
+            AND (:username IS NULL OR q.author.username LIKE %:username%)
+    """)
     Page<Question> searchQuestions(
             @Param("keyword") String keyword,
             @Param("tags") List<String> tags,
