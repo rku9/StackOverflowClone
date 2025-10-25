@@ -1,9 +1,11 @@
 package com.mountblue.stackoverflowclone.services;
 
+import com.mountblue.stackoverflowclone.dtos.QuestionFilterRequestDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
 import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
 import com.mountblue.stackoverflowclone.models.Question;
+import com.mountblue.stackoverflowclone.models.SearchQuery;
 import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.TagRepository;
@@ -25,13 +27,16 @@ public class QuestionService {
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
     private final TagRepository tagRepository;
+    private final SearchQueryParser searchQueryParser;
 
     public QuestionService(QuestionRepository questionRepository,
                            UserRepository userRepository,
-                           TagRepository tagRepository) {
+                           TagRepository tagRepository,
+                           SearchQueryParser searchQueryParser) {
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
         this.tagRepository = tagRepository;
+        this.searchQueryParser = searchQueryParser;
     }
 
     @Transactional
@@ -93,7 +98,37 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    public List<Question> getAllQuestions() {
-        return questionRepository.findAll();
+    //a pageable is received from the controller along with the filter dto.
+    //the service receives that and then extracts the list of filters and tags and then
+    //passes it to the repository to fetch the questions.
+    public Page<Question> getAllQuestions(Pageable pageable,
+                                          QuestionFilterRequestDto questionFilterDto) {
+//        List<>
+
+
+//        return questionRepository.findAll();
+        return null;
     }
+
+    public Page<Question> getSeachedQuestions(Pageable pageable, String searchString) {
+        SearchQuery searchQuery = searchQueryParser.parse(searchString);
+
+        if (searchQuery.isEmpty()) {
+            return questionRepository.findAll(pageable);
+        }
+
+        if (searchQuery.getStringFilters().containsKey("user")) {
+            return questionRepository.findAllByUser(pageable, searchQuery.getStringFilters().get("user"));
+        }
+
+        if (searchQuery.getStringFilters().containsKey("tag")) {
+            return questionRepository.findAllByTags(pageable, new String[]{searchQuery.getStringFilters().get("tag")});
+        }
+
+        if (!searchQuery.getKeywords().isEmpty()) {
+            return questionRepository.findAllByKeyword(pageable, searchQuery.getKeywords().toArray(String[]::new));
+        }
+//        return questionRepository.findAll(pageable);
+    }
+
 }
