@@ -6,23 +6,145 @@
 <body>
 
 <!-- Navbar Fragment -->
-<nav th:fragment="navbar" class="navbar">
-    <div class="navbar-content">
-        <a href="/" class="logo">
-            <svg aria-hidden="true" width="150" height="30" viewBox="0 0 150 30">
-                <text x="0" y="20" font-family="Arial" font-size="20" font-weight="bold" fill="#222">stack<tspan fill="#f48225">overflow</tspan></text>
-            </svg>
+<nav th:fragment="navbar" style="background: #f8f9f9; border-bottom: 1px solid #d6d9dc; padding: 8px 0; position: fixed; top: 0; left: 0; right: 0; z-index: 100;">
+    <div style="max-width: 1264px; margin: 0 auto; display: flex; align-items: center; gap: 16px; padding: 0 16px;">
+        <!-- Logo -->
+        <a href="/" style="text-decoration: none;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 20px; font-weight: 700; color: #232629;">stack</span>
+                <span style="font-size: 20px; font-weight: 700; color: #f48024;">overflow</span>
+            </div>
         </a>
-        <div class="nav-search">
-            <input type="text" placeholder="Search...">
+
+        <!-- Search Container -->
+        <div style="flex: 1; max-width: 600px; position: relative;">
+            <div id="searchContainer" style="position: relative;">
+                <input type="text"
+                       id="globalSearchInput"
+                       placeholder="Search..."
+                       style="width: 100%; padding: 8px 40px 8px 32px; border: 1px solid #babfc4; border-radius: 3px; font-size: 13px;"
+                       onfocus="showSearchDropdown()"
+                       onblur="hideSearchDropdown()">
+                <svg style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%);" width="18" height="18" viewBox="0 0 18 18" fill="#6a737c">
+                    <path d="M12.86 11.32l4.38 4.38-1.54 1.54-4.38-4.38a7 7 0 1 1 1.54-1.54zM7 12A5 5 0 1 0 7 2a5 5 0 0 0 0 10z"/>
+                </svg>
+                <button onclick="performSearch()"
+                        style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: transparent; border: none; cursor: pointer; padding: 4px; color: #6a737c;">
+                    ↵
+                </button>
+            </div>
+
+            <!-- Search Dropdown -->
+            <div id="searchDropdown"
+                 style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #d6d9dc; border-top: none; border-radius: 0 0 3px 3px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: -1px; z-index: 1000;">
+                <div style="padding: 12px 16px; border-bottom: 1px solid #e3e6e8;">
+                    <div style="font-size: 12px; color: #6a737c; margin-bottom: 8px;">Search syntax</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px;">
+                        <div>
+                            <code style="background: #e3e6e8; padding: 2px 4px; border-radius: 2px;">[tag]</code>
+                            <span style="color: #6a737c;">search within a tag</span>
+                        </div>
+                        <div>
+                            <code style="background: #e3e6e8; padding: 2px 4px; border-radius: 2px;">answers:0</code>
+                            <span style="color: #6a737c;">unanswered questions</span>
+                        </div>
+                        <div>
+                            <code style="background: #e3e6e8; padding: 2px 4px; border-radius: 2px;">user:1234</code>
+                            <span style="color: #6a737c;">search by author</span>
+                        </div>
+                        <div>
+                            <code style="background: #e3e6e8; padding: 2px 4px; border-radius: 2px;">score:3</code>
+                            <span style="color: #6a737c;">posts with a 3+ score</span>
+                        </div>
+                        <div>
+                            <code style="background: #e3e6e8; padding: 2px 4px; border-radius: 2px;">"words here"</code>
+                            <span style="color: #6a737c;">exact phrase</span>
+                        </div>
+                        <div>
+                            <code style="background: #e3e6e8; padding: 2px 4px; border-radius: 2px;">isaccepted:yes</code>
+                            <span style="color: #6a737c;">has accepted answer</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 12px 16px;">
+                    <button onclick="performSearch()"
+                            style="background: #0a95ff; color: white; border: none; padding: 8px 12px; border-radius: 3px; font-size: 13px; cursor: pointer; width: 100%;">
+                        Search
+                    </button>
+                    <a href="/search/help" style="display: block; text-align: center; margin-top: 8px; font-size: 12px; color: #0074cc; text-decoration: none;">
+                        Search help
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="nav-items">
-            <button class="nav-btn">Products</button>
-            <button class="nav-btn">Log in</button>
-            <button class="nav-btn primary">Sign up</button>
+
+        <!-- Right Side Navigation -->
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <a href="/products" style="color: #6a737c; text-decoration: none; font-size: 13px;">Products</a>
+            <a href="/login" style="color: #0074cc; text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 3px;">Log in</a>
+            <a href="/signup" style="background: #0a95ff; color: white; text-decoration: none; font-size: 13px; padding: 8px 12px; border-radius: 4px;">Sign up</a>
         </div>
     </div>
 </nav>
+
+<!-- Navbar Script (MUST be included on every page) -->
+<script th:fragment="navbar-script">
+    let searchDropdownTimeout;
+
+    function showSearchDropdown() {
+        clearTimeout(searchDropdownTimeout);
+        const dropdown = document.getElementById('searchDropdown');
+        if (dropdown) {
+            dropdown.style.display = 'block';
+        }
+    }
+
+    function hideSearchDropdown() {
+        searchDropdownTimeout = setTimeout(() => {
+            const dropdown = document.getElementById('searchDropdown');
+            if (dropdown) {
+                dropdown.style.display = 'none';
+            }
+        }, 200);
+    }
+
+    function performSearch() {
+        const searchInput = document.getElementById('globalSearchInput');
+        if (!searchInput) {
+            console.error('Search input not found');
+            return;
+        }
+
+        const searchQuery = searchInput.value.trim();
+
+        if (searchQuery) {
+            // Always redirect to questions page with search query
+            window.location.href = '/questions?q=' + encodeURIComponent(searchQuery);
+        }
+    }
+
+    // Initialize search functionality when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('globalSearchInput');
+
+        if (searchInput) {
+            // Populate search input with current 'q' parameter if it exists
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentQuery = urlParams.get('q');
+            if (currentQuery) {
+                searchInput.value = currentQuery;
+            }
+
+            // Allow Enter key to search
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
+        }
+    });
+</script>
 
 <!-- Left Sidebar Fragment -->
 <aside th:fragment="sidebar" class="left-sidebar">
