@@ -1,0 +1,97 @@
+package com.mountblue.stackoverflowclone.services;
+
+import com.mountblue.stackoverflowclone.dtos.AnswerFormDto;
+import com.mountblue.stackoverflowclone.models.Answer;
+import com.mountblue.stackoverflowclone.models.Question;
+import com.mountblue.stackoverflowclone.models.User;
+import com.mountblue.stackoverflowclone.repositories.AnswerRepository;
+import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
+import com.mountblue.stackoverflowclone.repositories.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+@Service
+public class AnswerService {
+
+    private final AnswerRepository answerRepository;
+    private final UserRepository userRepository;
+    private final QuestionRepository questionRepository;
+
+    public AnswerService(AnswerRepository answerRepository, UserRepository userRepository, QuestionRepository questionRepository){
+        this.answerRepository = answerRepository;
+        this.userRepository = userRepository;
+        this.questionRepository = questionRepository;
+    }
+
+    @Transactional
+    public Answer saveAnswer(AnswerFormDto answerFormDto, Long questionId) {
+
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new NoSuchElementException("Question not found"));
+
+        User author = userRepository.findById(1L)
+                .orElseThrow(() -> new NoSuchElementException("Default user not found. Please ensure user with ID 1 exists in your database."));
+
+        if (answerFormDto.body() == null || answerFormDto.body().trim().isEmpty()) {
+            throw new IllegalArgumentException("Answer body cannot be empty");
+        }
+
+        Answer answer = new Answer();
+        answer.setBody(answerFormDto.body().trim());
+        answer.setQuestion(question);
+        answer.setAuthor(author);
+        answer.setScore(0);
+        answer.setAccepted(false);
+
+        return answerRepository.save(answer);
+    }
+
+    public List<Answer> getAnswers(Long questionId) {
+        return answerRepository.getAnswersByQuestionId(questionId);
+    }
+
+    @Transactional
+    public void voteAnswer(Long answerId, String choice){
+        Answer answer = answerRepository.findById(answerId).get();
+        answer.setScore(choice.equals("upvote") ? answer.getScore() + 1 : answer.getScore() - 1);
+    }
+
+    @Transactional
+    public Answer editAnswer(AnswerFormDto answerFormDto, Long answerId, Long questionId) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new NoSuchElementException("Answer not found"));
+
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new NoSuchElementException("Question not found"));
+
+        if (!answer.getQuestion().getId().equals(questionId)) {
+            throw new IllegalArgumentException("Answer does not belong to the specified question");
+        }
+
+        if (answerFormDto.body() == null || answerFormDto.body().trim().isEmpty()) {
+            throw new IllegalArgumentException("Answer body cannot be empty");
+        }
+
+        answer.setBody(answerFormDto.body().trim());
+
+        return answerRepository.save(answer);
+    }
+
+    @Transactional
+    public void editAnswerBody(Long answerId, Long questionId, String body) {
+        AnswerFormDto formDto = new AnswerFormDto(answerId, body);
+        editAnswer(formDto, answerId, questionId);
+    }
+
+    public void deleteAnswer(Long answerId) {
+        answerRepository.deleteById(answerId);
+    }
+
+    public Optional<Answer> findById(Long answerId) {
+        return answerRepository.findById(answerId);
+    }
+}

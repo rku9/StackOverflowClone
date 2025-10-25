@@ -2,57 +2,365 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>StackOverflow Clone – Home</title>
+    <title>StackOverflow Clone – Questions</title>
     <th:block th:replace="~{fragments/layout :: styles}"></th:block>
+    <style>
+        /* Tab navigation styles */
+        .tab-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .tab-btn {
+            background: transparent;
+            border: 1px solid #9fa6ad;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: #6a737c;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover {
+            background: #f8f9f9;
+        }
+        .tab-btn.active {
+            background: #e3e6e8;
+            color: #3b4045;
+            font-weight: 500;
+        }
+
+        /* Filter button */
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #9fa6ad;
+            color: #6a737c;
+            padding: 8px 10px;
+            border-radius: 3px;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .filter-btn:hover {
+            background: #f8f9f9;
+        }
+
+        /* Modal overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        /* Modal content */
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #d6d9dc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            font-size: 18px;
+            color: #232629;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #d6d9dc;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #6a737c;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Filter sections */
+        .filter-section {
+            margin-bottom: 24px;
+        }
+        .filter-section h4 {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: #232629;
+            font-weight: 600;
+        }
+        .filter-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #3b4045;
+            cursor: pointer;
+        }
+        .filter-section input[type="radio"],
+        .filter-section input[type="checkbox"] {
+            margin-right: 6px;
+        }
+        .filter-section input[type="number"] {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #babfc4;
+            border-radius: 3px;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{fragments/layout :: navbar}"></div>
 <div th:replace="~{fragments/layout :: sidebar}"></div>
 <div class="page-wrapper">
     <main>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>Questions</h2>
+        <!-- Header with title and Ask Question button -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h1 style="font-size: 27px; font-weight: 400;">All Questions</h1>
             <a th:href="@{/questions/new}"
-               style="background: #0a95ff; color: white; text-decoration: none; padding: 10px 16px; border-radius: 4px; font-size: 14px;">
+               style="background: #0a95ff; color: white; text-decoration: none; padding: 10px 16px; border-radius: 4px; font-size: 13px;">
                 Ask Question
             </a>
         </div>
+
+        <!-- Question count and sorting/filter controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #d6d9dc;">
+            <div style="font-size: 17px; color: #232629;" th:text="${#lists.size(questionResponseDtoList)} + ' questions'">
+                0 questions
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <!-- Sort Buttons (3 visible) -->
+                <div class="tab-nav">
+                    <button class="tab-btn"
+                            th:classappend="${param.sort == null or param.sort[0] == 'Newest'} ? 'active'"
+                            onclick="changeSort('Newest')">Newest</button>
+                    <button class="tab-btn"
+                            th:classappend="${param.sort != null and param.sort[0] == 'HighestScore'} ? 'active'"
+                            onclick="changeSort('HighestScore')">Highest Score</button>
+                    <button class="tab-btn"
+                            th:classappend="${param.sort != null and param.sort[0] == 'MostAnswers'} ? 'active'"
+                            onclick="changeSort('MostAnswers')">Most Answers</button>
+                </div>
+
+                <!-- Filter Button (with More functionality) -->
+                <button class="filter-btn" onclick="openFilterModal()">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                        <path d="M0 1h4v2H0V1zm6 0h8v2H6V1zM0 6h8v2H0V6zm10 0h4v2h-4V6zM0 11h4v2H0v-2zm6 0h8v2H6v-2z"/>
+                    </svg>
+                    Filter
+                </button>
+            </div>
+        </div>
+
+        <!-- Questions List -->
         <div class="questions-list" style="display: flex; flex-direction: column; gap: 16px;">
             <div th:each="question : ${questionResponseDtoList}" class="question-summary"
-                 style="background: #fff; border-radius: 4px; padding: 20px; display: flex; gap: 16px;">
+                 style="border-bottom: 1px solid #e3e6e8; padding: 16px 0; display: flex; gap: 16px;">
                 <!-- Stats -->
-                <div style="width: 85px; text-align: right; color: #6a737c;">
-                    <div style="font-size: 18px; font-weight: 700;" th:text="${question.score}">0</div>
-                    <div style="font-size: 13px;">votes</div>
-                    <div style="font-size: 18px; font-weight: 700; margin-top: 8px;">0</div>
-                    <div style="font-size: 13px;">answers</div>
-                    <div th:text="${question.viewCount}" style="font-size: 13px; margin-top: 8px;">0</div>
-                    <div style="font-size: 13px;">views</div>
+                <div style="width: 108px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #6a737c;">
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <span th:text="${question.score}" style="font-weight: 500;">0</span>
+                        <span>votes</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <span th:text="0" style="font-weight: 500;">0</span>
+                        <span>answers</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <span th:text="${question.viewCount}" style="font-weight: 500;">0</span>
+                        <span>views</span>
+                    </div>
                 </div>
+
                 <!-- Main Content -->
                 <div style="flex: 1;">
                     <h3 style="margin-bottom: 8px;">
                         <a th:href="@{'/questions/' + ${question.id}}" th:text="${question.title}"
-                           style="color: #0074cc; text-decoration: none; font-size: 16px;"></a>
+                           style="color: #0074cc; text-decoration: none; font-size: 17px; line-height: 1.3;"></a>
                     </h3>
-                    <div th:utext="${question.body}" style="margin-bottom: 10px; color: #232629; font-size: 14px;">
-                        <!-- question body -->
+                    <div th:utext="${#strings.abbreviate(question.body, 200)}"
+                         style="margin-bottom: 8px; color: #3b4045; font-size: 13px; line-height: 1.4;">
+                        <!-- question excerpt -->
                     </div>
-                    <div style="margin-bottom: 10px;">
-                        <span th:each="tag : ${question.tags}" th:text="${tag.name}"
-                              class="tag"
-                              style="background: #e1ecf4; color: #39739d; border-radius: 3px; padding: 3px 6px; font-size: 12px; margin-right: 5px;">
-                        </span>
-                    </div>
-                    <div style="font-size: 13px; color: #888;">
-                        asked <span th:text="${#temporals.format(question.createdAt, 'MMM dd, yyyy HH:mm')}"></span>
-                        by <span th:text="${question.authorName}"></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span th:each="tag : ${question.tags}" th:text="${tag.name}"
+                                  style="display: inline-block; background: #e1ecf4; color: #39739d; border-radius: 3px; padding: 4px 6px; font-size: 12px; margin-right: 4px; text-decoration: none;">
+                            </span>
+                        </div>
+                        <div style="font-size: 12px; color: #6a737c;">
+                            <span th:text="${question.authorName}" style="color: #0074cc;">username</span>
+                            asked <span th:text="${#temporals.format(question.createdAt, 'MMM dd, yyyy')}">Oct 24, 2025</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 </div>
+
+<!-- Combined Sort & Filter Modal -->
+<div id="filterModal" class="modal-overlay" onclick="closeFilterModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>Sort and Filter</h3>
+            <button class="close-btn" onclick="closeFilterModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- Sort Section -->
+            <div class="filter-section">
+                <h4>Sorted by</h4>
+                <label><input type="radio" name="sortOption" value="Newest" checked> Newest</label>
+                <label><input type="radio" name="sortOption" value="Oldest"> Oldest</label>
+                <label><input type="radio" name="sortOption" value="HighestScore"> Highest Score</label>
+                <label><input type="radio" name="sortOption" value="MostAnswers"> Most Answers</label>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <h4>Filter by</h4>
+                <label>
+                    <input type="checkbox" id="filterNoAnswers" value="NoAnswers">
+                    No answers
+                </label>
+                <label>
+                    <input type="checkbox" id="filterNoAccepted" value="NoUpvotedOrAccepted">
+                    No upvoted or accepted answers
+                </label>
+            </div>
+
+            <div class="filter-section">
+                <h4>Question Age</h4>
+                <label for="daysOld">Days old (minimum):</label>
+                <input type="number" id="daysOld" name="daysOld" min="0" placeholder="e.g., 7"
+                       style="width: 100%; padding: 6px 10px; border: 1px solid #babfc4; border-radius: 3px; font-size: 13px;">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="clearFilters()" style="padding: 8px 12px; border: 1px solid #9fa6ad; background: white; color: #6a737c; border-radius: 3px; cursor: pointer;">Clear</button>
+            <button onclick="closeFilterModal()" style="padding: 8px 12px; border: 1px solid #9fa6ad; background: white; color: #6a737c; border-radius: 3px; cursor: pointer;">Cancel</button>
+            <button onclick="applyFilters()" style="padding: 8px 12px; border: none; background: #0a95ff; color: white; border-radius: 3px; cursor: pointer;">Apply</button>
+        </div>
+    </div>
+</div>
+
 <div th:replace="~{fragments/layout :: footer}"></div>
+
+<script th:replace="~{fragments/layout :: navbar-script}"></script>
+<script>
+    // On page load, restore sort and filter values from URL
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sort = urlParams.get('sort') || 'Newest';
+        const filters = urlParams.getAll('filters'); // Get all filter parameters
+        const daysOld = urlParams.get('daysOld');
+
+        // Restore sort selection
+        const sortRadio = document.querySelector(`input[name="sortOption"][value="${sort}"]`);
+        if (sortRadio) sortRadio.checked = true;
+
+        // Restore filter checkboxes
+        if (filters.length > 0) {
+            filters.forEach(filter => {
+                if (filter === 'NoAnswers') {
+                    document.getElementById('filterNoAnswers').checked = true;
+                } else if (filter === 'NoUpvotedOrAccepted') {
+                    document.getElementById('filterNoAccepted').checked = true;
+                }
+            });
+        }
+
+        // Restore days old
+        if (daysOld) {
+            document.getElementById('daysOld').value = daysOld;
+        }
+    });
+
+    function changeSort(sortType) {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('sort', sortType);
+        window.location.search = urlParams.toString();
+    }
+
+    function openFilterModal() {
+        document.getElementById('filterModal').classList.add('show');
+    }
+
+    function closeFilterModal(event) {
+        if (!event || event.target.classList.contains('modal-overlay')) {
+            document.getElementById('filterModal').classList.remove('show');
+        }
+    }
+
+    function clearFilters() {
+        // Clear sort - reset to Newest
+        document.querySelector('input[name="sortOption"][value="Newest"]').checked = true;
+
+        // Clear filters
+        document.getElementById('filterNoAnswers').checked = false;
+        document.getElementById('filterNoAccepted').checked = false;
+        document.getElementById('daysOld').value = '';
+    }
+
+    function applyFilters() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Get selected sort
+        const selectedSort = document.querySelector('input[name="sortOption"]:checked').value;
+        urlParams.set('sort', selectedSort);
+
+        // Remove all existing filter parameters
+        urlParams.delete('filters');
+
+        // Add each filter as a separate parameter
+        if (document.getElementById('filterNoAnswers').checked) {
+            urlParams.append('filters', 'NoAnswers');
+        }
+        if (document.getElementById('filterNoAccepted').checked) {
+            urlParams.append('filters', 'NoUpvotedOrAccepted');
+        }
+
+        // Add days old parameter
+        const daysOld = document.getElementById('daysOld').value;
+        if (daysOld && daysOld > 0) {
+            urlParams.set('daysOld', daysOld);
+        } else {
+            urlParams.delete('daysOld');
+        }
+
+        window.location.search = urlParams.toString();
+    }
+</script>
 </body>
 </html>
