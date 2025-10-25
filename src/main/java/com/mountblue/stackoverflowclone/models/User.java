@@ -25,6 +25,12 @@ public class User extends BaseModel {
     @Column(columnDefinition = "TEXT")
     private String preferences;
 
+    @Column
+    private String password;
+
+    @Column
+    private String name;
+
     @OneToMany(
             mappedBy = "author",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
