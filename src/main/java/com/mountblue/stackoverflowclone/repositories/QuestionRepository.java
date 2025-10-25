@@ -22,36 +22,37 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
         WHERE SIZE(q.answers) = :answerCount
         ORDER BY q.createdAt DESC
     """)
-    List<Question> findQuestionsByAnswerCount(@Param("answerCount") int answerCount);
+    Page<Question> findQuestionsByAnswerCount(@Param("answerCount") int answerCount, Pageable pageable);
 
-    List<Question> findByAuthor_Username(String username);
-
-    @Query("""
-             SELECT q
-             FROM Question q
-             WHERE q.score >= :minScore
-             ORDER BY q.score DESC
-    """)
-    List<Question> findQuestionsByMinScore(@Param("minScore") int minScore);
+    Page<Question> findByAuthor_Username(String username, Pageable pageable);
 
     @Query("""
-            SELECT DISTINCT q FROM Question q LEFT JOIN q.tags t
-            WHERE LOWER(q.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
-            OR LOWER(q.body) LIKE LOWER(CONCAT('%', :keyword, '%'))
-            OR LOWER(t.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
-            ORDER BY q.createdAt DESC
+        SELECT q
+        FROM Question q
+        WHERE q.score >= :minScore
+        ORDER BY q.score DESC
     """)
-    List<Question> searchQuestionsByKeyword(@Param("keyword") String keyword);
+    Page<Question> findQuestionsByMinScore(@Param("minScore") int minScore, Pageable pageable);
 
     @Query("""
-            SELECT q FROM Question q JOIN q.tags t
-            WHERE LOWER(t.name) IN :tagNames
-            GROUP BY q.id
-            HAVING COUNT(DISTINCT t.id) = :tagCount
-            ORDER BY q.createdAt DESC
+        SELECT DISTINCT q FROM Question q LEFT JOIN q.tags t
+        WHERE LOWER(q.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(q.body) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        OR LOWER(t.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+        ORDER BY q.createdAt DESC
     """)
-    List<Question> findQuestionsByAllTags(@Param("tagNames") List<String> tagNames,
-                                          @Param("tagCount") long tagCount);
+    Page<Question> searchQuestionsByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query("""
+        SELECT q FROM Question q JOIN q.tags t
+        WHERE LOWER(t.name) IN :tagNames
+        GROUP BY q.id
+        HAVING COUNT(DISTINCT t.id) = :tagCount
+        ORDER BY q.createdAt DESC
+    """)
+    Page<Question> findQuestionsByAllTags(@Param("tagNames") List<String> tagNames,
+                                          @Param("tagCount") long tagCount,
+                                          Pageable pageable);
 
     @Query("""
         SELECT DISTINCT q FROM Question q
@@ -68,14 +69,14 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
               WHERE ans.question = q 
               AND (ans.accepted = true OR ans.score > 0)) = 0)
         AND (:daysOld IS NULL OR q.createdAt <= CURRENT_TIMESTAMP - :daysOld)
-        ORDER BY q.createdAt DESC
     """)
-    List<Question> searchQuestionsWithFilters(
+    Page<Question> searchQuestionsWithFilters(
             @Param("keyword") String keyword,
             @Param("minScore") Integer minScore,
             @Param("hasNoAnswers") boolean hasNoAnswers,
             @Param("hasNoUpvotedOrAccepted") boolean hasNoUpvotedOrAccepted,
-            @Param("daysOld") Integer daysOld
+            @Param("daysOld") Integer daysOld,
+            Pageable pageable
     );
 
 }
