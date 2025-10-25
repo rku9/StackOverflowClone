@@ -9,6 +9,9 @@ import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.services.AnswerService;
 import com.mountblue.stackoverflowclone.services.QuestionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -176,5 +179,22 @@ public class QuestionController {
 
         String truncated = plainText.substring(0, maxLength).trim() + "...";
         return "<p>" + truncated + "</p>";
+    }
+    @GetMapping("/search")
+    public String searchAll(
+            @RequestParam(value = "q", required = false, defaultValue = "") String query,
+            @PageableDefault(size = 15) Pageable pageable,
+            Model model) {
+
+        Page<QuestionResponseDto> searchResults = questionService.search(query, pageable);
+
+        model.addAttribute("query", query);
+        model.addAttribute("questions", searchResults.getContent());
+        model.addAttribute("currentPage", searchResults.getNumber());
+        model.addAttribute("totalPages", searchResults.getTotalPages());
+        model.addAttribute("hasNext", searchResults.hasNext());
+        model.addAttribute("hasPrevious", searchResults.hasPrevious());
+
+        return "search-results";
     }
 }
