@@ -1,10 +1,10 @@
 package com.mountblue.stackoverflowclone.services;
 
-import com.mountblue.stackoverflowclone.dtos.QuestionFilterRequestDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
 import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
 import com.mountblue.stackoverflowclone.models.Question;
+import com.mountblue.stackoverflowclone.models.FilterType;
 import com.mountblue.stackoverflowclone.models.SearchQuery;
 import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
@@ -72,13 +72,6 @@ public class QuestionService {
     }
 
     /**
-     * Controller expects a no-arg getAllQuestions() that returns all questions.
-     */
-    public List<Question> getAllQuestions() {
-        return questionRepository.findAll();
-    }
-
-    /**
      * Splits the comma-separated tag string, normalizes, fetches existing or creates new tags
      */
     private List<Tag> extractTags(String tagListString) {
@@ -106,21 +99,6 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    public Page<Question> getQuestionsByAnswerCount(Pageable pageable, int answerCount) {
-        return questionRepository.findQuestionsByAnswerCount(answerCount, pageable);
-    }
-
-    public Page<Question> getQuestionsByMinScore(Pageable pageable, int minScore) {
-        return questionRepository.findQuestionsByMinScore(minScore, pageable);
-    }
-
-    public Page<Question> searchQuestionsByKeyword(Pageable pageable, String keyword) {
-        if (keyword == null || keyword.isBlank()) {
-            return questionRepository.findAll(pageable);
-        }
-        return questionRepository.searchQuestionsByKeyword(keyword.trim(), pageable);
-    }
-
     /**
      * Controller expects Page<QuestionResponseDto> from service for search.
      * Reuse getSeachedQuestions(...) and map to DTOs.
@@ -142,71 +120,89 @@ public class QuestionService {
         ));
     }
 
-    public Page<Question> searchQuestionsByTags(Pageable pageable, List<String> tags) {
-        if (tags == null || tags.isEmpty()) {
-            return questionRepository.findAll(pageable);
+    /**
+     * Unified filtering + sorting + pagination used by QuestionsController.
+     * Applies: keyword search, tag intersection, checkbox filters, min age (daysOld), and sort.
+     */
+    public List<Question> getFilteredQuestions(
+            Pageable pageable,
+            String query,
+            List<String> tags,
+            List<FilterType> filterTypes,
+            Integer daysOld,
+            String sortParam
+    ) {
+        // Load all then filter in-memory (keeps repository unchanged)
+        List<Question> working = new ArrayList<>(questionRepository.findAll());
+
+        // Keyword filter (simple contains across title/body/tags)
+        if (query != null && !query.isBlank()) {
+            String needle = query.toLowerCase(Locale.ROOT);
+            working = working.stream()
+                    .filter(q -> {
+                        boolean inTitle = q.getTitle() != null && q.getTitle().toLowerCase(Locale.ROOT).contains(needle);
+                        boolean inBody = q.getBody() != null && q.getBody().toLowerCase(Locale.ROOT).contains(needle);
+                        boolean inTags = q.getTags() != null && q.getTags().stream()
+                                .map(t -> t.getName() == null ? "" : t.getName().toLowerCase(Locale.ROOT))
+                                .anyMatch(name -> name.contains(needle));
+                        return inTitle || inBody || inTags;
+                    })
+                    .collect(Collectors.toList());
         }
 
-        List<String> normalizedTags = tags.stream()
-                .filter(Objects::nonNull)
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .map(String::toLowerCase)
-                .distinct()
-                .collect(Collectors.toList());
-
-        if (normalizedTags.isEmpty()) {
-            return questionRepository.findAll(pageable);
+        // Tag filter (must contain all provided tags)
+        if (tags != null && !tags.isEmpty()) {
+            working = working.stream()
+                    .filter(q -> questionHasAllTags(q, tags))
+                    .collect(Collectors.toList());
         }
 
-        return questionRepository.findQuestionsByAllTags(normalizedTags, normalizedTags.size(), pageable);
-    }
+        // Checkbox filters
+        boolean requireNoAnswers = filterTypes != null && filterTypes.contains(FilterType.NO_ANSWERS);
+        boolean requireNoUpvotedOrAccepted = filterTypes != null && filterTypes.contains(FilterType.NO_UPVOTED_OR_ACCEPTED_ANSWER);
 
-    public Page<Question> searchQuestionsWithFilters(Pageable pageable,
-                                                     String keyword,
-                                                     Integer minScore,
-                                                     boolean hasNoAnswers,
-                                                     boolean hasNoUpvotedOrAccepted,
-                                                     Integer daysOld) {
-        String sanitizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.trim();
-        LocalDateTime cutoffDate = null;
+        if (requireNoAnswers) {
+            working = working.stream()
+                    .filter(q -> q.getAnswers() == null || q.getAnswers().isEmpty())
+                    .collect(Collectors.toList());
+        }
+
+        if (requireNoUpvotedOrAccepted) {
+            working = working.stream()
+                    .filter(q -> q.getAnswers() == null || q.getAnswers().stream()
+                            .noneMatch(a -> a.isAccepted() || a.getScore() > 0))
+                    .collect(Collectors.toList());
+        }
+
+        // Min age (days old)
         if (daysOld != null && daysOld > 0) {
-            cutoffDate = LocalDateTime.now().minusDays(daysOld);
+            LocalDateTime cutoff = LocalDateTime.now().minusDays(daysOld);
+            working = working.stream()
+                    .filter(q -> q.getCreatedAt() != null && (q.getCreatedAt().isBefore(cutoff) || q.getCreatedAt().isEqual(cutoff)))
+                    .collect(Collectors.toList());
         }
 
-        return questionRepository.searchQuestionsWithFilters(
-                sanitizedKeyword,
-                minScore,
-                hasNoAnswers,
-                hasNoUpvotedOrAccepted,
-                cutoffDate,
-                pageable
-        );
-    }
-
-    //a pageable is received from the controller along with the filter dto.
-    //the service receives that and then extracts the list of filters and tags and then
-    //passes it to the repository to fetch the questions.
-    public Page<Question> getAllQuestions(Pageable pageable,
-                                          QuestionFilterRequestDto questionFilterDto) {
-//        List<>
-
-
-//        return questionRepository.findAll();
-        return null;
-    }
-
-    public Page<Question> getSeachedQuestions(Pageable pageable, String searchString) {
-        SearchQuery searchQuery = searchQueryParser.parse(searchString);
-
-        if (searchQuery.isEmpty()) {
-            return questionRepository.findAll(pageable);
+        // Sorting
+        Comparator<Question> cmp;
+        if ("Oldest".equalsIgnoreCase(sortParam)) {
+            cmp = Comparator.comparing(q -> q.getCreatedAt(), Comparator.nullsLast(Comparator.naturalOrder()));
+        } else if ("HighestScore".equalsIgnoreCase(sortParam)) {
+            cmp = Comparator.comparingInt(Question::getScore)
+                    .reversed()
+                    .thenComparing((Question q) -> q.getCreatedAt(), Comparator.nullsLast(Comparator.reverseOrder()));
+        } else if ("MostAnswers".equalsIgnoreCase(sortParam)) {
+            cmp = Comparator.<Question>comparingInt(q -> q.getAnswers() == null ? 0 : q.getAnswers().size())
+                    .reversed()
+                    .thenComparing((Question q) -> q.getCreatedAt(), Comparator.nullsLast(Comparator.reverseOrder()));
+        } else {
+            // Default Newest
+            cmp = Comparator.comparing((Question q) -> q.getCreatedAt(), Comparator.nullsLast(Comparator.reverseOrder()));
         }
+        working.sort(cmp);
 
-        Page<Question> basePage = selectBaseResult(searchQuery);
-        List<Question> filtered = applyFilters(basePage.getContent(), searchQuery);
-
-        return paginate(filtered, pageable);
+        // Paginate and return page content
+        Page<Question> page = paginate(working, pageable);
+        return page.getContent();
     }
 
     private Page<Question> selectBaseResult(SearchQuery searchQuery) {

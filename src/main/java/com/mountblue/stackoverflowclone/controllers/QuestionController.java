@@ -21,6 +21,7 @@ import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,24 +40,45 @@ public class QuestionController {
     @GetMapping
     public String getAllQuestions(
             @RequestParam(value = "q", required = false) String query,
+            @RequestParam(value = "sort", required = false) String sortParam,
+            @RequestParam(value = "filters", required = false) List<String> filterParams,
+            @RequestParam(value = "daysOld", required = false) Integer daysOld,
+            @RequestParam(value = "tags", required = false) List<String> tags,
             @PageableDefault(size = 15) Pageable pageable,
             Model model){
         Parser parser = Parser.builder().build();
         HtmlRenderer renderer = HtmlRenderer.builder().build();
 
-        // If a search query is present, use the search service and map results; otherwise, load all
-        List<Question> questionList;
-        if (query != null && !query.isBlank()) {
-            Page<Question> results = questionService.getSeachedQuestions(pageable, query);
-            questionList = results.getContent();
-            model.addAttribute("query", query);
-            model.addAttribute("currentPage", results.getNumber());
-            model.addAttribute("totalPages", results.getTotalPages());
-            model.addAttribute("hasNext", results.hasNext());
-            model.addAttribute("hasPrevious", results.hasPrevious());
-        } else {
-            questionList = questionService.getAllQuestions();
+        // Unified fetch applying query, tags, filters and sort
+        List<String> normalizedTags = tags == null ? List.of() : tags.stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(String::toLowerCase)
+                .distinct()
+                .toList();
+
+        List<com.mountblue.stackoverflowclone.models.FilterType> filterTypes = new java.util.ArrayList<>();
+        if (filterParams != null) {
+            for (String f : filterParams) {
+                if (f == null) continue;
+                String v = f.trim();
+                if (v.equalsIgnoreCase("NoAnswers")) {
+                    filterTypes.add(com.mountblue.stackoverflowclone.models.FilterType.NO_ANSWERS);
+                } else if (v.equalsIgnoreCase("NoUpvotedOrAccepted")) {
+                    filterTypes.add(com.mountblue.stackoverflowclone.models.FilterType.NO_UPVOTED_OR_ACCEPTED_ANSWER);
+                }
+            }
         }
+
+        List<Question> questionList = questionService.getFilteredQuestions(
+                pageable,
+                query,
+                normalizedTags,
+                filterTypes,
+                daysOld,
+                sortParam
+        );
 
         List<QuestionResponseDto> questionResponseDtoList = questionList.stream()
                 .map(question -> {
