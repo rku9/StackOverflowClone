@@ -16,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,6 +72,13 @@ public class QuestionService {
     }
 
     /**
+     * Controller expects a no-arg getAllQuestions() that returns all questions.
+     */
+    public List<Question> getAllQuestions() {
+        return questionRepository.findAll();
+    }
+
+    /**
      * Splits the comma-separated tag string, normalizes, fetches existing or creates new tags
      */
     private List<Tag> extractTags(String tagListString) {
@@ -113,6 +121,27 @@ public class QuestionService {
         return questionRepository.searchQuestionsByKeyword(keyword.trim(), pageable);
     }
 
+    /**
+     * Controller expects Page<QuestionResponseDto> from service for search.
+     * Reuse getSeachedQuestions(...) and map to DTOs.
+     */
+    public Page<QuestionResponseDto> search(String query, Pageable pageable) {
+        Page<Question> results = getSeachedQuestions(pageable, query);
+        return results.map(question -> new QuestionResponseDto(
+                question.getId(),
+                question.getAuthor().getUsername(),
+                question.getTitle(),
+                question.getBody(),
+                question.getCreatedAt(),
+                question.getUpdatedAt(),
+                question.getViewCount(),
+                question.getScore(),
+                question.getTags().stream()
+                        .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
+                        .collect(Collectors.toList())
+        ));
+    }
+
     public Page<Question> searchQuestionsByTags(Pageable pageable, List<String> tags) {
         if (tags == null || tags.isEmpty()) {
             return questionRepository.findAll(pageable);
@@ -140,13 +169,17 @@ public class QuestionService {
                                                      boolean hasNoUpvotedOrAccepted,
                                                      Integer daysOld) {
         String sanitizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.trim();
+        LocalDateTime cutoffDate = null;
+        if (daysOld != null && daysOld > 0) {
+            cutoffDate = LocalDateTime.now().minusDays(daysOld);
+        }
 
         return questionRepository.searchQuestionsWithFilters(
                 sanitizedKeyword,
                 minScore,
                 hasNoAnswers,
                 hasNoUpvotedOrAccepted,
-                daysOld,
+                cutoffDate,
                 pageable
         );
     }

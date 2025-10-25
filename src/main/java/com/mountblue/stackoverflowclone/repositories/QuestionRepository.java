@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +58,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("""
         SELECT DISTINCT q FROM Question q
         LEFT JOIN q.tags t
-        LEFT JOIN q.answers a
         WHERE (:keyword IS NULL OR
               LOWER(q.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR 
               LOWER(q.body) LIKE LOWER(CONCAT('%', :keyword, '%')) OR 
@@ -68,14 +68,14 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
              (SELECT COUNT(ans) FROM Answer ans 
               WHERE ans.question = q 
               AND (ans.accepted = true OR ans.score > 0)) = 0)
-        AND (:daysOld IS NULL OR q.createdAt <= CURRENT_TIMESTAMP - :daysOld)
+        AND (:cutoffDate IS NULL OR q.createdAt <= :cutoffDate)
     """)
     Page<Question> searchQuestionsWithFilters(
             @Param("keyword") String keyword,
             @Param("minScore") Integer minScore,
             @Param("hasNoAnswers") boolean hasNoAnswers,
             @Param("hasNoUpvotedOrAccepted") boolean hasNoUpvotedOrAccepted,
-            @Param("daysOld") Integer daysOld,
+            @Param("cutoffDate") LocalDateTime cutoffDate,
             Pageable pageable
     );
 
