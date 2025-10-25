@@ -20,7 +20,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("""
         SELECT q
         FROM Question q
-        WHERE SIZE(q.answers) = :answerCount
+        WHERE SIZE(q.answers) >= :answerCount
         ORDER BY q.createdAt DESC
     """)
     Page<Question> findQuestionsByAnswerCount(@Param("answerCount") int answerCount, Pageable pageable);

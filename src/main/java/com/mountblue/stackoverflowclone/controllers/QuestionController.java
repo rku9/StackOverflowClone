@@ -37,12 +37,28 @@ public class QuestionController {
     }
 
     @GetMapping
-    public String getAllQuestions(Model model){
+    public String getAllQuestions(
+            @RequestParam(value = "q", required = false) String query,
+            @PageableDefault(size = 15) Pageable pageable,
+            Model model){
         Parser parser = Parser.builder().build();
         HtmlRenderer renderer = HtmlRenderer.builder().build();
 
-        List<Question> questionResponseList =  questionService.getAllQuestions();
-        List<QuestionResponseDto> questionResponseDtoList = questionResponseList.stream()
+        // If a search query is present, use the search service and map results; otherwise, load all
+        List<Question> questionList;
+        if (query != null && !query.isBlank()) {
+            Page<Question> results = questionService.getSeachedQuestions(pageable, query);
+            questionList = results.getContent();
+            model.addAttribute("query", query);
+            model.addAttribute("currentPage", results.getNumber());
+            model.addAttribute("totalPages", results.getTotalPages());
+            model.addAttribute("hasNext", results.hasNext());
+            model.addAttribute("hasPrevious", results.hasPrevious());
+        } else {
+            questionList = questionService.getAllQuestions();
+        }
+
+        List<QuestionResponseDto> questionResponseDtoList = questionList.stream()
                 .map(question -> {
                     // Parse markdown body to HTML
                     String markdown = question.getBody();
