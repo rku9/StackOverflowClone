@@ -4,6 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up - Stack Overflow Clone</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background-color: #f1f2f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 32px 24px;
+            border-radius: 7px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 20px 48px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            min-height: 550px;
+        }
+
+        .close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #6a737c;
+            background: none;
+            border: none;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            margin-top: 8px;
+        }
+
+        .logo {
+            width: 32px;
+            height: 37px;
+        }
+
+        h1 {
+            font-size: 27px;
+            margin: 0;
+            color: #232629;
+            font-weight: 400;
+        }
+
+        .terms {
+            font-size: 12px;
+            color: #6a737c;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .terms a {
+            color: #0074cc;
+            text-decoration: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 11px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            cursor: pointer;
+            border: 1px solid #d6d9dc;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        }
+
+        .btn:hover {
+            background: #f8f9f9;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: #9199a1;
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-top: 1px solid #d6d9dc;
+        }
+
+        .divider span {
+            padding: 0 12px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 15px;
+            color: #0c0d0e;
+        }
+
+        input {
+            width: 100%;
+            padding: 9px 10px;
+            margin-bottom: 16px;
+            border: 1px solid #babfc4;
+            border-radius: 3px;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #6cbbf7;
+            box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+        }
+
+        .password-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .password-box input {
+            margin-bottom: 0;
+            padding-right: 40px;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            cursor: pointer;
+            color: #6a737c;
+            font-size: 16px;
+            user-select: none;
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 11px;
+            background: #0a95ff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .btn-signup:hover {
+            background: #0074cc;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #232629;
+        }
+
+        .link a {
+            color: #0074cc;
+            text-decoration: none;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
