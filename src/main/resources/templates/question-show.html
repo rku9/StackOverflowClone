@@ -491,6 +491,7 @@
                                                             style="font-size: 13px; padding: 4px 8px;"
                                                             th:onclick="'showEditForm(' + ${answer.answerId} + ')'">Edit</button>
                                                     <form th:action="@{/answers/{id}(id=${answer.answerId})}" method="post" style="display:inline">
+                                                        <input type="hidden" name="questionId" th:value="${question.id}" />
                                                         <input type="hidden" name="_method" value="delete" />
                                                         <button type="submit" class="btn btn-outline" style="font-size: 13px; padding: 4px 8px;" onclick="return confirm('Are you sure you want to delete this answer?');">Delete</button>
                                                     </form>
