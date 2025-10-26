@@ -1,4 +1,4 @@
-package com.mountblue.stackoverflowclone.controllers;
+package com.mountblue.stackoverflowclone.services;
 
 import com.mountblue.stackoverflowclone.models.Answer;
 import com.mountblue.stackoverflowclone.models.Comment;
