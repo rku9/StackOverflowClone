@@ -202,7 +202,8 @@
         <div class="main-content">
             <h1 th:text="${questionForm != null and questionForm.id != null} ? 'Edit question' : 'Ask a question'">Ask a
                 question</h1>
-            <form method="post"
+            <form id="question-form"
+                  method="post"
                   th:action="${questionForm != null and questionForm.id != null}
                               ? @{/questions/{id}(id=${questionForm.id})}
                               : @{/questions/new}">
@@ -294,6 +295,8 @@
         initialEditType: 'markdown',
         previewStyle: 'vertical',
         placeholder: 'Write your question with markdown here...',
+        usageStatistics: false,  // ADD THIS
+        linkify: false,  // ADD THIS
         toolbarItems: [
             ['heading', 'bold', 'italic', 'strike'],
             ['hr'],
@@ -306,13 +309,23 @@
                 const formData = new FormData();
                 formData.append('image', blob);
 
-                const response = await fetch('/api/images/upload', {
-                    method: 'POST',
-                    body: formData
-                });
+                try {
+                    const response = await fetch('/api/images/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
 
-                const data = await response.json();
-                callback(data.url, 'image');
+                    if (!response.ok) {
+                        alert('Image upload failed');
+                        return;
+                    }
+
+                    const data = await response.json();
+                    callback(data.url, 'image');
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    alert('Image upload failed');
+                }
             }
         }
     });
@@ -328,15 +341,18 @@
         }
     })();
 
-    // Get the form element
-    const form = document.querySelector('form');
+    // Get the SPECIFIC form element by ID (MORE RELIABLE)
+    const form = document.getElementById('question-form'); // USE ID INSTEAD
 
-    form.addEventListener('submit', function (e) {
-        const markdown = editor.getMarkdown();
-        const html = editor.getHTML();
-        document.getElementById('editorContent').value = markdown;
-        document.getElementById('editorContentHtml').value = html;
-    });
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            const markdown = editor.getMarkdown();
+            const html = editor.getHTML();
+            document.getElementById('editorContent').value = markdown;
+            document.getElementById('editorContentHtml').value = html;
+            // Don't prevent default - let form submit normally
+        });
+    }
 </script>
 <script th:replace="~{fragments/layout :: navbar-script}"></script>
 </body>

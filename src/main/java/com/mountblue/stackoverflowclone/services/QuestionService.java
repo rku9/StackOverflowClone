@@ -108,6 +108,7 @@ public class QuestionService {
         return results.map(question -> new QuestionResponseDto(
                 question.getId(),
                 question.getAuthor().getName(),
+                question.getAuthor().getEmail(),
                 question.getTitle(),
                 question.getBody(),
                 question.getCreatedAt(),

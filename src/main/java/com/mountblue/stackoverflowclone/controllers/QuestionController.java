@@ -92,6 +92,7 @@ public class QuestionController {
                     return new QuestionResponseDto(
                             question.getId(),
                             question.getAuthor().getName(),
+                            question.getAuthor().getEmail(),
                             question.getTitle(),
                             truncatedHtml,  // Use parsed HTML instead of raw markdown
                             question.getCreatedAt(),
@@ -118,6 +119,7 @@ public class QuestionController {
     @PostMapping("/new")
     public String submitQuestionForm(@ModelAttribute("questionForm") QuestionFormDto questionFormDto,
                                      BindingResult result, Model model) {
+        System.out.println(questionFormDto.body());
         if (result.hasErrors()){
             return "question-form";
         }
@@ -147,6 +149,7 @@ public class QuestionController {
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto(id,
                 question.getAuthor().getName(),
+                question.getAuthor().getEmail(),
                 question.getTitle(),
                 question.getBody(),
                 question.getCreatedAt(),

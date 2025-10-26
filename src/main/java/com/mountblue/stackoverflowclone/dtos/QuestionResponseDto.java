@@ -9,6 +9,7 @@ import java.util.List;
 public record QuestionResponseDto(
         Long id,
         String authorName,
+        String authorEmail,
         String title,
         String body,
         LocalDateTime createdAt,

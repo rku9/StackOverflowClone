@@ -614,11 +614,11 @@
                 <span th:if="${question.updatedAt != null}">
                             <span>Modified:</span>
                             <time th:text="${#temporals.format(question.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-10-23 18:00</time>
-                        </span>
+                </span>
                 <span>
                             <span>Viewed:</span>
                             <span th:text="${question.viewCount}">123</span> <span>times</span>
-                        </span>
+                </span>
             </div>
 
             <!-- Question body with voting buttons on the side -->
@@ -665,12 +665,12 @@
                 <button type="button" class="btn btn-outline">Follow</button>
                 <button type="button" class="btn btn-outline">Share</button>
                 <form th:action="@{/questions/edit/{id}(id=${question.id})}" method="get" style="display:inline"
-                      sec:authorize="isAuthenticated()" th:if="${#authentication.name == question.authorName}">
+                      sec:authorize="isAuthenticated()" th:if="${#authentication.name == question.authorEmail}">
                     <button type="submit" class="btn btn-outline">Edit</button>
                 </form>
                 <form th:action="@{/questions/{id}(id=${question.id})}" method="post"
                       style="display:inline"
-                      sec:authorize="isAuthenticated()" th:if="${#authentication.name == question.authorName}">
+                      sec:authorize="isAuthenticated()" th:if="${#authentication.name == question.authorEmail}">
                     <input type="hidden" name="_method" value="delete"/>
                     <button type="submit" class="btn btn-outline"
                             onclick="return confirm('Are you sure you want to delete this question?')">Delete
