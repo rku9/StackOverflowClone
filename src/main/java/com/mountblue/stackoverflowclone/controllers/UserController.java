@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/users")
+//@RequestMapping("/users")
 public class UserController {
 
     private UserService userService;
@@ -24,22 +24,22 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm(Model model, @RequestParam(value="error", required = false) String error) {
-        if(error != null){
+    public String showLoginForm(Model model, @RequestParam(value = "error", required = false) String error) {
+        if (error != null) {
             model.addAttribute("errorMessage", error);
         }
         model.addAttribute("loginRequestDto", new com.mountblue.stackoverflowclone.dtos.LoginRequestDto());
         return "login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/signup")
     public String showRegistrationForm(Model model) {
         SignUpRequestDto signUpRequestDto = new SignUpRequestDto();
         model.addAttribute("signUpRequestDto", signUpRequestDto);
-        return "register";
+        return "signup";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public String registerUser(@ModelAttribute SignUpRequestDto signUpRequestDto, Model model, HttpServletRequest request) {
         String name = signUpRequestDto.getName();
         String email = signUpRequestDto.getEmail();
@@ -58,6 +58,7 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             model.addAttribute("signUpRequestDto", signUpRequestDto);
             model.addAttribute("errorMessage", e.getMessage());
-            return "register";
+            return "signup";
         }
     }
+}

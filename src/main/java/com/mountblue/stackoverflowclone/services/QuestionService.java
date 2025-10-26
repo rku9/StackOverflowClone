@@ -282,6 +282,30 @@ public class QuestionService {
         return working;
     }
 
+    /**
+     * Note the intentional method name to match existing usage in search().
+     * Parses the raw query, selects a base result set from repository, applies
+     * in-memory filters, sorts by Newest (createdAt desc), and paginates.
+     */
+    private Page<Question> getSeachedQuestions(Pageable pageable, String rawQuery) {
+        SearchQuery searchQuery = searchQueryParser.parse(rawQuery);
+
+        // Get base (unpaged) results according to the most specific available criterion
+        Page<Question> base = selectBaseResult(searchQuery);
+
+        // Apply remaining filters in-memory
+        List<Question> filtered = applyFilters(base.getContent(), searchQuery);
+
+        // Default sort: Newest first (nulls last)
+        filtered.sort(Comparator.comparing(
+                (Question q) -> q.getCreatedAt(),
+                Comparator.nullsLast(Comparator.reverseOrder())
+        ));
+
+        // Paginate according to request
+        return paginate(filtered, pageable);
+    }
+
     private Page<Question> paginate(List<Question> items, Pageable pageable) {
         if (pageable.isUnpaged()) {
             return new PageImpl<>(items);
