@@ -16,6 +16,18 @@ public class UserPrincipal implements UserDetails {
         this.user = user;
     }
 
+    public Long getId() {
+        return user.getId();
+    }
+
+    public String getEmail() {
+        return user.getEmail();
+    }
+
+    public String getDisplayName() {
+        return user.getName();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_"+"USER"));
