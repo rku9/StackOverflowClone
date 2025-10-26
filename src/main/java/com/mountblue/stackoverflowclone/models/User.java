@@ -14,7 +14,7 @@ public class User extends BaseModel {
 
     private String username;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     private int reputation;

@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8"/>
     <title th:text="${question.title}">Question Details</title>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-dark.min.css">
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-dark.min.css">
 
     <!-- Include layout styles first -->
     <th:block th:replace="fragments/layout :: styles"></th:block>
@@ -153,7 +154,7 @@
         .answer-body pre {
             background: #1e1e1e;
             color: #d4d4d4;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 6px;
             padding: 16px 18px;
             margin: 12px 0;
@@ -194,12 +195,14 @@
             margin-left: 1.25rem;
             padding-left: 1.25rem;
         }
+
         .question-body ol,
         .answer-body ol {
             list-style: decimal;
             margin-left: 1.25rem;
             padding-left: 1.25rem;
         }
+
         .question-body li,
         .answer-body li {
             margin: 6px 0;
@@ -259,7 +262,7 @@
             background: #fff;
             padding: 12px;
             margin-bottom: 16px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
         }
 
         .card h4 {
@@ -282,12 +285,12 @@
 
         /* Form styling */
         .answer-form {
-          margin-top: 30px;
-          padding-top: 20px;
-          border-top: 1px solid #e3e6e8;
-          width: 100%;
-          grid-column: 1; /* Force it to stay in first column */
-          max-width: 100%;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e3e6e8;
+            width: 100%;
+            grid-column: 1; /* Force it to stay in first column */
+            max-width: 100%;
         }
 
         .answer-form h3 {
@@ -310,27 +313,64 @@
         .submit-button:hover {
             background: #0074cc;
         }
+
         /* Let pre control colors; keep HLJS transparent inside blocks */
         pre code.hljs,
         .question-body code.hljs,
         .answer-body code.hljs {
-          background: transparent;
-          color: inherit;
+            background: transparent;
+            color: inherit;
         }
 
         /* RESPONSIVE BREAKPOINTS */
         @media (max-width: 1200px) {
-            .question-container { gap: 16px; grid-template-columns: minmax(0,1fr) 260px; }
-            .sidebar { width: 260px; flex: 0 0 260px; }
+            .question-container {
+                gap: 16px;
+                grid-template-columns: minmax(0, 1fr) 260px;
+            }
+
+            .sidebar {
+                width: 260px;
+                flex: 0 0 260px;
+            }
         }
 
         @media (max-width: 980px) {
-            .question-body-container { flex-direction: column; gap: 12px; }
-            .vote-col { flex-direction: row; width: auto; justify-content: flex-start; gap: 8px; padding: 0; }
-            .question-container { grid-template-columns: 1fr; grid-template-areas: "main" "side"; gap: 20px; }
-            .sidebar { width: auto; flex: none; position: static; top: auto; max-height: none; overflow: visible; }
-            .question-title { font-size: 24px; }
-            .question-meta { gap: 12px; }
+            .question-body-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .vote-col {
+                flex-direction: row;
+                width: auto;
+                justify-content: flex-start;
+                gap: 8px;
+                padding: 0;
+            }
+
+            .question-container {
+                grid-template-columns: 1fr;
+                grid-template-areas: "main" "side";
+                gap: 20px;
+            }
+
+            .sidebar {
+                width: auto;
+                flex: none;
+                position: static;
+                top: auto;
+                max-height: none;
+                overflow: visible;
+            }
+
+            .question-title {
+                font-size: 24px;
+            }
+
+            .question-meta {
+                gap: 12px;
+            }
         }
 
         @media (max-width: 640px) {
@@ -373,295 +413,321 @@
 <div th:replace="fragments/layout :: sidebar"></div>
 
 <!-- Main content area using layout's page-wrapper -->
-    <div class="page-wrapper">
-            <div class="question-container">
-                <div class="question-main" id="question-section">
-                    <!-- Title and meta info first -->
-                    <h1 class="question-title" th:text="${question.title}">Question Title</h1>
+<div class="page-wrapper">
+    <div class="question-container">
+        <div class="question-main" id="question-section">
+            <!-- Title and meta info first -->
+            <h1 class="question-title" th:text="${question.title}">Question Title</h1>
 
-                    <div class="question-meta">
+            <div class="question-meta">
                         <span>
                             <span>Asked:</span>
                             <time th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}">2025-10-23 17:52</time>
                         </span>
-                        <span th:if="${question.updatedAt != null}">
+                <span th:if="${question.updatedAt != null}">
                             <span>Modified:</span>
                             <time th:text="${#temporals.format(question.updatedAt, 'yyyy-MM-dd HH:mm')}">2025-10-23 18:00</time>
                         </span>
-                        <span>
+                <span>
                             <span>Viewed:</span>
                             <span th:text="${question.viewCount}">123</span> <span>times</span>
                         </span>
-                    </div>
+            </div>
 
-                    <!-- Question body with voting buttons on the side -->
-                    <div class="question-body-container">
-                        <!-- Left voting column -->
-                        <div class="vote-col">
-                            <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post">
-                                <input type="hidden" name="choice" value="upvote" />
-                                <button type="submit" class="vote-button" title="This question is useful">
-                                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-                                        <path d="M1 12h16L9 4 1 12Z"/>
-                                    </svg>
-                                </button>
-                            </form>
+            <!-- Question body with voting buttons on the side -->
+            <div class="question-body-container">
+                <!-- Left voting column -->
+                <div class="vote-col">
+                    <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post">
+                        <input type="hidden" name="choice" value="upvote"/>
+                        <button type="submit" class="vote-button" title="This question is useful">
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+                                <path d="M1 12h16L9 4 1 12Z"/>
+                            </svg>
+                        </button>
+                    </form>
 
-                            <div class="vote-count" th:text="${question.score}">0</div>
+                    <div class="vote-count" th:text="${question.score}">0</div>
 
-                            <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post">
-                                <input type="hidden" name="choice" value="downvote" />
-                                <button type="submit" class="vote-button" title="This question is not useful">
-                                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-                                        <path d="M1 6h16L9 14 1 6Z"/>
-                                    </svg>
-                                </button>
-                            </form>
-                        </div>
-
-                        <!-- Question body content -->
-                        <article class="question-body" th:utext="${questionHtml}">
-                            <p>Question body content...</p>
-                        </article>
-                    </div>
-
-                    <div class="tag-list">
-                        <span th:each="tag : ${question.tags}" th:text="${tag.name}" class="tag">
-                        </span>
-                    </div>
-
-                    <div class="post-actions">
-                        <button type="button" class="btn btn-outline">Follow</button>
-                        <button type="button" class="btn btn-outline">Share</button>
-                        <form th:action="@{/questions/edit/{id}(id=${question.id})}" method="get" style="display:inline">
-                            <button type="submit" class="btn btn-outline">Edit</button>
-                        </form>
-                        <form th:action="@{/questions/{id}(id=${question.id})}" method="post"
-                              style="display:inline">
-                            <input type="hidden" name="_method" value="delete" />
-                            <button type="submit" class="btn btn-outline">Delete</button>
-                        </form>
-                    </div>
-
-                    <!-- Answers Section -->
-                    <div class="answers-section" style="margin-top: 32px;">
-                        <div th:if="${answers != null and !answers.isEmpty()}">
-                            <h3 class="answers-header" th:text="${answers.size()} + ' Answer' + (${answers.size()} > 1 ? 's' : '')">Answers</h3>
-
-                            <div th:each="answer : ${answers}" class="answer" th:id="'answer-' + ${answer.answerId}">
-                                <div class="question-body-container">
-                                    <div class="vote-col">
-                                        <form th:action="@{/answers/vote/{id}(id=${answer.answerId})}" method="post">
-                                            <input type="hidden" name="questionId" th:value="${question.id}" />
-                                            <input type="hidden" name="choice" value="upvote" />
-                                            <button type="submit" class="vote-button" title="This answer is useful">
-                                                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-                                                    <path d="M1 12h16L9 4 1 12Z"/>
-                                                </svg>
-                                            </button>
-                                        </form>
-
-                                        <div class="vote-count" th:text="${answer.score}">0</div>
-
-                                        <form th:action="@{/answers/vote/{id}(id=${answer.answerId})}" method="post">
-                                            <input type="hidden" name="questionId" th:value="${question.id}" />
-                                            <input type="hidden" name="choice" value="downvote" />
-                                            <button type="submit" class="vote-button" title="This answer is not useful">
-                                                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
-                                                    <path d="M1 6h16L9 14 1 6Z"/>
-                                                </svg>
-                                            </button>
-                                        </form>
-                                    </div>
-
-                                    <div class="answer-body" th:id="'answer-body-wrapper-' + ${answer.answerId}">
-                                        <div th:id="'answer-display-' + ${answer.answerId}">
-                                            <article th:utext="${answer.bodyHtml}">
-                                                <p>Answer content...</p>
-                                            </article>
-                                            <input type="hidden"
-                                                   th:id="'answer-markdown-' + ${answer.answerId}"
-                                                   th:value="${answer.body}" />
-
-                                            <div class="answer-meta" style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                                                <div class="answer-actions" style="display: flex; gap: 8px;">
-                                                    <button type="button" class="btn btn-outline" style="font-size: 13px; padding: 4px 8px;">Share</button>
-                                                    <button type="button"
-                                                            class="btn btn-outline"
-                                                            style="font-size: 13px; padding: 4px 8px;"
-                                                            th:onclick="'showEditForm(' + ${answer.answerId} + ')'">Edit</button>
-                                                    <form th:action="@{/answers/{id}(id=${answer.answerId})}" method="post" style="display:inline">
-                                                        <input type="hidden" name="questionId" th:value="${question.id}" />
-                                                        <input type="hidden" name="_method" value="delete" />
-                                                        <button type="submit" class="btn btn-outline" style="font-size: 13px; padding: 4px 8px;" onclick="return confirm('Are you sure you want to delete this answer?');">Delete</button>
-                                                    </form>
-                                                </div>
-
-                                                <div class="answer-author" style="background: #d9eaf7; padding: 8px 10px; border-radius: 3px; font-size: 13px; color: #0c0d0e;">
-                                                    <div style="color: #6a737c; margin-bottom: 2px;">answered <time th:text="${#temporals.format(answer.createdAt, 'MMM dd, yyyy')}">Oct 24, 2025</time></div>
-                                                    <div>
-                                                        <a href="#" style="color: #0074cc; text-decoration: none;" th:text="${answer.authorName}">username</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div th:id="'answer-edit-form-' + ${answer.answerId}" style="display: none;">
-                                            <form th:action="@{/answers/edit/{id}(id=${answer.answerId})}"
-                                                  method="post"
-                                                  th:onsubmit="'return prepareEditAnswerContent(' + ${answer.answerId} + ')'">
-                                                <input type="hidden" name="_method" value="patch" />
-                                                <input type="hidden" name="questionId" th:value="${question.id}" />
-                                                <div th:id="'edit-answer-editor-' + ${answer.answerId}"></div>
-                                                <input type="hidden" name="body" th:id="'editAnswerContent-' + ${answer.answerId}" />
-                                                <div style="margin-top: 12px; display: flex; gap: 8px;">
-                                                    <button type="submit" class="btn btn-outline" style="font-size: 13px; padding: 4px 8px;">Save</button>
-                                                    <button type="button"
-                                                            class="btn btn-outline"
-                                                            style="font-size: 13px; padding: 4px 8px;"
-                                                            th:onclick="'cancelEdit(' + ${answer.answerId} + ')'">Cancel</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div th:if="${answers == null or answers.isEmpty()}" style="padding: 32px; text-align: center; color: #6a737c; border-top: 1px solid #e3e6e8;">
-                            <p style="font-size: 15px; margin: 0;">No answers yet. Be the first to answer!</p>
-                        </div>
-                    </div>
-
-                <div class="answer-form">
-                    <h3>Your Answer</h3>
-                    <form id="new-answer-form" th:action="@{/answers/new}" method="post" onsubmit="return prepareNewAnswerContent()">
-                        <input type="hidden" name="questionId" th:value="${question.id}" />
-                        <div id="new-answer-editor"></div>
-                        <input type="hidden" name="body" id="newAnswerContent" />
-                        <button type="submit" class="submit-button">Post Your Answer</button>
+                    <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post">
+                        <input type="hidden" name="choice" value="downvote"/>
+                        <button type="submit" class="vote-button" title="This question is not useful">
+                            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+                                <path d="M1 6h16L9 14 1 6Z"/>
+                            </svg>
+                        </button>
                     </form>
                 </div>
+
+                <!-- Question body content -->
+                <article class="question-body" th:utext="${questionHtml}">
+                    <p>Question body content...</p>
+                </article>
+            </div>
+
+            <div class="tag-list">
+                        <span th:each="tag : ${question.tags}" th:text="${tag.name}" class="tag">
+                        </span>
+            </div>
+
+            <div class="post-actions">
+                <button type="button" class="btn btn-outline">Follow</button>
+                <button type="button" class="btn btn-outline">Share</button>
+                <form th:action="@{/questions/edit/{id}(id=${question.id})}" method="get" style="display:inline">
+                    <button type="submit" class="btn btn-outline">Edit</button>
+                </form>
+                <form th:action="@{/questions/{id}(id=${question.id})}" method="post"
+                      style="display:inline">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="btn btn-outline">Delete</button>
+                </form>
+            </div>
+
+            <!-- Answers Section -->
+            <div class="answers-section" style="margin-top: 32px;">
+                <div th:if="${answers != null and !answers.isEmpty()}">
+                    <h3 class="answers-header"
+                        th:text="${answers.size()} + ' Answer' + (${answers.size()} > 1 ? 's' : '')">Answers</h3>
+
+                    <div th:each="answer : ${answers}" class="answer" th:id="'answer-' + ${answer.answerId}">
+                        <div class="question-body-container">
+                            <div class="vote-col">
+                                <form th:action="@{/answers/vote/{id}(id=${answer.answerId})}" method="post">
+                                    <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                    <input type="hidden" name="choice" value="upvote"/>
+                                    <button type="submit" class="vote-button" title="This answer is useful">
+                                        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+                                            <path d="M1 12h16L9 4 1 12Z"/>
+                                        </svg>
+                                    </button>
+                                </form>
+
+                                <div class="vote-count" th:text="${answer.score}">0</div>
+
+                                <form th:action="@{/answers/vote/{id}(id=${answer.answerId})}" method="post">
+                                    <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                    <input type="hidden" name="choice" value="downvote"/>
+                                    <button type="submit" class="vote-button" title="This answer is not useful">
+                                        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
+                                            <path d="M1 6h16L9 14 1 6Z"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="answer-body" th:id="'answer-body-wrapper-' + ${answer.answerId}">
+                                <div th:id="'answer-display-' + ${answer.answerId}">
+                                    <article th:utext="${answer.bodyHtml}">
+                                        <p>Answer content...</p>
+                                    </article>
+                                    <input type="hidden"
+                                           th:id="'answer-markdown-' + ${answer.answerId}"
+                                           th:value="${answer.body}"/>
+
+                                    <div class="answer-meta"
+                                         style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                                        <div class="answer-actions" style="display: flex; gap: 8px;">
+                                            <button type="button" class="btn btn-outline"
+                                                    style="font-size: 13px; padding: 4px 8px;">Share
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-outline"
+                                                    style="font-size: 13px; padding: 4px 8px;"
+                                                    th:onclick="'showEditForm(' + ${answer.answerId} + ')'">Edit
+                                            </button>
+                                            <form th:action="@{/answers/{id}(id=${answer.answerId})}" method="post"
+                                                  style="display:inline">
+                                                <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <button type="submit" class="btn btn-outline"
+                                                        style="font-size: 13px; padding: 4px 8px;"
+                                                        onclick="return confirm('Are you sure you want to delete this answer?');">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <div class="answer-author"
+                                             style="background: #d9eaf7; padding: 8px 10px; border-radius: 3px; font-size: 13px; color: #0c0d0e;">
+                                            <div style="color: #6a737c; margin-bottom: 2px;">answered
+                                                <time th:text="${#temporals.format(answer.createdAt, 'MMM dd, yyyy')}">
+                                                    Oct 24, 2025
+                                                </time>
+                                            </div>
+                                            <div>
+                                                <a href="#" style="color: #0074cc; text-decoration: none;"
+                                                   th:text="${answer.authorName}">username</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div th:id="'answer-edit-form-' + ${answer.answerId}" style="display: none;">
+                                    <form th:action="@{/answers/edit/{id}(id=${answer.answerId})}"
+                                          method="post"
+                                          th:onsubmit="'return prepareEditAnswerContent(' + ${answer.answerId} + ')'">
+                                        <input type="hidden" name="_method" value="patch"/>
+                                        <input type="hidden" name="questionId" th:value="${question.id}"/>
+                                        <div th:id="'edit-answer-editor-' + ${answer.answerId}"></div>
+                                        <input type="hidden" name="body"
+                                               th:id="'editAnswerContent-' + ${answer.answerId}"/>
+                                        <div style="margin-top: 12px; display: flex; gap: 8px;">
+                                            <button type="submit" class="btn btn-outline"
+                                                    style="font-size: 13px; padding: 4px 8px;">Save
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-outline"
+                                                    style="font-size: 13px; padding: 4px 8px;"
+                                                    th:onclick="'cancelEdit(' + ${answer.answerId} + ')'">Cancel
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${answers == null or answers.isEmpty()}"
+                     style="padding: 32px; text-align: center; color: #6a737c; border-top: 1px solid #e3e6e8;">
+                    <p style="font-size: 15px; margin: 0;">No answers yet. Be the first to answer!</p>
+                </div>
+            </div>
+
+            <div class="answer-form">
+                <h3>Your Answer</h3>
+                <form id="new-answer-form" th:action="@{/answers/new}" method="post"
+                      onsubmit="return prepareNewAnswerContent()">
+                    <input type="hidden" name="questionId" th:value="${question.id}"/>
+                    <div id="new-answer-editor"></div>
+                    <input type="hidden" name="body" id="newAnswerContent"/>
+                    <button type="submit" class="submit-button">Post Your Answer</button>
+                </form>
             </div>
         </div>
     </div>
-    <div th:replace="fragments/layout :: footer"></div>
+</div>
+<div th:replace="fragments/layout :: footer"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
     const newAnswerEditor = new toastui.Editor({
-          el: document.querySelector('#new-answer-editor'),
-          height: '300px',
-          initialEditType: 'markdown',
-          previewStyle: 'vertical',
-          placeholder: 'Write your answer here...',
-          usageStatistics: false,
-          linkify: false,
-          toolbarItems: [
+        el: document.querySelector('#new-answer-editor'),
+        height: '300px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        placeholder: 'Write your answer here...',
+        usageStatistics: false,
+        linkify: false,
+        toolbarItems: [
             ['heading', 'bold', 'italic', 'strike'],
             ['hr'],
             ['quote', 'ul', 'ol', 'task'],
             ['table', 'image', 'link'],
             ['code', 'codeblock']
-          ],
-          hooks: {
-            addImageBlobHook: async (blob, callback) => {
-              const fd = new FormData();
-              fd.append('image', blob, blob?.name || 'image.png');
-
-              const resp = await fetch('/api/images/upload', { method: 'POST', body: fd });
-              if (!resp.ok) {
-                let msg = 'Image upload failed';
-                try { const err = await resp.json(); if (err?.error) msg = err.error; } catch {}
-                alert(msg);
-                return;
-              }
-              const data = await resp.json();
-              if (!data?.url) {
-                alert('Upload succeeded but no URL returned');
-                return;
-              }
-              callback(data.url, 'image');
-            }
-          }
-        });
-
-        // Optional prefill for edit flow (if an element with existing markdown exists)
-        (function prefillEditor(){
-          const el = document.getElementById('existing-body');
-          if (el) {
-            const content = el.textContent || '';
-            if (content.trim().length) {
-              newAnswerEditor.setMarkdown(content);
-            }
-          }
-        })();
-
-        // Single submit hook used by onsubmit attribute
-        function prepareNewAnswerContent() {
-          const markdown = newAnswerEditor.getMarkdown();
-          document.getElementById('newAnswerContent').value = markdown;
-          return true;
-        }
-
-    // Edit Answer Editor functionality
-        let editAnswerEditor = null;
-        let currentEditingAnswerId = null;
-
-        function initEditAnswerEditor(answerId, currentContent) {
-        if (editAnswerEditor) {
-        editAnswerEditor.destroy();
-        }
-        editAnswerEditor = new toastui.Editor({
-        el: document.querySelector('#edit-answer-editor-' + answerId),
-        height: '300px',
-        initialEditType: 'markdown',
-        previewStyle: 'vertical',
-        initialValue: currentContent,
-        usageStatistics: false,
-        linkify: false,
-        toolbarItems: [
-        ['heading', 'bold', 'italic', 'strike'],
-        ['hr'],
-        ['quote', 'ul', 'ol', 'task'],
-        ['table', 'image', 'link'],
-        ['code', 'codeblock']
         ],
         hooks: {
-        // Upload pasted/dropped image to Cloudinary via your Spring endpoint
-        addImageBlobHook: async (blob, callback) => {
-        const formData = new FormData();
-        formData.append('image', blob);
+            addImageBlobHook: async (blob, callback) => {
+                const fd = new FormData();
+                fd.append('image', blob, blob?.name || 'image.png');
 
-        const response = await fetch('/api/images/upload', {
-        method: 'POST',
-        body: formData
+                const resp = await fetch('/api/images/upload', {method: 'POST', body: fd});
+                if (!resp.ok) {
+                    let msg = 'Image upload failed';
+                    try {
+                        const err = await resp.json();
+                        if (err?.error) msg = err.error;
+                    } catch {
+                    }
+                    alert(msg);
+                    return;
+                }
+                const data = await resp.json();
+                if (!data?.url) {
+                    alert('Upload succeeded but no URL returned');
+                    return;
+                }
+                callback(data.url, 'image');
+            }
+        }
+    });
+
+    // Optional prefill for edit flow (if an element with existing markdown exists)
+    (function prefillEditor() {
+        const el = document.getElementById('existing-body');
+        if (el) {
+            const content = el.textContent || '';
+            if (content.trim().length) {
+                newAnswerEditor.setMarkdown(content);
+            }
+        }
+    })();
+
+    // Single submit hook used by onsubmit attribute
+    function prepareNewAnswerContent() {
+        const markdown = newAnswerEditor.getMarkdown();
+        document.getElementById('newAnswerContent').value = markdown;
+        return true;
+    }
+
+    // Edit Answer Editor functionality
+    let editAnswerEditor = null;
+    let currentEditingAnswerId = null;
+
+    function initEditAnswerEditor(answerId, currentContent) {
+        if (editAnswerEditor) {
+            editAnswerEditor.destroy();
+        }
+        editAnswerEditor = new toastui.Editor({
+            el: document.querySelector('#edit-answer-editor-' + answerId),
+            height: '300px',
+            initialEditType: 'markdown',
+            previewStyle: 'vertical',
+            initialValue: currentContent,
+            usageStatistics: false,
+            linkify: false,
+            toolbarItems: [
+                ['heading', 'bold', 'italic', 'strike'],
+                ['hr'],
+                ['quote', 'ul', 'ol', 'task'],
+                ['table', 'image', 'link'],
+                ['code', 'codeblock']
+            ],
+            hooks: {
+                // Upload pasted/dropped image to Cloudinary via your Spring endpoint
+                addImageBlobHook: async (blob, callback) => {
+                    const formData = new FormData();
+                    formData.append('image', blob);
+
+                    const response = await fetch('/api/images/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    // Insert the returned Cloudinary URL into the editor content
+                    callback(data.url, 'image');
+                }
+            }
         });
+    }
 
-        const data = await response.json();
-        // Insert the returned Cloudinary URL into the editor content
-        callback(data.url, 'image');
-        }
-        }
-        });
-        }
-
-        function prepareEditAnswerContent(answerId) {
+    function prepareEditAnswerContent(answerId) {
         if (!editAnswerEditor) {
-        return false;
+            return false;
         }
         const content = editAnswerEditor.getMarkdown();
         document.getElementById('editAnswerContent-' + answerId).value = content;
         currentEditingAnswerId = null;
         return true;
-        }
+    }
 
-        function showEditForm(answerId) {
+    function showEditForm(answerId) {
         if (currentEditingAnswerId && currentEditingAnswerId !== answerId) {
-        cancelEdit(currentEditingAnswerId);
+            cancelEdit(currentEditingAnswerId);
         }
         const answerDisplay = document.getElementById('answer-display-' + answerId);
         const answerEditForm = document.getElementById('answer-edit-form-' + answerId);
@@ -671,17 +737,17 @@
         answerEditForm.style.display = 'block';
         initEditAnswerEditor(answerId, currentContent);
         currentEditingAnswerId = answerId;
-        }
+    }
 
-        function cancelEdit(answerId) {
+    function cancelEdit(answerId) {
         document.getElementById('answer-display-' + answerId).style.display = 'block';
         document.getElementById('answer-edit-form-' + answerId).style.display = 'none';
         if (editAnswerEditor) {
-        editAnswerEditor.destroy();
-        editAnswerEditor = null;
+            editAnswerEditor.destroy();
+            editAnswerEditor = null;
         }
         if (currentEditingAnswerId === answerId) {
-        currentEditingAnswerId = null;
+            currentEditingAnswerId = null;
         }
     }
 </script>

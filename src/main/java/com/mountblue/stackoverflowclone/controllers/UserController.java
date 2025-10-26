@@ -54,7 +54,7 @@ public class UserController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             // Ensure session is created so SecurityContext persists
             request.getSession(true);
-            return "redirect:/";
+            return "redirect:/login";
         } catch (IllegalArgumentException e) {
             model.addAttribute("signUpRequestDto", signUpRequestDto);
             model.addAttribute("errorMessage", e.getMessage());

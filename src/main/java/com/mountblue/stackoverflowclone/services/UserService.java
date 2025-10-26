@@ -25,9 +25,7 @@ public class UserService {
     User user = new User();
     user.setName(name);
     user.setEmail(email);
-    if(passwordEncoder.matches(password, confirmPassword)) {
-        user.setPassword(passwordEncoder.encode(password));
-    }
+    user.setPassword(passwordEncoder.encode(password));
 
     userRepository.save(user);
     }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ask a question - Stack Overflow</title>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
 
     <!-- Include common styles from fragment -->
     <th:block th:replace="~{fragments/layout :: styles}"></th:block>
@@ -15,10 +15,12 @@
             margin: 0 auto;
             padding: 24px 12px;
         }
+
         .container {
             display: flex;
             gap: 24px;
         }
+
         .main-content {
             flex: 1;
             background: white;
@@ -26,20 +28,24 @@
             border-radius: 3px;
             border: 1px solid #d6d9dc;
         }
+
         h1 {
             font-size: 27px;
             margin-bottom: 24px;
             font-weight: 600;
         }
+
         .form-group {
             margin-bottom: 24px;
         }
+
         label {
             display: block;
             font-weight: 600;
             font-size: 15px;
             margin-bottom: 4px;
         }
+
         .label-hint {
             display: block;
             font-size: 12px;
@@ -47,6 +53,7 @@
             margin-bottom: 8px;
             font-weight: normal;
         }
+
         input[type="text"], textarea {
             width: 100%;
             padding: 8px 10px;
@@ -54,14 +61,17 @@
             border-radius: 3px;
             font-size: 13px;
         }
+
         input[type="text"]:focus, textarea:focus {
             outline: none;
             border-color: #6cbbf7;
             box-shadow: 0 0 0 4px rgba(0, 116, 204, 0.15);
         }
+
         .required {
             color: #c22e32;
         }
+
         .btn-primary {
             background: #0a95ff;
             color: white;
@@ -72,9 +82,11 @@
             cursor: pointer;
             font-weight: 500;
         }
+
         .btn-primary:hover {
             background: #0074cc;
         }
+
         .btn-secondary {
             background: transparent;
             color: #c22e32;
@@ -84,10 +96,12 @@
             cursor: pointer;
             margin-left: 8px;
         }
+
         .sidebar {
             width: 350px;
             flex-shrink: 0;
         }
+
         .help-box {
             background: #fdf7e2;
             border: 1px solid #e1ce84;
@@ -95,24 +109,29 @@
             padding: 16px;
             margin-bottom: 16px;
         }
+
         .help-box h3 {
             font-size: 15px;
             font-weight: 600;
             margin-bottom: 12px;
         }
+
         .help-box ol {
             margin-left: 18px;
         }
+
         .help-box li {
             font-size: 13px;
             color: #3b4045;
             margin-bottom: 8px;
         }
+
         .radio-group {
             display: flex;
             gap: 16px;
             margin-top: 12px;
         }
+
         .radio-option {
             flex: 1;
             border: 1px solid #d6d9dc;
@@ -120,23 +139,28 @@
             padding: 16px;
             cursor: pointer;
         }
+
         .radio-option:hover {
             border-color: #0a95ff;
         }
+
         .radio-option input[type="radio"] {
             margin-right: 8px;
         }
+
         .radio-option label {
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
         }
+
         .radio-option ul {
             list-style: none;
             margin-top: 8px;
             font-size: 12px;
             color: #6a737c;
         }
+
         .radio-option ul li {
             margin-bottom: 4px;
         }
@@ -176,7 +200,8 @@
 <div class="page-container">
     <div class="container">
         <div class="main-content">
-            <h1 th:text="${questionForm != null and questionForm.id != null} ? 'Edit question' : 'Ask a question'">Ask a question</h1>
+            <h1 th:text="${questionForm != null and questionForm.id != null} ? 'Edit question' : 'Ask a question'">Ask a
+                question</h1>
             <form method="post"
                   th:action="${questionForm != null and questionForm.id != null}
                               ? @{/questions/{id}(id=${questionForm.id})}
@@ -194,10 +219,12 @@
                     <label>Body <span class="required">*</span></label>
                     <span class="label-hint">Include all information someone would need to answer your question.</span>
                     <div id="editor"></div>
-                    <textarea id="existing-body" hidden th:text="${(questionForm != null) ? questionForm.body : ''}"></textarea>
+                    <textarea id="existing-body" hidden
+                              th:text="${(questionForm != null) ? questionForm.body : ''}"></textarea>
                     <input type="hidden" name="body" id="editorContent">
                     <input type="hidden" name="bodyHtml" id="editorContentHtml">
-                    <input type="hidden" name="id" th:if="${questionForm != null and questionForm.id != null}" th:value="${questionForm.id}" />
+                    <input type="hidden" name="id" th:if="${questionForm != null and questionForm.id != null}"
+                           th:value="${questionForm.id}"/>
                 </div>
 
                 <div class="form-group">
@@ -231,8 +258,12 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="_method" value="patch" th:if="${questionForm != null and questionForm.id != null}" />
-                <button type="submit" class="btn-primary" th:text="${questionForm != null and questionForm.id != null} ? 'Save edits' : 'Review your question'">Review your question</button>
+                <input type="hidden" name="_method" value="patch"
+                       th:if="${questionForm != null and questionForm.id != null}"/>
+                <button type="submit" class="btn-primary"
+                        th:text="${questionForm != null and questionForm.id != null} ? 'Save edits' : 'Review your question'">
+                    Review your question
+                </button>
                 <button type="reset" class="btn-secondary">Discard draft</button>
             </form>
         </div>
@@ -240,7 +271,8 @@
         <div class="sidebar">
             <div class="help-box">
                 <h3>Step 1: Draft your question</h3>
-                <p style="font-size: 13px; margin-bottom: 8px;">The community is here to help you with specific problems.</p>
+                <p style="font-size: 13px; margin-bottom: 8px;">The community is here to help you with specific
+                    problems.</p>
                 <ol>
                     <li>Summarize the problem</li>
                     <li>Describe what you've tried</li>
@@ -257,19 +289,19 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
     const editor = new toastui.Editor({
-      el: document.querySelector('#editor'),
-      height: '400px',
-      initialEditType: 'markdown',
-      previewStyle: 'vertical',
-      placeholder: 'Write your question with markdown here...',
-      toolbarItems: [
-        ['heading', 'bold', 'italic', 'strike'],
-        ['hr'],
-        ['quote', 'ul', 'ol', 'task'],
-        ['table', 'image', 'link'],
-        ['code', 'codeblock']
-      ],
-      hooks: {
+        el: document.querySelector('#editor'),
+        height: '400px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        placeholder: 'Write your question with markdown here...',
+        toolbarItems: [
+            ['heading', 'bold', 'italic', 'strike'],
+            ['hr'],
+            ['quote', 'ul', 'ol', 'task'],
+            ['table', 'image', 'link'],
+            ['code', 'codeblock']
+        ],
+        hooks: {
             addImageBlobHook: async (blob, callback) => {
                 const formData = new FormData();
                 formData.append('image', blob);
@@ -286,7 +318,7 @@
     });
 
     // If editing, prefill the editor with existing markdown
-    (function prefillEditor(){
+    (function prefillEditor() {
         const el = document.getElementById('existing-body');
         if (el) {
             const content = el.textContent || '';
@@ -299,7 +331,7 @@
     // Get the form element
     const form = document.querySelector('form');
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         const markdown = editor.getMarkdown();
         const html = editor.getHTML();
         document.getElementById('editorContent').value = markdown;
