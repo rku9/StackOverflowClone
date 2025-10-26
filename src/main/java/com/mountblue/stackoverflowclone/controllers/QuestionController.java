@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.List;
@@ -97,6 +98,7 @@ public class QuestionController {
                             question.getUpdatedAt(),
                             question.getViewCount(),
                             question.getScore(),
+                            question.getComments(),
                             question.getTags().stream()
                                     .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
                                     .collect(Collectors.toList())
@@ -134,7 +136,8 @@ public class QuestionController {
 
     @GetMapping("/{id}")
     public String getQuestion(@PathVariable Long id,
-                              Model model){
+                              Model model,
+                              Principal principal){
         Question question = questionService.findById(id).get();
 
         List<Tag> tags = question.getTags();
@@ -150,6 +153,7 @@ public class QuestionController {
                 question.getUpdatedAt(),
                 question.getViewCount(),
                 question.getScore(),
+                question.getComments(),
                 tagResponseDtoList
                 );
         model.addAttribute("question", questionResponseDto);
@@ -167,7 +171,8 @@ public class QuestionController {
                     answer.getAuthor() != null ? answer.getAuthor().getName() : "Unknown",
                     answer.getCreatedAt(),
                     answer.getUpdatedAt(),
-                    answer.getScore());
+                    answer.getScore(),
+                    answer.getComments());
         }).toList();
 
         String markdown = questionResponseDto.body();

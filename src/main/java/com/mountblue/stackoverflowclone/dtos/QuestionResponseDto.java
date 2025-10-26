@@ -1,6 +1,7 @@
 package com.mountblue.stackoverflowclone.dtos;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mountblue.stackoverflowclone.models.Comment;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,8 +16,7 @@ public record QuestionResponseDto(
         Long viewCount,
         int score,
 //        List<AnswerResponseDto> answers,
-//        List<CommentResponseDto> comments,
-
+        List<Comment> comments,
         @JsonManagedReference("question-tags")
         List<TagResponseDto> tags
 ) {}

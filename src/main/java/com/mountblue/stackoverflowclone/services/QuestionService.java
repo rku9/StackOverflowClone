@@ -114,6 +114,7 @@ public class QuestionService {
                 question.getUpdatedAt(),
                 question.getViewCount(),
                 question.getScore(),
+                question.getComments(),
                 question.getTags().stream()
                         .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
                         .collect(Collectors.toList())

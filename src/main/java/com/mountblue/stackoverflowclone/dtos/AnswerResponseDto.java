@@ -1,6 +1,9 @@
 package com.mountblue.stackoverflowclone.dtos;
 
+import com.mountblue.stackoverflowclone.models.Comment;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record AnswerResponseDto(Long questionId,
                                 Long answerId,
@@ -9,6 +12,7 @@ public record AnswerResponseDto(Long questionId,
                                 String authorName,
                                 LocalDateTime createdAt,
                                 LocalDateTime updatedAt,
-                                int score) {
+                                int score,
+                                List<Comment> comments) {
 
 }
