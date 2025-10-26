@@ -233,9 +233,11 @@
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <span th:each="tag : ${question.tags}" th:text="${tag.name}"
-                                  style="display: inline-block; background: #e1ecf4; color: #39739d; border-radius: 3px; padding: 4px 6px; font-size: 12px; margin-right: 4px; text-decoration: none;">
-                            </span>
+                            <a th:each="tag : ${question.tags}"
+                               th:href="@{/questions(tags=${tag.name})}"
+                               th:text="${tag.name}"
+                               style="display: inline-block; background: #e1ecf4; color: #39739d; border-radius: 3px; padding: 4px 6px; font-size: 12px; margin-right: 4px; text-decoration: none;">
+                            </a>
                         </div>
                         <div style="font-size: 12px; color: #6a737c;">
                             <span th:text="${question.authorName}" style="color: #0074cc;">username</span>

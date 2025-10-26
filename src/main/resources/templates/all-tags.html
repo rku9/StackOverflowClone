@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StackOverflow Clone – Tags</title>
+    <th:block th:replace="~{fragments/layout :: styles}"></th:block>
+    <style>
+        .tags-page-wrapper {
+            max-width: 727px;
+            margin-left: 164px;
+            padding: 72px 24px 48px;
+            min-height: 100vh;
+        }
+
+        .tags-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .tags-header h1 {
+            font-size: 27px;
+            font-weight: 400;
+            color: #232629;
+        }
+
+        .tags-count {
+            font-size: 15px;
+            color: #6a737c;
+        }
+
+        .tags-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .tag-card {
+            background: #ffffff;
+            border: 1px solid #d6d9dc;
+            border-radius: 4px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tag-link {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            padding: 6px 10px;
+            border-radius: 3px;
+            font-size: 13px;
+            text-decoration: none;
+            font-weight: 500;
+            width: fit-content;
+        }
+
+        .tag-link:hover {
+            background: #d0e3f1;
+            color: #2c5777;
+        }
+
+        .tag-meta {
+            font-size: 12px;
+            color: #6a737c;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 64px 0;
+            color: #6a737c;
+            font-size: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .tags-page-wrapper {
+                margin-left: 0;
+                padding: 72px 16px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+
+<main class="tags-page-wrapper">
+    <div class="tags-header">
+        <h1>Tags</h1>
+        <div class="tags-count" th:text="${tags != null ? #lists.size(tags) : 0} + ' tags'">0 tags</div>
+    </div>
+
+    <div th:if="${tags != null and !tags.isEmpty()}" class="tags-grid">
+        <div class="tag-card" th:each="tag : ${tags}">
+            <a class="tag-link"
+               th:href="@{/questions(tags=${tag.name})}"
+               th:text="${tag.name}">tag</a>
+            <p class="tag-meta">
+                <span th:text="${tag.questions != null ? tag.questions.size() : 0}"></span>
+                questions
+            </p>
+        </div>
+    </div>
+
+    <div th:if="${tags == null or tags.isEmpty()}" class="empty-state">
+        No tags have been created yet.
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+<script th:replace="~{fragments/layout :: navbar-script}"></script>
+</body>
+</html>

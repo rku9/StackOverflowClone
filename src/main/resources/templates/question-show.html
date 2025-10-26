@@ -466,8 +466,10 @@
             </div>
 
             <div class="tag-list">
-                        <span th:each="tag : ${question.tags}" th:text="${tag.name}" class="tag">
-                        </span>
+                <a th:each="tag : ${question.tags}"
+                   th:href="@{/questions(tags=${tag.name})}"
+                   th:text="${tag.name}"
+                   class="tag"></a>
             </div>
 
             <div class="post-actions">
