@@ -25,7 +25,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     """)
     Page<Question> findQuestionsByAnswerCount(@Param("answerCount") int answerCount, Pageable pageable);
 
-    Page<Question> findByAuthor_Username(Pageable pageable, String username);
+    Page<Question> findByAuthor_Name(Pageable pageable, String name);
 
     @Query("""
         SELECT q

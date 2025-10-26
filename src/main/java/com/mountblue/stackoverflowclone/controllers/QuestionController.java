@@ -90,7 +90,7 @@ public class QuestionController {
 
                     return new QuestionResponseDto(
                             question.getId(),
-                            question.getAuthor().getUsername(),
+                            question.getAuthor().getName(),
                             question.getTitle(),
                             truncatedHtml,  // Use parsed HTML instead of raw markdown
                             question.getCreatedAt(),
@@ -143,7 +143,7 @@ public class QuestionController {
                 .collect(Collectors.toList());
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto(id,
-                question.getAuthor().getUsername(),
+                question.getAuthor().getName(),
                 question.getTitle(),
                 question.getBody(),
                 question.getCreatedAt(),
@@ -164,7 +164,7 @@ public class QuestionController {
                     answer.getId(),
                     markdownBody,
                     htmlBody,
-                    answer.getAuthor() != null ? answer.getAuthor().getUsername() : "Unknown",
+                    answer.getAuthor() != null ? answer.getAuthor().getName() : "Unknown",
                     answer.getCreatedAt(),
                     answer.getUpdatedAt(),
                     answer.getScore());

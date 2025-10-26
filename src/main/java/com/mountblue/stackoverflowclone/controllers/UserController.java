@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping("/login")
     public String showLoginForm(Model model, @RequestParam(value = "error", required = false) String error) {
         if (error != null) {
-            model.addAttribute("errorMessage", error);
+            model.addAttribute("errorMessage", "Invalid email or password.");
         }
         model.addAttribute("loginRequestDto", new com.mountblue.stackoverflowclone.dtos.LoginRequestDto());
         return "login";
@@ -54,7 +54,7 @@ public class UserController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             // Ensure session is created so SecurityContext persists
             request.getSession(true);
-            return "redirect:/login";
+            return "redirect:/questions";
         } catch (IllegalArgumentException e) {
             model.addAttribute("signUpRequestDto", signUpRequestDto);
             model.addAttribute("errorMessage", e.getMessage());

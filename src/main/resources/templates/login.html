@@ -252,6 +252,10 @@
     </button>
 
     <div class="auth-card">
+        <div th:if="${errorMessage}"
+             style="background: #f8d7da; color: #842029; border: 1px solid #f5c2c7; padding: 10px 12px; border-radius: 4px; margin-bottom: 12px;">
+            <span th:text="${errorMessage}">Invalid email or password.</span>
+        </div>
         <form th:action="@{/login}" method="post">
             <div class="form-group">
                 <label for="email">Email</label>

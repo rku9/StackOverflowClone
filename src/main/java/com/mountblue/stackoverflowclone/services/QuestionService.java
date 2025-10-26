@@ -107,7 +107,7 @@ public class QuestionService {
         Page<Question> results = getSeachedQuestions(pageable, query);
         return results.map(question -> new QuestionResponseDto(
                 question.getId(),
-                question.getAuthor().getUsername(),
+                question.getAuthor().getName(),
                 question.getTitle(),
                 question.getBody(),
                 question.getCreatedAt(),
@@ -213,7 +213,7 @@ public class QuestionService {
 
         if (stringFilters.containsKey("user")) {
             String username = stringFilters.get("user");
-            return questionRepository.findByAuthor_Username(Pageable.unpaged(), username);
+            return questionRepository.findByAuthor_Name(Pageable.unpaged(), username);
         }
 
         if (!tags.isEmpty()) {

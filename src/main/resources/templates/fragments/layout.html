@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
 </head>
@@ -84,12 +84,25 @@
         <!-- Right Side Navigation -->
         <div style="display: flex; gap: 12px; align-items: center;">
             <a href="/products" style="color: #6a737c; text-decoration: none; font-size: 13px;">Products</a>
-            <a href="/login"
-               style="color: #0074cc; text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 3px;">Log
-                in</a>
-            <a href="/signup"
-               style="background: #0a95ff; color: white; text-decoration: none; font-size: 13px; padding: 8px 12px; border-radius: 4px;">Sign
-                up</a>
+
+            <!-- Show only when NOT authenticated -->
+            <div sec:authorize="isAnonymous()" style="display: flex; gap: 12px; align-items: center;">
+                <a href="/login"
+                   style="color: #0074cc; text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 3px;">Log in</a>
+                <a href="/signup"
+                   style="background: #0a95ff; color: white; text-decoration: none; font-size: 13px; padding: 8px 12px; border-radius: 4px;">Sign up</a>
+            </div>
+
+            <!-- Show only when authenticated -->
+            <div sec:authorize="isAuthenticated()" style="display: flex; gap: 12px; align-items: center;">
+                <span style="font-size: 13px; color: #3b4045;" th:text="${#authentication?.principal?.displayName}">User</span>
+                <form th:action="@{/logout}" method="post" style="display:inline; margin:0;">
+                    <button type="submit"
+                            style="background: transparent; color: #6a737c; border: 1px solid #d6d9dc; padding: 6px 12px; border-radius: 3px; font-size: 13px; cursor: pointer;">
+                        Log out
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
