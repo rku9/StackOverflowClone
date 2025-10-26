@@ -48,7 +48,7 @@ public class UserController {
         try {
             userService.register(name, email, password, confirmPassword);
             // Auto-login the user by setting Authentication in the SecurityContext
-            UserDetails userDetails = userDetailsService.loadUserByUsername(name);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
