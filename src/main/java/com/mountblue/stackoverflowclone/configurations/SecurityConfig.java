@@ -31,7 +31,10 @@ public class SecurityConfig {
                 form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/questions", true)
+                        .failureUrl("/login?error")
                         .permitAll());
         http.logout(logout ->
                 logout
