@@ -941,7 +941,7 @@
                 </div>
             </div>
 
-            <div class="answer-form">
+            <div class="answer-form" sec:authorize="isAuthenticated()">
                 <h3>Your Answer</h3>
                 <form id="new-answer-form" th:action="@{/answers/new}" method="post"
                       onsubmit="return prepareNewAnswerContent()">
@@ -950,6 +950,21 @@
                     <input type="hidden" name="body" id="newAnswerContent"/>
                     <button type="submit" class="submit-button">Post Your Answer</button>
                 </form>
+            </div>
+            <div sec:authorize="!isAuthenticated()">
+                <div class="login-prompt" style="background: #fdf7e7; border: 1px solid #f1e5bc; padding: 5px; border-radius: 5px; text-align: center;">
+                    <p style="margin: 0 0 12px 0; font-size: 15px; color: #3b4045;">
+                        You must be logged in to post an answer.
+                    </p>
+                    <div style="display: flex; gap: 12px; justify-content: center;">
+                        <a th:href="@{/login}" class="btn" style="background: #0a95ff; color: white; padding: 10px 16px; text-decoration: none; border-radius: 3px;">
+                            Log in
+                        </a>
+                        <a th:href="@{/signup}" class="btn" style="background: #fff; color: #0a95ff; padding: 10px 16px; text-decoration: none; border-radius: 3px; border: 1px solid #0a95ff;">
+                            Sign up
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
