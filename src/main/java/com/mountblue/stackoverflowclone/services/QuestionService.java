@@ -3,10 +3,7 @@ package com.mountblue.stackoverflowclone.services;
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
 import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
-import com.mountblue.stackoverflowclone.models.Question;
-import com.mountblue.stackoverflowclone.models.FilterType;
-import com.mountblue.stackoverflowclone.models.SearchQuery;
-import com.mountblue.stackoverflowclone.models.Tag;
+import com.mountblue.stackoverflowclone.models.*;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.TagRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
@@ -40,14 +37,14 @@ public class QuestionService {
     }
 
     @Transactional
-    public Question createQuestion(QuestionFormDto questionFormDto) {
+    public Question createQuestion(QuestionFormDto questionFormDto, UserPrincipal currentUser) {
         Question question = new Question();
         question.setTitle(questionFormDto.title());
         question.setBody(questionFormDto.body());
         question.setTags(extractTags(questionFormDto.tags()));
         Long authorId = questionFormDto.authorId() != null && questionFormDto.authorId() > 0
                 ? questionFormDto.authorId()
-                : 1L;
+                : currentUser.getId();
         question.setAuthor(userRepository.findById(authorId)
                 .orElseThrow(() -> new NoSuchElementException("Author not found")));
         return questionRepository.save(question);

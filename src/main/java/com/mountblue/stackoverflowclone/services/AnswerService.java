@@ -4,6 +4,7 @@ import com.mountblue.stackoverflowclone.dtos.AnswerFormDto;
 import com.mountblue.stackoverflowclone.models.Answer;
 import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.User;
+import com.mountblue.stackoverflowclone.models.UserPrincipal;
 import com.mountblue.stackoverflowclone.repositories.AnswerRepository;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
@@ -28,12 +29,12 @@ public class AnswerService {
     }
 
     @Transactional
-    public Answer saveAnswer(AnswerFormDto answerFormDto, Long questionId) {
+    public Answer saveAnswer(AnswerFormDto answerFormDto, Long questionId, UserPrincipal currentUser) {
 
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new NoSuchElementException("Question not found"));
 
-        User author = userRepository.findById(1L)
+        User author = userRepository.findById(currentUser.getId())
                 .orElseThrow(() -> new NoSuchElementException("Default user not found. Please ensure user with ID 1 exists in your database."));
 
         if (answerFormDto.body() == null || answerFormDto.body().trim().isEmpty()) {

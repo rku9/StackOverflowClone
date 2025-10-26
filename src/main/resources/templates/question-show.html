@@ -797,13 +797,13 @@
                                                     class="btn btn-outline"
                                                     style="font-size: 13px; padding: 4px 8px;"
                                                     sec:authorize="isAuthenticated()"
-                                                    th:if="${#authentication.name == answer.authorName}"
+                                                    th:if="${#authentication.name == answer.authorEmail}"
                                                     th:onclick="'showEditForm(' + ${answer.answerId} + ')'">Edit
                                             </button>
                                             <form th:action="@{/answers/{id}(id=${answer.answerId})}" method="post"
                                                   style="display:inline"
                                                   sec:authorize="isAuthenticated()"
-                                                  th:if="${#authentication.name == answer.authorName}">
+                                                  th:if="${#authentication.name == answer.authorEmail}">
                                                 <input type="hidden" name="questionId" th:value="${question.id}"/>
                                                 <input type="hidden" name="_method" value="delete"/>
                                                 <button type="submit" class="btn btn-outline"

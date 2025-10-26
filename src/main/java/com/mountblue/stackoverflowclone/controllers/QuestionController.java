@@ -7,11 +7,13 @@ import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
 import com.mountblue.stackoverflowclone.models.Answer;
 import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.Tag;
+import com.mountblue.stackoverflowclone.models.UserPrincipal;
 import com.mountblue.stackoverflowclone.services.AnswerService;
 import com.mountblue.stackoverflowclone.services.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -118,13 +120,13 @@ public class QuestionController {
 
     @PostMapping("/new")
     public String submitQuestionForm(@ModelAttribute("questionForm") QuestionFormDto questionFormDto,
-                                     BindingResult result, Model model) {
-        System.out.println(questionFormDto.body());
+                                     BindingResult result,
+                                     Model model,
+                                     @AuthenticationPrincipal UserPrincipal principal) {
         if (result.hasErrors()){
             return "question-form";
         }
-        System.out.println(questionFormDto);
-        Question savedQuestion = questionService.createQuestion(questionFormDto);
+        Question savedQuestion = questionService.createQuestion(questionFormDto, principal);
 
         return "redirect:/questions/" + savedQuestion.getId();
     }
@@ -172,6 +174,7 @@ public class QuestionController {
                     markdownBody,
                     htmlBody,
                     answer.getAuthor() != null ? answer.getAuthor().getName() : "Unknown",
+                    answer.getAuthor().getEmail(),
                     answer.getCreatedAt(),
                     answer.getUpdatedAt(),
                     answer.getScore(),
