@@ -17,7 +17,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {}
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username).get();
+    }
 
     public void register(String name, String email, String password, String confirmPassword) {
     User user = new User();
