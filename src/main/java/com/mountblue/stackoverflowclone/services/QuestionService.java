@@ -7,6 +7,7 @@ import com.mountblue.stackoverflowclone.models.*;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.TagRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
+import com.mountblue.stackoverflowclone.repositories.VoteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,15 +26,18 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final TagRepository tagRepository;
     private final SearchQueryParser searchQueryParser;
+    private final VoteRepository voteRepository;
 
     public QuestionService(QuestionRepository questionRepository,
                            UserRepository userRepository,
                            TagRepository tagRepository,
-                           SearchQueryParser searchQueryParser) {
+                           SearchQueryParser searchQueryParser,
+                           VoteRepository voteRepository) {
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
         this.tagRepository = tagRepository;
         this.searchQueryParser = searchQueryParser;
+        this.voteRepository=voteRepository;
     }
 
     @Transactional
@@ -91,8 +95,42 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    public void voteQuestion(Question question, String choice){
-        question.setScore(choice.equals("upvote") ? question.getScore() + 1 : question.getScore() - 1);
+    public void voteQuestion(Question question, String choice, String postType, UserPrincipal principal, Long id){
+        int score = question.getScore();
+        User user = userRepository.findById(principal.getId()).get();
+        Vote vote = voteRepository.findByUserIdAndPostIdAndPostType(user.getId(), id, postType).isEmpty()
+                ? new Vote()
+                : voteRepository.findByUserIdAndPostIdAndPostType(principal.getId(), id, postType).get();
+        int newVoteValue = choice.equals("upvote") ? 1 : -1;
+        System.out.println(newVoteValue);
+        if (vote.getPostId() == null) {
+            // New vote - user hasn't voted before
+            vote.setUser(user);
+            vote.setPostId(id);
+            vote.setPostType(postType);
+            vote.setVoteValue(newVoteValue);
+            score += newVoteValue;
+        } else {
+            // User has voted before - toggle or change vote
+            int oldVoteValue = vote.getVoteValue();
+
+            if (oldVoteValue == newVoteValue) {
+                // Clicking same vote - remove vote
+                voteRepository.delete(vote);
+                score -= oldVoteValue;
+                question.setScore(score);
+                questionRepository.save(question);
+                return;
+            } else {
+                // Changing vote (upvote to downvote or vice versa)
+                score -= oldVoteValue;  // Remove old vote
+                score += newVoteValue;  // Add new vote
+                vote.setVoteValue(newVoteValue);
+            }
+        }
+
+        voteRepository.save(vote);
+        question.setScore(score);
         questionRepository.save(question);
     }
 

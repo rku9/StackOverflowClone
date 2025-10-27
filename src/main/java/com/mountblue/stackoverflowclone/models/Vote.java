@@ -20,6 +20,6 @@ public class Vote extends BaseModel {
     @Column(name = "post_type", nullable = false)
     private String postType; // "question" or "answer"
 
-    @Column(name = "vote_value", nullable = false)
+    @Column(name = "vote_value", nullable = false, columnDefinition = "integer default 0")
     private int voteValue; // +1 for upvote, -1 for downvote
 }

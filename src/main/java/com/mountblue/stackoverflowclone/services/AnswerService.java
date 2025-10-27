@@ -1,13 +1,11 @@
 package com.mountblue.stackoverflowclone.services;
 
 import com.mountblue.stackoverflowclone.dtos.AnswerFormDto;
-import com.mountblue.stackoverflowclone.models.Answer;
-import com.mountblue.stackoverflowclone.models.Question;
-import com.mountblue.stackoverflowclone.models.User;
-import com.mountblue.stackoverflowclone.models.UserPrincipal;
+import com.mountblue.stackoverflowclone.models.*;
 import com.mountblue.stackoverflowclone.repositories.AnswerRepository;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
+import com.mountblue.stackoverflowclone.repositories.VoteRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +19,16 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
+    private final VoteRepository voteRepository;
 
-    public AnswerService(AnswerRepository answerRepository, UserRepository userRepository, QuestionRepository questionRepository){
+    public AnswerService(AnswerRepository answerRepository,
+                         UserRepository userRepository,
+                         QuestionRepository questionRepository,
+                         VoteRepository voteRepository){
         this.answerRepository = answerRepository;
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
+        this.voteRepository = voteRepository;
     }
 
     @Transactional
@@ -56,9 +59,43 @@ public class AnswerService {
     }
 
     @Transactional
-    public void voteAnswer(Long answerId, String choice){
-        Answer answer = answerRepository.findById(answerId).get();
-        answer.setScore(choice.equals("upvote") ? answer.getScore() + 1 : answer.getScore() - 1);
+    public void voteAnswer(Answer answer, String choice, String postType, UserPrincipal principal, Long id){
+        int score = answer.getScore();
+        User user = userRepository.findById(principal.getId()).get();
+        Vote vote = voteRepository.findByUserIdAndPostIdAndPostType(user.getId(), id, postType).isEmpty()
+                ? new Vote()
+                : voteRepository.findByUserIdAndPostIdAndPostType(principal.getId(), id, postType).get();
+        int newVoteValue = choice.equals("upvote") ? 1 : -1;
+        System.out.println(newVoteValue);
+        if (vote.getPostId() == null) {
+            // New vote - user hasn't voted before
+            vote.setUser(user);
+            vote.setPostId(id);
+            vote.setPostType(postType);
+            vote.setVoteValue(newVoteValue);
+            score += newVoteValue;
+        } else {
+            // User has voted before - toggle or change vote
+            int oldVoteValue = vote.getVoteValue();
+
+            if (oldVoteValue == newVoteValue) {
+                // Clicking same vote - remove vote
+                voteRepository.delete(vote);
+                score -= oldVoteValue;
+                answer.setScore(score);
+                answerRepository.save(answer);
+                return;
+            } else {
+                // Changing vote (upvote to downvote or vice versa)
+                score -= oldVoteValue;  // Remove old vote
+                score += newVoteValue;  // Add new vote
+                vote.setVoteValue(newVoteValue);
+            }
+        }
+
+        voteRepository.save(vote);
+        answer.setScore(score);
+        answerRepository.save(answer);
     }
 
     @Transactional

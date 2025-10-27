@@ -209,9 +209,13 @@ public class QuestionController {
     }
 
     @PostMapping("/vote/{id}")
-    public String voteQuestion(@PathVariable Long id, @RequestParam("choice") String choice, Model model){
+    public String voteQuestion(@PathVariable Long id,
+                               @RequestParam("choice") String choice,
+                               @RequestParam("postType") String postType,
+                               @AuthenticationPrincipal UserPrincipal principal,
+                               Model model){
         Question question = questionService.findById(id).get();
-        questionService.voteQuestion(question, choice);
+        questionService.voteQuestion(question, choice, postType, principal, id);
         return "redirect:/questions/" + question.getId();
     }
 

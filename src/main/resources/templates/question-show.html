@@ -627,6 +627,7 @@
                 <div class="vote-col">
                     <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post">
                         <input type="hidden" name="choice" value="upvote"/>
+                        <input type="hidden" name="postType" value="question"/>
                         <button type="submit" class="vote-button" title="This question is useful">
                             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
                                 <path d="M1 12h16L9 4 1 12Z"/>
@@ -638,6 +639,7 @@
 
                     <form th:action="@{/questions/vote/{id}(id=${question.id})}" method="post">
                         <input type="hidden" name="choice" value="downvote"/>
+                        <input type="hidden" name="postType" value="question"/>
                         <button type="submit" class="vote-button" title="This question is not useful">
                             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
                                 <path d="M1 6h16L9 14 1 6Z"/>
@@ -758,6 +760,7 @@
                                 <form th:action="@{/answers/vote/{id}(id=${answer.answerId})}" method="post">
                                     <input type="hidden" name="questionId" th:value="${question.id}"/>
                                     <input type="hidden" name="choice" value="upvote"/>
+                                    <input type="hidden" name="postType" value="answer"/>
                                     <button type="submit" class="vote-button" title="This answer is useful">
                                         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
                                             <path d="M1 12h16L9 4 1 12Z"/>
@@ -770,6 +773,7 @@
                                 <form th:action="@{/answers/vote/{id}(id=${answer.answerId})}" method="post">
                                     <input type="hidden" name="questionId" th:value="${question.id}"/>
                                     <input type="hidden" name="choice" value="downvote"/>
+                                    <input type="hidden" name="postType" value="answer"/>
                                     <button type="submit" class="vote-button" title="This answer is not useful">
                                         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
                                             <path d="M1 6h16L9 14 1 6Z"/>
