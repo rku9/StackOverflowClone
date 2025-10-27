@@ -4,10 +4,7 @@ import com.mountblue.stackoverflowclone.dtos.AnswerResponseDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionFormDto;
 import com.mountblue.stackoverflowclone.dtos.QuestionResponseDto;
 import com.mountblue.stackoverflowclone.dtos.TagResponseDto;
-import com.mountblue.stackoverflowclone.models.Answer;
-import com.mountblue.stackoverflowclone.models.Question;
-import com.mountblue.stackoverflowclone.models.Tag;
-import com.mountblue.stackoverflowclone.models.UserPrincipal;
+import com.mountblue.stackoverflowclone.models.*;
 import com.mountblue.stackoverflowclone.services.AnswerService;
 import com.mountblue.stackoverflowclone.services.QuestionService;
 import com.mountblue.stackoverflowclone.services.FollowService;
@@ -26,6 +23,7 @@ import com.vladsch.flexmark.parser.Parser;
 
 import java.security.Principal;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,15 +66,15 @@ public class QuestionController {
                 .distinct()
                 .toList();
 
-        List<com.mountblue.stackoverflowclone.models.FilterType> filterTypes = new java.util.ArrayList<>();
+        List<FilterType> filterTypes = new java.util.ArrayList<>();
         if (filterParams != null) {
             for (String f : filterParams) {
                 if (f == null) continue;
                 String v = f.trim();
                 if (v.equalsIgnoreCase("NoAnswers")) {
-                    filterTypes.add(com.mountblue.stackoverflowclone.models.FilterType.NO_ANSWERS);
+                    filterTypes.add(FilterType.NO_ANSWERS);
                 } else if (v.equalsIgnoreCase("NoUpvotedOrAccepted")) {
-                    filterTypes.add(com.mountblue.stackoverflowclone.models.FilterType.NO_UPVOTED_OR_ACCEPTED_ANSWER);
+                    filterTypes.add(FilterType.NO_UPVOTED_OR_ACCEPTED_ANSWER);
                 }
             }
         }
@@ -170,6 +168,7 @@ public class QuestionController {
                 );
         model.addAttribute("question", questionResponseDto);
         List<Answer> answers = answerService.getAnswers(question.getId());
+        answers.sort(Comparator.comparing(Answer::isAccepted).reversed());
         Parser parser = Parser.builder().build();
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         List<AnswerResponseDto> answerResponseDtos = answers.stream().map(answer -> {
@@ -185,7 +184,8 @@ public class QuestionController {
                     answer.getCreatedAt(),
                     answer.getUpdatedAt(),
                     answer.getScore(),
-                    answer.getComments());
+                    answer.getComments(),
+                    answer.isAccepted());
         }).toList();
 
         String markdown = questionResponseDto.body();

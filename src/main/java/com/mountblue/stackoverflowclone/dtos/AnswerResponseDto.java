@@ -14,6 +14,7 @@ public record AnswerResponseDto(Long questionId,
                                 LocalDateTime createdAt,
                                 LocalDateTime updatedAt,
                                 int score,
-                                List<Comment> comments) {
+                                List<Comment> comments,
+                                boolean accepted) {
 
 }

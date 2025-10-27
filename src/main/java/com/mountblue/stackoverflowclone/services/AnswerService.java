@@ -1,13 +1,12 @@
 package com.mountblue.stackoverflowclone.services;
 
 import com.mountblue.stackoverflowclone.dtos.AnswerFormDto;
-import com.mountblue.stackoverflowclone.models.Answer;
-import com.mountblue.stackoverflowclone.models.Question;
-import com.mountblue.stackoverflowclone.models.User;
-import com.mountblue.stackoverflowclone.models.UserPrincipal;
+import com.mountblue.stackoverflowclone.models.*;
 import com.mountblue.stackoverflowclone.repositories.AnswerRepository;
 import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
+import com.mountblue.stackoverflowclone.repositories.VoteRepository;
+import org.springframework.security.access.AccessDeniedException;
 import com.mountblue.stackoverflowclone.workers.EmailQueue;
 import com.mountblue.stackoverflowclone.dtos.EmailTaskDto;
 import org.slf4j.Logger;
@@ -96,16 +95,43 @@ public class AnswerService {
     }
 
     @Transactional
-    public void voteAnswer(Long answerId, String choice){
-        Answer answer = answerRepository.findById(answerId).get();
-        answer.setScore(choice.equals("upvote") ? answer.getScore() + 1 : answer.getScore() - 1);
-    }
+    public void voteAnswer(Answer answer, String choice, String postType, UserPrincipal principal, Long id){
+        int score = answer.getScore();
+        User user = userRepository.findById(principal.getId()).get();
+        Vote vote = voteRepository.findByUserIdAndPostIdAndPostType(user.getId(), id, postType).isEmpty()
+                ? new Vote()
+                : voteRepository.findByUserIdAndPostIdAndPostType(principal.getId(), id, postType).get();
+        int newVoteValue = choice.equals("upvote") ? 1 : -1;
+        System.out.println(newVoteValue);
+        if (vote.getPostId() == null) {
+            // New vote - user hasn't voted before
+            vote.setUser(user);
+            vote.setPostId(id);
+            vote.setPostType(postType);
+            vote.setVoteValue(newVoteValue);
+            score += newVoteValue;
+        } else {
+            // User has voted before - toggle or change vote
+            int oldVoteValue = vote.getVoteValue();
 
-    @Transactional
-    public void voteAnswer(Answer answer, String choice, String postType, UserPrincipal principal, Long id) {
-        // Bridge to simple voting logic used by templates; ignores postType/principal for now
-        if (answer == null) return;
-        voteAnswer(answer.getId(), choice);
+            if (oldVoteValue == newVoteValue) {
+                // Clicking same vote - remove vote
+                voteRepository.delete(vote);
+                score -= oldVoteValue;
+                answer.setScore(score);
+                answerRepository.save(answer);
+                return;
+            } else {
+                // Changing vote (upvote to downvote or vice versa)
+                score -= oldVoteValue;  // Remove old vote
+                score += newVoteValue;  // Add new vote
+                vote.setVoteValue(newVoteValue);
+            }
+        }
+
+        voteRepository.save(vote);
+        answer.setScore(score);
+        answerRepository.save(answer);
     }
 
     @Transactional
@@ -114,13 +140,17 @@ public class AnswerService {
                 .orElseThrow(() -> new NoSuchElementException("Answer not found"));
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new NoSuchElementException("Question not found"));
+
         if (!answer.getQuestion().getId().equals(questionId)) {
             throw new IllegalArgumentException("Answer does not belong to the specified question");
         }
+
         if (answerFormDto.body() == null || answerFormDto.body().trim().isEmpty()) {
             throw new IllegalArgumentException("Answer body cannot be empty");
         }
+
         answer.setBody(answerFormDto.body().trim());
+
         return answerRepository.save(answer);
     }
 
@@ -128,6 +158,33 @@ public class AnswerService {
     public void editAnswerBody(Long answerId, Long questionId, String body) {
         AnswerFormDto formDto = new AnswerFormDto(answerId, body);
         editAnswer(formDto, answerId, questionId);
+    }
+
+    @Transactional
+    public void acceptAnswer(Long answerId, UserPrincipal principal) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new NoSuchElementException("Answer not found"));
+
+        Question question = answer.getQuestion();
+
+        if (!question.getAuthor().getId().equals(principal.getId())) {
+            throw new AccessDeniedException("Only the question author can accept an answer");
+        }
+
+        List<Answer> answers = answerRepository.getAnswersByQuestionId(question.getId());
+        for (Answer a : answers) {
+            if (a.isAccepted()) {
+                a.setAccepted(false);
+                answerRepository.save(a);
+            }
+        }
+
+        answer.setAccepted(true);
+        answerRepository.save(answer);
+    }
+
+    public void deleteAnswer(Long answerId) {
+        answerRepository.deleteById(answerId);
     }
 
     public Optional<Answer> findById(Long answerId) {

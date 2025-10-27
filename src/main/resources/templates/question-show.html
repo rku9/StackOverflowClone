@@ -758,6 +758,9 @@
                 </div>
             </div>
 
+            <div>
+                UserId: [[${#authentication.principal.email}]] | AuthorId: [[${question.authorEmail}]]
+            </div>
             <!-- Answers Section -->
             <div class="answers-section" style="margin-top: 32px;">
                 <div th:if="${answers != null and !answers.isEmpty()}">
@@ -803,6 +806,10 @@
 
                                     <div class="answer-meta"
                                          style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+
+                                        <!-- Green tick for accepted answer -->
+                                        <span th:if="${answer.accepted}" style="color:green; font-size:1.6em; margin-right: 6px;" title="Accepted Answer">&#10003;</span>
+
                                         <div class="answer-actions" style="display: flex; gap: 8px;">
                                             <button type="button" class="btn btn-outline"
                                                     style="font-size: 13px; padding: 4px 8px;">Share
@@ -826,6 +833,16 @@
                                                     Delete
                                                 </button>
                                             </form>
+
+                                            <!-- Accept answer button, only visible to question author and only if not accepted -->
+                                            <div th:if="${#authentication.principal.email == question.authorEmail}">
+                                                <form th:action="@{/answers/accept/{id}(id=${answer.answerId})}" method="post" style="display:inline; margin-left: 6px;">
+                                                    <input type="hidden" name="questionId" th:value="${question.id}" />
+                                                    <button type="submit" th:if="${!answer.accepted}" class="btn btn-success"
+                                                            style="font-size: 13px; padding: 4px 8px;">Accept</button>
+                                                </form>
+                                            </div>
+
                                         </div>
 
                                         <div class="answer-author"
@@ -931,8 +948,8 @@
                                         <div th:id="'add-a-comment-form-' + ${answer.answerId}" class="hidden">
                                             <form th:action="@{/answers/{id}/comments(id=${answer.answerId})}"
                                                   method="post">
-                                                <textarea class="comment-input" name="content"
-                                                          placeholder="Add your comment..." required></textarea>
+                                    <textarea class="comment-input" name="content"
+                                              placeholder="Add your comment..." required></textarea>
                                                 <button type="submit" class="comment-submit-btn">Add Comment</button>
                                                 <button type="button" class="comment-cancel-btn comment-edit-btn"
                                                         th:onclick="'hideAddCommentForm(\'a\', ' + ${answer.answerId} + ')'">
@@ -994,9 +1011,9 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
 <script>
-    // ============================================
+
     // NEW ANSWER EDITOR
-    // ============================================
+
     const newAnswerEditor = new toastui.Editor({
         el: document.querySelector('#new-answer-editor'),
         height: '300px',
@@ -1056,9 +1073,8 @@
         return true;
     }
 
-    // ============================================
     // EDIT ANSWER EDITOR
-    // ============================================
+
     let editAnswerEditor = null;
     let currentEditingAnswerId = null;
 
@@ -1134,9 +1150,7 @@
         }
     }
 
-    // ============================================
     // COMMENT FUNCTIONS
-    // ============================================
 
     // Show add comment form
     function showAddCommentForm(type, id) {
