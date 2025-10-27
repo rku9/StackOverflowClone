@@ -161,7 +161,7 @@ public class QuestionService {
      * Unified filtering + sorting + pagination used by QuestionsController.
      * Applies: keyword search, tag intersection, checkbox filters, min age (daysOld), and sort.
      */
-    public List<Question> getFilteredQuestions(
+    public Page<Question> getFilteredQuestions(
             Pageable pageable,
             String query,
             List<String> tags,
@@ -237,9 +237,8 @@ public class QuestionService {
         }
         working.sort(cmp);
 
-        // Paginate and return page content
-        Page<Question> page = paginate(working, pageable);
-        return page.getContent();
+        // Paginate and return Page (not just page content)
+        return paginate(working, pageable);  // Changed from page.getContent() to just page
     }
 
     private Page<Question> selectBaseResult(SearchQuery searchQuery) {

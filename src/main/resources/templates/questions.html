@@ -5,6 +5,15 @@
     <title>StackOverflow Clone – Questions</title>
     <th:block th:replace="~{fragments/layout :: styles}"></th:block>
     <style>
+        .pagination-container a:hover {
+            background: #f8f9f9 !important;
+            border-color: #bbc0c4 !important;
+        }
+
+        .pagination-number:hover {
+            background: #e1ecf4 !important;
+        }
+
         /* Tab navigation styles */
         .tab-nav {
             display: flex;
@@ -241,13 +250,90 @@
                         </div>
                         <div style="font-size: 12px; color: #6a737c;">
                             <span th:text="${question.authorName}" style="color: #0074cc;">username</span>
-                            asked <span
-                                th:text="${#temporals.format(question.createdAt, 'MMM dd, yyyy')}">Oct 24, 2025</span>
+                            asked <span th:text="${#temporals.format(question.createdAt, 'MMM dd, yyyy')}">Oct 24, 2025</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Pagination Controls -->
+        <div th:if="${totalPages > 1}" class="pagination-container"
+             style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 32px; padding: 20px 0;">
+
+            <!-- Previous Button -->
+            <a th:if="${currentPage > 0}"
+               th:href="@{/questions(page=${currentPage - 1}, size=15, q=${query}, sort=${sort}, filters=${filters}, daysOld=${daysOld}, tags=${tags})}"
+               class="pagination-btn"
+               style="padding: 8px 12px; border: 1px solid #d6d9dc; border-radius: 3px; text-decoration: none; color: #3b4045; background: white;">
+                Prev
+            </a>
+            <span th:if="${currentPage == 0}"
+                  style="padding: 8px 12px; border: 1px solid #e3e6e8; border-radius: 3px; color: #bbc0c4; background: #f8f9f9;">
+        Prev
+    </span>
+
+            <!-- Page Numbers -->
+            <div style="display: flex; gap: 4px;">
+                <!-- First page -->
+                <a th:if="${currentPage > 2}"
+                   th:href="@{/questions(page=0, size=15, q=${query}, sort=${sort}, filters=${filters}, daysOld=${daysOld}, tags=${tags})}"
+                   class="pagination-number"
+                   style="padding: 8px 12px; border: 1px solid #d6d9dc; border-radius: 3px; text-decoration: none; color: #3b4045; background: white;">
+                    1
+                </a>
+
+                <!-- Ellipsis if needed -->
+                <span th:if="${currentPage > 3}" style="padding: 8px 4px;">...</span>
+
+                <!-- Pages around current page -->
+                <th:block th:each="i : ${#numbers.sequence(currentPage > 2 ? currentPage - 1 : 0,
+                                                   currentPage < totalPages - 3 ? currentPage + 1 : totalPages - 1)}">
+                    <a th:if="${i != currentPage}"
+                       th:href="@{/questions(page=${i}, size=15, q=${query}, sort=${sort}, filters=${filters}, daysOld=${daysOld}, tags=${tags})}"
+                       th:text="${i + 1}"
+                       class="pagination-number"
+                       style="padding: 8px 12px; border: 1px solid #d6d9dc; border-radius: 3px; text-decoration: none; color: #3b4045; background: white;">
+                    </a>
+                    <span th:if="${i == currentPage}"
+                          th:text="${i + 1}"
+                          style="padding: 8px 12px; border: 1px solid #0a95ff; border-radius: 3px; color: white; background: #0a95ff; font-weight: 500;">
+            </span>
+                </th:block>
+
+                <!-- Ellipsis if needed -->
+                <span th:if="${currentPage < totalPages - 4}" style="padding: 8px 4px;">...</span>
+
+                <!-- Last page -->
+                <a th:if="${currentPage < totalPages - 3}"
+                   th:href="@{/questions(page=${totalPages - 1}, size=15, q=${query}, sort=${sort}, filters=${filters}, daysOld=${daysOld}, tags=${tags})}"
+                   th:text="${totalPages}"
+                   class="pagination-number"
+                   style="padding: 8px 12px; border: 1px solid #d6d9dc; border-radius: 3px; text-decoration: none; color: #3b4045; background: white;">
+                </a>
+            </div>
+
+            <!-- Next Button -->
+            <a th:if="${currentPage < totalPages - 1}"
+               th:href="@{/questions(page=${currentPage + 1}, size=15, q=${query}, sort=${sort}, filters=${filters}, daysOld=${daysOld}, tags=${tags})}"
+               class="pagination-btn"
+               style="padding: 8px 12px; border: 1px solid #d6d9dc; border-radius: 3px; text-decoration: none; color: #3b4045; background: white;">
+                Next
+            </a>
+            <span th:if="${currentPage == totalPages - 1}"
+                  style="padding: 8px 12px; border: 1px solid #e3e6e8; border-radius: 3px; color: #bbc0c4; background: #f8f9f9;">
+        Next
+    </span>
+        </div>
+
+        <!-- Pagination Info -->
+        <div th:if="${totalPages > 0}"
+             style="text-align: center; margin-top: 16px; font-size: 13px; color: #6a737c;">
+            Showing <span th:text="${currentPage * 15 + 1}">1</span> -
+            <span th:text="${(currentPage + 1) * 15 > totalItems ? totalItems : (currentPage + 1) * 15}">15</span>
+            of <span th:text="${totalItems}">100</span> questions
+        </div>
+
     </main>
 </div>
 

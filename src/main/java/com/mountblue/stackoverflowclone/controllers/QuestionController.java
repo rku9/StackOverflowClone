@@ -79,7 +79,7 @@ public class QuestionController {
             }
         }
 
-        List<Question> questionList = questionService.getFilteredQuestions(
+        Page<Question> questionPage = questionService.getFilteredQuestions(
                 pageable,
                 query,
                 normalizedTags,
@@ -88,32 +88,42 @@ public class QuestionController {
                 sortParam
         );
 
-        List<QuestionResponseDto> questionResponseDtoList = questionList.stream()
-                .map(question -> {
-                    // Parse markdown body to HTML
-                    String markdown = question.getBody();
-                    String html = renderer.render(parser.parse(markdown));
+        // Convert to DTO
+        Page<QuestionResponseDto> questionResponseDtoPage = questionPage.map(question -> {
+            String markdown = question.getBody();
+            String html = renderer.render(parser.parse(markdown));
+            String truncatedHtml = truncateHtml(html, 150);
 
-                    String truncatedHtml = truncateHtml(html, 150);
+            return new QuestionResponseDto(
+                    question.getId(),
+                    question.getAuthor().getName(),
+                    question.getAuthor().getEmail(),
+                    question.getTitle(),
+                    truncatedHtml,
+                    question.getCreatedAt(),
+                    question.getUpdatedAt(),
+                    question.getViewCount(),
+                    question.getScore(),
+                    question.getComments(),
+                    question.getTags().stream()
+                            .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
+                            .collect(Collectors.toList())
+            );
+        });
 
-                    return new QuestionResponseDto(
-                            question.getId(),
-                            question.getAuthor().getName(),
-                            question.getAuthor().getEmail(),
-                            question.getTitle(),
-                            truncatedHtml,  // Use parsed HTML instead of raw markdown
-                            question.getCreatedAt(),
-                            question.getUpdatedAt(),
-                            question.getViewCount(),
-                            question.getScore(),
-                            question.getComments(),
-                            question.getTags().stream()
-                                    .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
-                                    .collect(Collectors.toList())
-                    );
-                })
-                .collect(Collectors.toList());
-       model.addAttribute("questionResponseDtoList", questionResponseDtoList);
+        // Add pagination attributes to model
+        model.addAttribute("questionResponseDtoList", questionResponseDtoPage.getContent());
+        model.addAttribute("page", questionResponseDtoPage);
+        model.addAttribute("currentPage", questionResponseDtoPage.getNumber());
+        model.addAttribute("totalPages", questionResponseDtoPage.getTotalPages());
+        model.addAttribute("totalItems", questionResponseDtoPage.getTotalElements());
+
+        // Preserve query parameters for pagination links
+        model.addAttribute("query", query);
+        model.addAttribute("sort", sortParam);
+        model.addAttribute("filters", filterParams);
+        model.addAttribute("daysOld", daysOld);
+        model.addAttribute("tags", tags);
        return "questions";
     }
 
