@@ -48,4 +48,6 @@ public class Question extends BaseModel {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags;
+
+    private boolean isAnswered = false;
 }
