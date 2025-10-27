@@ -104,6 +104,7 @@ public class QuestionController {
                     question.getUpdatedAt(),
                     question.getViewCount(),
                     question.getScore(),
+                    question.getAnswers() != null ? question.getAnswers().size() : 0,
                     question.getComments(),
                     question.getTags().stream()
                             .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
@@ -160,6 +161,9 @@ public class QuestionController {
         Question question = questionService.findById(id).get();
 
         List<Tag> tags = question.getTags();
+        List<Answer> answers = answerService.getAnswers(question.getId());
+        answers.sort(Comparator.comparing(Answer::isAccepted).reversed());
+
         List<TagResponseDto> tagResponseDtoList = tags.stream()
                 .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
                 .collect(Collectors.toList());
@@ -173,12 +177,11 @@ public class QuestionController {
                 question.getUpdatedAt(),
                 question.getViewCount(),
                 question.getScore(),
+                answers != null ? answers.size() : 0,
                 question.getComments(),
                 tagResponseDtoList
                 );
         model.addAttribute("question", questionResponseDto);
-        List<Answer> answers = answerService.getAnswers(question.getId());
-        answers.sort(Comparator.comparing(Answer::isAccepted).reversed());
         Parser parser = Parser.builder().build();
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         List<AnswerResponseDto> answerResponseDtos = answers.stream().map(answer -> {
@@ -203,7 +206,6 @@ public class QuestionController {
         model.addAttribute("questionHtml", html);
         model.addAttribute("answers", answerResponseDtos);
 
-        boolean isFollowing = false;
         if (principal != null) {
             userService.findByEmail(principal.getName()).ifPresent(user -> {
                 boolean following = followService.isFollowingQuestion(user.getId(), id);
@@ -246,14 +248,14 @@ public class QuestionController {
         return "redirect:/questions/" + question.getId();
     }
 
-    @PostMapping("/{id}/follow")
-    public String followQuestion(@PathVariable Long id, Principal principal) {
+    @PostMapping("/{questionId}/follow")
+    public String followQuestion(@PathVariable Long questionId, Principal principal) {
         if (principal != null) {
             userService.findByEmail(principal.getName()).ifPresent(user ->
-                    followService.followQuestion(user.getId(), id)
+                    followService.followQuestion(user.getId(), questionId)
             );
         }
-        return "redirect:/questions/" + id;
+        return "redirect:/questions/" + questionId;
     }
 
     @PostMapping("/{id}/unfollow")

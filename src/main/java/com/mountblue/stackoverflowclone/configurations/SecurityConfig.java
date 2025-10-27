@@ -3,6 +3,7 @@ package com.mountblue.stackoverflowclone.configurations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -23,7 +24,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())               // disable CSRF if it's not needed (APIs)
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()               // allow every request without auth
+                        .requestMatchers("/login", "/signup", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/questions/new").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/questions/new").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/questions/vote/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/answers/vote/**").authenticated()
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults());      // can be removed; keeps no login page
 

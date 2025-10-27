@@ -832,7 +832,7 @@
                                             </form>
 
                                             <!-- Accept answer button, only visible to question author and only if not accepted -->
-                                            <div th:if="${#authentication.principal.email == question.authorEmail}">
+                                            <div sec:authorize="isAuthenticated()" th:if="${#authentication.name == question.authorEmail}">
                                                 <form th:action="@{/answers/accept/{id}(id=${answer.answerId})}" method="post" style="display:inline; margin-left: 6px;">
                                                     <input type="hidden" name="questionId" th:value="${question.id}" />
                                                     <button type="submit" th:if="${!answer.accepted}" class="btn btn-success"

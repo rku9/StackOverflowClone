@@ -24,15 +24,15 @@ public class AnswerController {
     }
 
     @PostMapping("/new")
-    public String submitQuestionForm(@ModelAttribute("answerForm") AnswerFormDto answerFormDto,
-                                     BindingResult result,
-                                     Model model,
-                                     @RequestParam("questionId") Long questionId,
-                                     @AuthenticationPrincipal UserPrincipal principal) {
+    public String submitAnswerForm(@ModelAttribute("answerForm") AnswerFormDto answerFormDto,
+                                   BindingResult result,
+                                   Model model,
+                                   @RequestParam("questionId") Long questionId,
+                                   @AuthenticationPrincipal UserPrincipal principal) {
         if (result.hasErrors()){
             return "question-show";
         }
-        Answer savedQuestion = answerService.saveAnswer(answerFormDto, questionId, principal);
+        answerService.saveAnswer(answerFormDto, questionId, principal);
 
         return "redirect:/questions/" + questionId;
     }
