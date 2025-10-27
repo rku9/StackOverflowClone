@@ -664,7 +664,17 @@
             </div>
 
             <div class="post-actions">
-                <button type="button" class="btn btn-outline">Follow</button>
+                <div sec:authorize="isAuthenticated()" style="display:inline">
+                    <form th:if="${isFollowing}" th:action="@{/questions/{id}/unfollow(id=${question.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-outline">Unfollow</button>
+                    </form>
+                    <form th:if="${!isFollowing}" th:action="@{/questions/{id}/follow(id=${question.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-outline">Follow</button>
+                    </form>
+                </div>
+                <div sec:authorize="!isAuthenticated()" style="display:inline">
+                    <a class="btn btn-outline" th:href="@{/login}">Follow</a>
+                </div>
                 <button type="button" class="btn btn-outline">Share</button>
                 <form th:action="@{/questions/edit/{id}(id=${question.id})}" method="get" style="display:inline"
                       sec:authorize="isAuthenticated()" th:if="${#authentication.name == question.authorEmail}">

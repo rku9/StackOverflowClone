@@ -10,6 +10,8 @@ import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.models.UserPrincipal;
 import com.mountblue.stackoverflowclone.services.AnswerService;
 import com.mountblue.stackoverflowclone.services.QuestionService;
+import com.mountblue.stackoverflowclone.services.FollowService;
+import com.mountblue.stackoverflowclone.services.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -34,10 +36,15 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final AnswerService answerService;
+    private final FollowService followService;
+    private final UserService userService;
 
-    public QuestionController(QuestionService questionService, AnswerService answerService) {
+    public QuestionController(QuestionService questionService, AnswerService answerService,
+                              FollowService followService, UserService userService) {
         this.questionService = questionService;
         this.answerService = answerService;
+        this.followService = followService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -185,6 +192,16 @@ public class QuestionController {
         String html = renderer.render(parser.parse(markdown));
         model.addAttribute("questionHtml", html);
         model.addAttribute("answers", answerResponseDtos);
+
+        boolean isFollowing = false;
+        if (principal != null) {
+            userService.findByEmail(principal.getName()).ifPresent(user -> {
+                boolean following = followService.isFollowingQuestion(user.getId(), id);
+                model.addAttribute("isFollowing", following);
+            });
+        } else {
+            model.addAttribute("isFollowing", false);
+        }
         // Load answers also if needed
         return "question-show";
     }
@@ -217,6 +234,26 @@ public class QuestionController {
         Question question = questionService.findById(id).get();
         questionService.voteQuestion(question, choice, postType, principal, id);
         return "redirect:/questions/" + question.getId();
+    }
+
+    @PostMapping("/{id}/follow")
+    public String followQuestion(@PathVariable Long id, Principal principal) {
+        if (principal != null) {
+            userService.findByEmail(principal.getName()).ifPresent(user ->
+                    followService.followQuestion(user.getId(), id)
+            );
+        }
+        return "redirect:/questions/" + id;
+    }
+
+    @PostMapping("/{id}/unfollow")
+    public String unfollowQuestion(@PathVariable Long id, Principal principal) {
+        if (principal != null) {
+            userService.findByEmail(principal.getName()).ifPresent(user ->
+                    followService.unfollowQuestion(user.getId(), id)
+            );
+        }
+        return "redirect:/questions/" + id;
     }
 
     private String truncateHtml(String html, int maxLength) {

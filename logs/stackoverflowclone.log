@@ -1,0 +1,919 @@
+2025-10-27T09:56:12.930+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 613522 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T09:56:12.931+05:30 DEBUG 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T09:56:12.931+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T09:56:13.069+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T09:56:13.083+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 8 JPA repository interfaces.
+2025-10-27T09:56:13.193+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T09:56:13.194+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T09:56:13.194+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T09:56:13.204+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-27T09:56:13.204+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 272 ms
+2025-10-27T09:56:13.217+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [B936E14AA5C306A70354E2B9B5B69853]
+2025-10-27T09:56:13.241+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T09:56:13.243+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T09:56:13.249+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T09:56:13.250+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-10-27T09:56:13.253+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@39e36ad1
+2025-10-27T09:56:13.253+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-10-27T09:56:13.254+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T09:56:13.255+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T09:56:13.370+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T09:56:13.462+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T09:56:13.652+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-27T09:56:13.659+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-27T09:56:13.659+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-27T09:56:13.786+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-27T09:56:13.800+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-27T09:56:13.806+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Started StackOverflowCloneApplication in 0.94 seconds (process running for 448.77)
+2025-10-27T09:56:13.808+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-10-27T10:01:39.953+05:30  INFO 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-27T10:01:39.954+05:30  INFO 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-27T10:01:39.960+05:30  INFO 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2025-10-27T10:01:40.058+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:01:40.071+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:01:40.089+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:01:40.165+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:03.614+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:03.621+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:03.629+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:03.667+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:06.691+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:06.693+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:06.698+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:06.725+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:11.065+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:11.069+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:11.076+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:02:11.101+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:03:22.147+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:03:22.150+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:03:22.152+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:03:22.170+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:03:23.356+05:30 DEBUG 613522 --- [StackOverflowClone] [Thread-14] c.m.s.services.EmailService              : SendGrid email sent with status 202
+2025-10-27T10:09:08.106+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] o.s.s.c.bcrypt.BCryptPasswordEncoder     : Empty encoded password
+2025-10-27T10:09:39.948+05:30  INFO 613522 --- [StackOverflowClone] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-10-27T10:09:39.950+05:30  INFO 613522 --- [StackOverflowClone] [Thread-10] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-27T10:09:39.952+05:30  INFO 613522 --- [StackOverflowClone] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-27T10:09:39.955+05:30  INFO 613522 --- [StackOverflowClone] [Thread-10] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T10:09:39.956+05:30  INFO 613522 --- [StackOverflowClone] [Thread-10] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2025-10-27T10:09:39.959+05:30  INFO 613522 --- [StackOverflowClone] [Thread-10] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2025-10-27T10:09:40.087+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 613522 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T10:09:40.087+05:30 DEBUG 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T10:09:40.087+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T10:09:40.271+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T10:09:40.283+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 8 JPA repository interfaces.
+2025-10-27T10:09:40.446+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T10:09:40.448+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T10:09:40.448+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T10:09:40.461+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-27T10:09:40.461+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 372 ms
+2025-10-27T10:09:40.542+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T10:09:40.552+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T10:09:40.562+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T10:09:40.564+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2025-10-27T10:09:40.567+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@26a92920
+2025-10-27T10:09:40.568+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2025-10-27T10:09:40.569+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T10:09:40.569+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T10:09:40.694+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T10:09:40.809+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T10:09:40.892+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'answerController' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/controllers/AnswerController.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-10-27T10:09:40.893+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T10:09:40.893+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2025-10-27T10:09:40.897+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2025-10-27T10:09:40.897+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-27T10:09:40.904+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-27T10:09:40.927+05:30 ERROR 613522 --- [StackOverflowClone] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.mountblue.stackoverflowclone.controllers.AnswerController required a bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' in your configuration.
+
+2025-10-27T10:09:42.393+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 613522 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T10:09:42.393+05:30 DEBUG 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T10:09:42.393+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T10:09:42.535+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T10:09:42.548+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 8 JPA repository interfaces.
+2025-10-27T10:09:42.620+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T10:09:42.622+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T10:09:42.622+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T10:09:42.631+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-27T10:09:42.631+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 235 ms
+2025-10-27T10:09:42.660+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T10:09:42.662+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T10:09:42.666+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T10:09:42.667+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2025-10-27T10:09:42.669+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3f1234a1
+2025-10-27T10:09:42.669+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2025-10-27T10:09:42.670+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T10:09:42.670+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-4)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T10:09:42.749+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T10:09:42.839+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T10:09:42.994+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-27T10:09:43.003+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-27T10:09:43.003+05:30  WARN 613522 --- [StackOverflowClone] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-27T10:09:43.145+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-27T10:09:43.155+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-27T10:09:43.158+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Started StackOverflowCloneApplication in 0.813 seconds (process running for 1258.122)
+2025-10-27T10:09:43.160+05:30  INFO 613522 --- [StackOverflowClone] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-10-27T10:09:44.911+05:30  INFO 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-27T10:09:44.912+05:30  INFO 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-27T10:09:44.914+05:30  INFO 613522 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-10-27T10:10:16.022+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:10:16.027+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:10:16.031+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:10:16.042+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:10:19.079+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:10:19.081+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:10:19.084+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:10:19.098+05:30  WARN 613522 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:11:56.401+05:30  INFO 613522 --- [StackOverflowClone] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-27T10:11:56.404+05:30  INFO 613522 --- [StackOverflowClone] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-27T10:11:56.407+05:30  INFO 613522 --- [StackOverflowClone] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T10:11:56.409+05:30  INFO 613522 --- [StackOverflowClone] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2025-10-27T10:11:56.411+05:30  INFO 613522 --- [StackOverflowClone] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2025-10-27T10:12:14.660+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 617085 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T10:12:14.661+05:30 DEBUG 617085 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T10:12:14.661+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T10:12:14.701+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-10-27T10:12:14.702+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-10-27T10:12:15.267+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T10:12:15.323+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 8 JPA repository interfaces.
+2025-10-27T10:12:15.873+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T10:12:15.883+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T10:12:15.883+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T10:12:15.910+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-27T10:12:15.910+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1208 ms
+2025-10-27T10:12:15.949+05:30  WARN 617085 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [71F4ACBE311AB325D69C9F4D8E41E6B9]
+2025-10-27T10:12:16.046+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T10:12:16.095+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-10-27T10:12:16.136+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T10:12:16.359+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T10:12:16.380+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-27T10:12:16.501+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2d2f67b6
+2025-10-27T10:12:16.502+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-27T10:12:16.556+05:30  WARN 617085 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T10:12:16.571+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T10:12:17.319+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T10:12:17.453+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T10:12:17.717+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-27T10:12:20.529+05:30  WARN 617085 --- [StackOverflowClone] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-27T10:12:20.552+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-27T10:12:20.552+05:30  WARN 617085 --- [StackOverflowClone] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-27T10:12:20.970+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-27T10:12:20.993+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-27T10:12:20.999+05:30  INFO 617085 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Started StackOverflowCloneApplication in 6.831 seconds (process running for 7.594)
+2025-10-27T10:12:44.907+05:30  INFO 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-27T10:12:44.907+05:30  INFO 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-27T10:12:44.909+05:30  INFO 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-10-27T10:12:45.450+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:12:45.473+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:12:45.496+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:12:45.564+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:03.994+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:03.997+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:04.000+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:04.015+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:09.799+05:30  INFO 617085 --- [StackOverflowClone] [http-nio-8080-exec-6] c.m.s.services.AnswerService             : Email notify queued for follower: rkucr7@gmail.com (offered=true) subject='New answer on: Why does my C++ program crash when returning a reference to a local variable?'
+2025-10-27T10:13:09.802+05:30  INFO 617085 --- [StackOverflowClone] [Thread-7] c.m.s.services.EmailService              : Sending email via SendGrid: to=rkucr7@gmail.com, subject=New answer on: Why does my C++ program crash when returning a reference to a local variable?, bodyPreview="Hi rkucr7@gmail.com,\n\nAn answer has been submitted to a question you follow.\nTitle: Why does my C++ program crash when returning a reference to a local variable?\nLink: /questions/16\n\nYou receive..."
+2025-10-27T10:13:09.836+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:09.839+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:09.842+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:09.872+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:13:11.076+05:30  INFO 617085 --- [StackOverflowClone] [Thread-7] c.m.s.services.EmailService              : SendGrid accepted: status=202, to=rkucr7@gmail.com, subject=New answer on: Why does my C++ program crash when returning a reference to a local variable?
+2025-10-27T10:24:52.836+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:24:52.840+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:24:52.842+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:24:52.851+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:24:55.202+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-3] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-3][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:24:55.204+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-3] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-3][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:24:55.207+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-3] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-3][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:24:55.219+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-3] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-3][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:25:55.055+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:25:55.059+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:25:55.066+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:25:55.074+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:26:00.839+05:30  INFO 617085 --- [StackOverflowClone] [http-nio-8080-exec-1] c.m.s.services.AnswerService             : Email notify queued for follower: kalpanamahadevan1@gmail.com (offered=true) subject='New answer on: What’s the difference between module.exports and exports in Node.js?'
+2025-10-27T10:26:00.840+05:30  INFO 617085 --- [StackOverflowClone] [Thread-8] c.m.s.services.EmailService              : Sending email via SendGrid: to=kalpanamahadevan1@gmail.com, subject=New answer on: What’s the difference between module.exports and exports in Node.js?, bodyPreview="Hi kalpanamahadevan1@gmail.com,\n\nAn answer has been submitted to a question you follow.\nTitle: What’s the difference between module.exports and exports in Node.js?\nLink: /questions/15\n\nYou recei..."
+2025-10-27T10:26:00.869+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:26:00.872+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:26:00.877+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:26:00.894+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:26:01.007+05:30 ERROR 617085 --- [StackOverflowClone] [Thread-8] c.m.s.services.EmailService              : Failed to send email via SendGrid
+
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:489) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.readHeader(SSLSocketInputRecord.java:483) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.bytesInCompletePacket(SSLSocketInputRecord.java:70) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl.readApplicationRecord(SSLSocketImpl.java:1461) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl$AppInputStream.read(SSLSocketImpl.java:1066) ~[na:na]
+	at org.apache.http.impl.io.SessionInputBufferImpl.streamRead(SessionInputBufferImpl.java:137) ~[httpcore-4.4.16.jar:4.4.16]
+	at org.apache.http.impl.io.SessionInputBufferImpl.fillBuffer(SessionInputBufferImpl.java:153) ~[httpcore-4.4.16.jar:4.4.16]
+	at org.apache.http.impl.io.SessionInputBufferImpl.readLine(SessionInputBufferImpl.java:280) ~[httpcore-4.4.16.jar:4.4.16]
+	at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:138) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:56) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.impl.io.AbstractMessageParser.parse(AbstractMessageParser.java:259) ~[httpcore-4.4.16.jar:4.4.16]
+	at org.apache.http.impl.DefaultBHttpClientConnection.receiveResponseHeader(DefaultBHttpClientConnection.java:163) ~[httpcore-4.4.16.jar:4.4.16]
+	at org.apache.http.impl.conn.CPoolProxy.receiveResponseHeader(CPoolProxy.java:157) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.protocol.HttpRequestExecutor.doReceiveResponse(HttpRequestExecutor.java:273) ~[httpcore-4.4.16.jar:4.4.16]
+	at org.apache.http.protocol.HttpRequestExecutor.execute(HttpRequestExecutor.java:125) ~[httpcore-4.4.16.jar:4.4.16]
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:272) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:186) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:110) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83) ~[httpclient-4.5.13.jar:4.5.13]
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:108) ~[httpclient-4.5.13.jar:4.5.13]
+	at com.sendgrid.Client.executeApiCall(Client.java:377) ~[java-http-client-4.5.0.jar:na]
+	at com.sendgrid.Client.post(Client.java:249) ~[java-http-client-4.5.0.jar:na]
+	at com.sendgrid.Client.api(Client.java:407) ~[java-http-client-4.5.0.jar:na]
+	at com.sendgrid.BaseInterface.makeCall(BaseInterface.java:260) ~[sendgrid-java-4.10.3.jar:na]
+	at com.sendgrid.BaseInterface.api(BaseInterface.java:282) ~[sendgrid-java-4.10.3.jar:na]
+	at com.mountblue.stackoverflowclone.services.EmailService.sendEmail(EmailService.java:48) ~[classes/:na]
+	at com.mountblue.stackoverflowclone.services.EmailService.sendEmail(EmailService.java:65) ~[classes/:na]
+	at com.mountblue.stackoverflowclone.workers.EmailWorker.attemptSendWithRetries(EmailWorker.java:41) ~[classes/:na]
+	at com.mountblue.stackoverflowclone.workers.EmailWorker.run(EmailWorker.java:26) ~[classes/:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2025-10-27T10:26:02.023+05:30  INFO 617085 --- [StackOverflowClone] [Thread-8] c.m.s.services.EmailService              : Sending email via SendGrid: to=kalpanamahadevan1@gmail.com, subject=New answer on: What’s the difference between module.exports and exports in Node.js?, bodyPreview="Hi kalpanamahadevan1@gmail.com,\n\nAn answer has been submitted to a question you follow.\nTitle: What’s the difference between module.exports and exports in Node.js?\nLink: /questions/15\n\nYou recei..."
+2025-10-27T10:26:03.219+05:30  INFO 617085 --- [StackOverflowClone] [Thread-8] c.m.s.services.EmailService              : SendGrid accepted: status=202, to=kalpanamahadevan1@gmail.com, subject=New answer on: What’s the difference between module.exports and exports in Node.js?
+2025-10-27T10:27:51.231+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:27:51.236+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:27:51.241+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:27:51.251+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:28:01.823+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:28:01.825+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:28:01.828+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:28:01.843+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:28:07.318+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-6] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-6][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:28:07.320+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-6] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-6][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:28:07.323+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-6] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-6][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:28:07.339+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-6] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-6][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:07.188+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:07.192+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:07.194+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:07.216+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-5] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-5][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:15.641+05:30  INFO 617085 --- [StackOverflowClone] [Thread-9] c.m.s.services.EmailService              : Sending email via SendGrid: to=rushikesh.c.kendre@gmail.com, subject=New answer on: Why do I get NaN when adding two input values from HTML in JavaScript?, bodyPreview="Hi rushikesh.c.kendre@gmail.com,\n\nAn answer has been submitted to a question you follow.\nTitle: Why do I get NaN when adding two input values from HTML in JavaScript?\nLink: /questions/14\n\nYou re..."
+2025-10-27T10:30:15.641+05:30  INFO 617085 --- [StackOverflowClone] [http-nio-8080-exec-6] c.m.s.services.AnswerService             : Email notify queued for follower: rushikesh.c.kendre@gmail.com (offered=true) subject='New answer on: Why do I get NaN when adding two input values from HTML in JavaScript?'
+2025-10-27T10:30:15.678+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:15.681+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:15.684+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:15.705+05:30  WARN 617085 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T10:30:16.598+05:30  INFO 617085 --- [StackOverflowClone] [Thread-9] c.m.s.services.EmailService              : SendGrid accepted: status=202, to=rushikesh.c.kendre@gmail.com, subject=New answer on: Why do I get NaN when adding two input values from HTML in JavaScript?
+2025-10-27T10:42:22.703+05:30  INFO 617085 --- [StackOverflowClone] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-27T10:42:22.704+05:30  INFO 617085 --- [StackOverflowClone] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-27T10:42:22.709+05:30  INFO 617085 --- [StackOverflowClone] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T10:42:22.713+05:30  INFO 617085 --- [StackOverflowClone] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-27T10:42:22.718+05:30  INFO 617085 --- [StackOverflowClone] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-27T12:12:23.456+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 628004 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T12:12:23.458+05:30 DEBUG 628004 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T12:12:23.459+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T12:12:23.492+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-10-27T12:12:23.492+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-10-27T12:12:24.073+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T12:12:24.141+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 59 ms. Found 8 JPA repository interfaces.
+2025-10-27T12:12:24.766+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T12:12:24.780+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T12:12:24.780+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T12:12:24.819+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-27T12:12:24.819+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1326 ms
+2025-10-27T12:12:24.868+05:30  WARN 628004 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [E569E55B7478475CB03C5922A0458B58]
+2025-10-27T12:12:24.981+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T12:12:25.048+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-10-27T12:12:25.090+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T12:12:25.370+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T12:12:25.393+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-27T12:12:25.517+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@35741946
+2025-10-27T12:12:25.518+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-27T12:12:25.569+05:30  WARN 628004 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T12:12:25.583+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T12:12:26.354+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T12:12:26.494+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:12:26.746+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-27T12:12:29.555+05:30  WARN 628004 --- [StackOverflowClone] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-27T12:12:29.582+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-27T12:12:29.582+05:30  WARN 628004 --- [StackOverflowClone] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-27T12:12:30.020+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-27T12:12:30.047+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-27T12:12:30.053+05:30  INFO 628004 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Started StackOverflowCloneApplication in 7.005 seconds (process running for 7.802)
+2025-10-27T12:12:34.681+05:30  INFO 628004 --- [StackOverflowClone] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-27T12:12:34.682+05:30  INFO 628004 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-27T12:12:34.688+05:30  INFO 628004 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2025-10-27T12:13:26.316+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:26.324+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:26.332+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:26.383+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:29.253+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:29.258+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:29.265+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:29.294+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-1] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-1][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:56.462+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:56.468+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:56.474+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:13:56.503+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-7] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-7][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:14:11.555+05:30  INFO 628004 --- [StackOverflowClone] [http-nio-8080-exec-8] c.m.s.services.AnswerService             : Email notify queued for follower: ashokg.geek@gmail.com (offered=true) subject='New answer on: Why does this behave differently inside an arrow function in JavaScript?'
+2025-10-27T12:14:11.566+05:30  INFO 628004 --- [StackOverflowClone] [Thread-7] c.m.s.services.EmailService              : Sending email via SendGrid: to=ashokg.geek@gmail.com, subject=New answer on: Why does this behave differently inside an arrow function in JavaScript?, bodyPreview="Hi ashokg.geek@gmail.com,\n\nAn answer has been submitted to a question you follow.\nTitle: Why does this behave differently inside an arrow function in JavaScript?\nLink: /questions/12\n\nYou receive..."
+2025-10-27T12:14:11.652+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:14:11.659+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:14:11.668+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:14:11.751+05:30  WARN 628004 --- [StackOverflowClone] [http-nio-8080-exec-9] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-9][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 967, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T12:14:13.653+05:30  INFO 628004 --- [StackOverflowClone] [Thread-7] c.m.s.services.EmailService              : SendGrid accepted: status=202, to=ashokg.geek@gmail.com, subject=New answer on: Why does this behave differently inside an arrow function in JavaScript?
+2025-10-27T12:42:38.930+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 630607 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T12:42:38.932+05:30 DEBUG 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T12:42:38.933+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T12:42:39.358+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T12:42:39.363+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
+2025-10-27T12:42:39.651+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T12:42:39.654+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T12:42:39.655+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T12:42:39.670+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-27T12:42:39.671+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 731 ms
+2025-10-27T12:42:39.760+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T12:42:39.765+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T12:42:39.776+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T12:42:39.780+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2025-10-27T12:42:39.802+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@55fe1e46
+2025-10-27T12:42:39.803+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2025-10-27T12:42:39.806+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T12:42:39.807+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-4)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T12:42:39.831+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T12:42:39.831+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:42:39.887+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-27T12:42:40.160+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 3ee47dfa-6f34-4c94-8ccc-a12df9bc3f2a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-10-27T12:42:40.165+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-10-27T12:42:40.247+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-27T12:42:40.284+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-27T12:42:40.294+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Started StackOverflowCloneApplication in 1.501 seconds (process running for 994.753)
+2025-10-27T12:42:40.304+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   SpringBootWebSecurityConfiguration.SecurityFilterChainConfiguration matched:
+      - AllNestedConditions 2 matched 0 did not; NestedCondition on DefaultWebSecurityCondition.Beans @ConditionalOnMissingBean (types: org.springframework.security.web.SecurityFilterChain; SearchStrategy: all) did not find any beans; NestedCondition on DefaultWebSecurityCondition.Classes @ConditionalOnClass found required classes 'org.springframework.security.web.SecurityFilterChain', 'org.springframework.security.config.annotation.web.builders.HttpSecurity' (DefaultWebSecurityCondition)
+
+   UserDetailsServiceAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.security.authentication.AuthenticationManager' (OnClassCondition)
+      - found 'session' scope (OnWebApplicationCondition)
+      - AnyNestedCondition 1 matched 2 did not; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.PasswordConfigured @ConditionalOnProperty (spring.security.user.password) did not find property 'spring.security.user.password'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.NameConfigured @ConditionalOnProperty (spring.security.user.name) did not find property 'spring.security.user.name'; NestedCondition on UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured.MissingAlternative @ConditionalOnMissingClass did not find unwanted classes 'org.springframework.security.oauth2.client.registration.ClientRegistrationRepository', 'org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector', 'org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository' (UserDetailsServiceAutoConfiguration.MissingAlternativeOrUserPropertiesConfigured)
+      - @ConditionalOnBean (types: org.springframework.security.config.ObjectPostProcessor; SearchStrategy: all) found beans 'objectPostProcessor', 'webAuthorizationManagerPostProcessor', 'filterChainDecoratorPostProcessor', 'authenticationManagerPostProcessor'; @ConditionalOnMissingBean (types: org.springframework.security.authentication.AuthenticationManager,org.springframework.security.authentication.AuthenticationProvider,org.springframework.security.core.userdetails.UserDetailsService,org.springframework.security.authentication.AuthenticationManagerResolver,?; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2025-10-27T12:42:43.265+05:30  INFO 630607 --- [StackOverflowClone] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 48 class path changes (48 additions, 0 deletions, 0 modifications)
+2025-10-27T12:42:43.272+05:30  INFO 630607 --- [StackOverflowClone] [Thread-18] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-27T12:42:43.278+05:30  INFO 630607 --- [StackOverflowClone] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-27T12:42:43.284+05:30  INFO 630607 --- [StackOverflowClone] [Thread-18] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:42:43.288+05:30  INFO 630607 --- [StackOverflowClone] [Thread-18] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2025-10-27T12:42:43.295+05:30  INFO 630607 --- [StackOverflowClone] [Thread-18] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2025-10-27T12:42:43.573+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 630607 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T12:42:43.574+05:30 DEBUG 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T12:42:43.574+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T12:42:43.857+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T12:42:43.897+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 8 JPA repository interfaces.
+2025-10-27T12:42:44.164+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T12:42:44.167+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T12:42:44.168+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T12:42:44.182+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-27T12:42:44.183+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 604 ms
+2025-10-27T12:42:44.280+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T12:42:44.283+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T12:42:44.298+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T12:42:44.299+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2025-10-27T12:42:44.308+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@355b1e81
+2025-10-27T12:42:44.309+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2025-10-27T12:42:44.311+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T12:42:44.312+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-5)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T12:42:44.603+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T12:42:44.755+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:42:44.766+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'securityConfig': Unsatisfied dependency expressed through field 'userDetailsService': No qualifying bean of type 'org.springframework.security.core.userdetails.UserDetailsService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2025-10-27T12:42:44.766+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:42:44.767+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2025-10-27T12:42:44.771+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2025-10-27T12:42:44.772+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-27T12:42:44.781+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-27T12:42:44.799+05:30 ERROR 630607 --- [StackOverflowClone] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field userDetailsService in com.mountblue.stackoverflowclone.configurations.SecurityConfig required a bean of type 'org.springframework.security.core.userdetails.UserDetailsService' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.security.core.userdetails.UserDetailsService' in your configuration.
+
+2025-10-27T12:50:01.041+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 630607 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T12:50:01.043+05:30 DEBUG 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T12:50:01.043+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T12:50:01.405+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T12:50:01.413+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 JPA repository interfaces.
+2025-10-27T12:50:01.806+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T12:50:01.812+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T12:50:01.813+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T12:50:01.836+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-27T12:50:01.836+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 788 ms
+2025-10-27T12:50:01.963+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T12:50:01.968+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T12:50:01.987+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T12:50:01.990+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Starting...
+2025-10-27T12:50:02.000+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@76248693
+2025-10-27T12:50:02.001+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Start completed.
+2025-10-27T12:50:02.005+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T12:50:02.006+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-6)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T12:50:02.039+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T12:50:02.040+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:50:02.121+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-27T12:50:02.458+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: fe5cfff0-5b50-4c9a-8cf6-a9e954fbe94b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-10-27T12:50:02.466+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-10-27T12:50:02.580+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-27T12:50:02.622+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-27T12:50:02.634+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Started StackOverflowCloneApplication in 1.649 seconds (process running for 1437.093)
+2025-10-27T12:50:02.641+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-10-27T12:50:07.602+05:30  INFO 630607 --- [StackOverflowClone] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 52 class path changes (52 additions, 0 deletions, 0 modifications)
+2025-10-27T12:50:07.606+05:30  INFO 630607 --- [StackOverflowClone] [Thread-22] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-27T12:50:07.608+05:30  INFO 630607 --- [StackOverflowClone] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-27T12:50:07.612+05:30  INFO 630607 --- [StackOverflowClone] [Thread-22] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:50:07.614+05:30  INFO 630607 --- [StackOverflowClone] [Thread-22] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown initiated...
+2025-10-27T12:50:07.620+05:30  INFO 630607 --- [StackOverflowClone] [Thread-22] com.zaxxer.hikari.HikariDataSource       : HikariPool-6 - Shutdown completed.
+2025-10-27T12:50:07.887+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 630607 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T12:50:07.887+05:30 DEBUG 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T12:50:07.888+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T12:50:08.319+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T12:50:08.394+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 70 ms. Found 8 JPA repository interfaces.
+2025-10-27T12:50:08.917+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T12:50:08.923+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T12:50:08.923+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T12:50:08.946+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-27T12:50:08.946+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1054 ms
+2025-10-27T12:50:09.052+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T12:50:09.057+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T12:50:09.070+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T12:50:09.072+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2025-10-27T12:50:09.084+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7cae50bd
+2025-10-27T12:50:09.085+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2025-10-27T12:50:09.087+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T12:50:09.087+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-7)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T12:50:09.332+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T12:50:09.577+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:50:10.195+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'emailService' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/services/EmailService.class]: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+2025-10-27T12:50:10.196+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:50:10.197+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2025-10-27T12:50:10.201+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2025-10-27T12:50:10.202+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-27T12:50:10.211+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-27T12:50:10.213+05:30 ERROR 630607 --- [StackOverflowClone] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'emailService' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/services/EmailService.class]: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:321) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:309) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1395) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1232) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.mountblue.stackoverflowclone.StackOverflowCloneApplication.main(StackOverflowCloneApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:223) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:318) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 24 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/sendgrid/SendGrid
+	at com.mountblue.stackoverflowclone.services.EmailService.<init>(EmailService.java:30) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:210) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.sendgrid.SendGrid
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:534) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:513) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[na:na]
+	... 31 common frames omitted
+
+2025-10-27T12:51:53.103+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 630607 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T12:51:53.103+05:30 DEBUG 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T12:51:53.104+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T12:51:53.633+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T12:51:53.696+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 8 JPA repository interfaces.
+2025-10-27T12:51:54.096+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T12:51:54.098+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T12:51:54.099+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T12:51:54.120+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-27T12:51:54.120+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1011 ms
+2025-10-27T12:51:54.201+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T12:51:54.206+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T12:51:54.215+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T12:51:54.217+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+2025-10-27T12:51:54.235+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@afa9b8
+2025-10-27T12:51:54.236+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+2025-10-27T12:51:54.239+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T12:51:54.239+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-8)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T12:51:54.652+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T12:51:54.871+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:51:55.527+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'emailService' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/services/EmailService.class]: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+2025-10-27T12:51:55.528+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T12:51:55.530+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
+2025-10-27T12:51:55.536+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
+2025-10-27T12:51:55.537+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-27T12:51:55.547+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-27T12:51:55.553+05:30 ERROR 630607 --- [StackOverflowClone] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'emailService' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/services/EmailService.class]: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:321) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:309) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1395) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1232) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.mountblue.stackoverflowclone.StackOverflowCloneApplication.main(StackOverflowCloneApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:223) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:318) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 24 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/sendgrid/SendGrid
+	at com.mountblue.stackoverflowclone.services.EmailService.<init>(EmailService.java:30) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:210) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.sendgrid.SendGrid
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:534) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:513) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[na:na]
+	... 31 common frames omitted
+
+2025-10-27T13:01:04.096+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 630607 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T13:01:04.096+05:30 DEBUG 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T13:01:04.097+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T13:01:04.279+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T13:01:04.304+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 8 JPA repository interfaces.
+2025-10-27T13:01:04.471+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T13:01:04.472+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T13:01:04.472+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T13:01:04.485+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat-3].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-27T13:01:04.485+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 387 ms
+2025-10-27T13:01:04.525+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T13:01:04.526+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T13:01:04.530+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T13:01:04.531+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Starting...
+2025-10-27T13:01:04.535+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@32a89746
+2025-10-27T13:01:04.536+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Start completed.
+2025-10-27T13:01:04.537+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T13:01:04.538+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-9)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T13:01:04.693+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T13:01:04.788+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T13:01:04.838+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'answerController' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/controllers/AnswerController.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-10-27T13:01:04.839+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T13:01:04.839+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown initiated...
+2025-10-27T13:01:04.851+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown completed.
+2025-10-27T13:01:04.852+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-27T13:01:04.855+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-27T13:01:04.859+05:30 ERROR 630607 --- [StackOverflowClone] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.mountblue.stackoverflowclone.controllers.AnswerController required a bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' in your configuration.
+
+2025-10-27T13:01:06.289+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 630607 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T13:01:06.289+05:30 DEBUG 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T13:01:06.289+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T13:01:06.421+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T13:01:06.431+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 8 JPA repository interfaces.
+2025-10-27T13:01:06.508+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T13:01:06.509+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T13:01:06.509+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T13:01:06.517+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat-4].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-27T13:01:06.517+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 226 ms
+2025-10-27T13:01:06.547+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T13:01:06.549+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T13:01:06.555+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T13:01:06.555+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Starting...
+2025-10-27T13:01:06.567+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-10 - Added connection com.mysql.cj.jdbc.ConnectionImpl@607f7e8b
+2025-10-27T13:01:06.567+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Start completed.
+2025-10-27T13:01:06.567+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T13:01:06.568+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-10)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T13:01:06.628+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T13:01:06.722+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T13:01:06.843+05:30  WARN 630607 --- [StackOverflowClone] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'emailService' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/services/EmailService.class]: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+2025-10-27T13:01:06.843+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T13:01:06.843+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown initiated...
+2025-10-27T13:01:06.871+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown completed.
+2025-10-27T13:01:06.872+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-27T13:01:06.875+05:30  INFO 630607 --- [StackOverflowClone] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-27T13:01:06.876+05:30 ERROR 630607 --- [StackOverflowClone] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'emailService' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/services/EmailService.class]: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:321) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:309) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1395) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1232) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.mountblue.stackoverflowclone.StackOverflowCloneApplication.main(StackOverflowCloneApplication.java:12) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.mountblue.stackoverflowclone.services.EmailService]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:223) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:318) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 24 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/sendgrid/SendGrid
+	at com.mountblue.stackoverflowclone.services.EmailService.<init>(EmailService.java:30) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:210) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.sendgrid.SendGrid
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:534) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:513) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[na:na]
+	... 31 common frames omitted
+
+2025-10-27T13:03:26.128+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 637565 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-27T13:03:26.129+05:30 DEBUG 637565 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-27T13:03:26.129+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-27T13:03:26.158+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-10-27T13:03:26.158+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-10-27T13:03:26.734+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-27T13:03:26.795+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 52 ms. Found 8 JPA repository interfaces.
+2025-10-27T13:03:27.290+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-27T13:03:27.299+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-27T13:03:27.300+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-27T13:03:27.330+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-27T13:03:27.331+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1173 ms
+2025-10-27T13:03:27.371+05:30  WARN 637565 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [801C199559F2854A7E9C125A7D8E23F9]
+2025-10-27T13:03:27.463+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-27T13:03:27.512+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-10-27T13:03:27.550+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-27T13:03:27.763+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-27T13:03:27.784+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-27T13:03:27.896+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7ec41954
+2025-10-27T13:03:27.897+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-27T13:03:27.944+05:30  WARN 637565 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-27T13:03:27.955+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-27T13:03:28.682+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-27T13:03:28.818+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-27T13:03:29.069+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-27T13:03:31.926+05:30  WARN 637565 --- [StackOverflowClone] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-27T13:03:31.951+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-27T13:03:31.951+05:30  WARN 637565 --- [StackOverflowClone] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-27T13:03:32.357+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-27T13:03:32.384+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-27T13:03:32.392+05:30  INFO 637565 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Started StackOverflowCloneApplication in 6.59 seconds (process running for 7.273)
+2025-10-27T13:03:42.628+05:30  INFO 637565 --- [StackOverflowClone] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-27T13:03:42.628+05:30  INFO 637565 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-27T13:03:42.629+05:30  INFO 637565 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-10-27T13:03:55.527+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:03:55.530+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:03:55.533+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:03:55.581+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 986, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:03:55.584+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-4] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-4][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar-script" found in template question-show, line 987, col 9. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar-script}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:17.375+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:17.378+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:17.380+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:17.398+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 986, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:17.400+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-10] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-10][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar-script" found in template question-show, line 987, col 9. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar-script}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:33.846+05:30  INFO 637565 --- [StackOverflowClone] [http-nio-8080-exec-1] c.m.s.services.AnswerService             : Email notify queued for follower: nj8454@gmail.com (offered=true) subject='New answer on: Why am I getting a “multiple definition” linker error even though I used include guards?'
+2025-10-27T13:04:33.848+05:30  INFO 637565 --- [StackOverflowClone] [Thread-7] c.m.s.services.EmailService              : Sending email via SendGrid: to=nj8454@gmail.com, subject=New answer on: Why am I getting a “multiple definition” linker error even though I used include guards?, bodyPreview="Hi nj8454@gmail.com,\n\nAn answer has been submitted to a question you follow.\nTitle: Why am I getting a “multiple definition” linker error even though I used include guards?\nLink: /questions/17\n\n..."
+2025-10-27T13:04:33.888+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: styles" found in template question-show, line 11, col 15. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: styles}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:33.891+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar" found in template question-show, line 598, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:33.894+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template question-show, line 600, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:33.926+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template question-show, line 986, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:33.929+05:30  WARN 637565 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][question-show] Deprecated unwrapped fragment expression "fragments/layout :: navbar-script" found in template question-show, line 987, col 9. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar-script}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-27T13:04:35.341+05:30  INFO 637565 --- [StackOverflowClone] [Thread-7] c.m.s.services.EmailService              : SendGrid accepted: status=202, to=nj8454@gmail.com, subject=New answer on: Why am I getting a “multiple definition” linker error even though I used include guards?
