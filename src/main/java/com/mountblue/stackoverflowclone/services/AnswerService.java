@@ -24,17 +24,21 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
+    private final VoteRepository voteRepository;
     private final FollowService followService;
     private final EmailQueue emailQueue;
+
 
     public AnswerService(AnswerRepository answerRepository,
                          UserRepository userRepository,
                          QuestionRepository questionRepository,
+                         VoteRepository voteRepository,
                          FollowService followService,
                          EmailQueue emailQueue){
         this.answerRepository = answerRepository;
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
+        this.voteRepository = voteRepository;
         this.followService = followService;
         this.emailQueue = emailQueue;
     }
@@ -181,10 +185,6 @@ public class AnswerService {
 
         answer.setAccepted(true);
         answerRepository.save(answer);
-    }
-
-    public void deleteAnswer(Long answerId) {
-        answerRepository.deleteById(answerId);
     }
 
     public Optional<Answer> findById(Long answerId) {
