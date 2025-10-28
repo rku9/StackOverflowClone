@@ -7,8 +7,6 @@ import com.mountblue.stackoverflowclone.repositories.QuestionRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
 import com.mountblue.stackoverflowclone.repositories.VoteRepository;
 import org.springframework.security.access.AccessDeniedException;
-import com.mountblue.stackoverflowclone.workers.EmailQueue;
-import com.mountblue.stackoverflowclone.dtos.EmailTaskDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,21 +24,18 @@ public class AnswerService {
     private final QuestionRepository questionRepository;
     private final VoteRepository voteRepository;
     private final FollowService followService;
-    private final EmailQueue emailQueue;
 
 
     public AnswerService(AnswerRepository answerRepository,
                          UserRepository userRepository,
                          QuestionRepository questionRepository,
                          VoteRepository voteRepository,
-                         FollowService followService,
-                         EmailQueue emailQueue){
+                         FollowService followService){
         this.answerRepository = answerRepository;
         this.userRepository = userRepository;
         this.questionRepository = questionRepository;
         this.voteRepository = voteRepository;
         this.followService = followService;
-        this.emailQueue = emailQueue;
     }
 
     @Transactional
@@ -63,9 +58,8 @@ public class AnswerService {
         answer.setAccepted(false);
 
         Answer saved = answerRepository.save(answer);
-
         // Notify followers asynchronously
-        notifyFollowers(question, saved);
+        followService.notifyFollowersOfNewAnswer(question, saved);
         return saved;
     }
 
@@ -90,7 +84,7 @@ public class AnswerService {
         answer.setAccepted(false);
 
         Answer saved = answerRepository.save(answer);
-        notifyFollowers(question, saved);
+        followService.notifyFollowersOfNewAnswer(question, saved);
         return saved;
     }
 
@@ -189,40 +183,6 @@ public class AnswerService {
 
     public Optional<Answer> findById(Long answerId) {
         return answerRepository.findById(answerId);
-    }
-
-    private void notifyFollowers(Question question, Answer answer) {
-        Long questionId = question.getId();
-        String title = question.getTitle() != null ? question.getTitle() : ("Question #" + questionId);
-
-        List<User> followers = followService.getFollowersForQuestion(questionId);
-        if (followers == null || followers.isEmpty()) return;
-
-        String subject = "New answer on: " + title;
-        String link = "/questions/" + questionId;
-
-        String answerAuthorEmail = answer.getAuthor() != null ? answer.getAuthor().getEmail() : null;
-
-        for (User u : followers) {
-            if (u == null || u.getEmail() == null) continue;
-            if (answerAuthorEmail != null && answerAuthorEmail.equalsIgnoreCase(u.getEmail())) continue; // skip sender
-            String personalizedBody = "Hi " + u.getEmail() + ",\n\n" +
-                    "An answer has been submitted to a question you follow.\n" +
-                    "Title: " + title + "\n" +
-                    "Link: " + link + "\n\n" +
-                    "You received this because you follow this question.\n--\nStackOverflowClone";
-            EmailTaskDto dto = new EmailTaskDto(u.getEmail(), subject, personalizedBody);
-            boolean offered = emailQueue.offer(dto);
-            logger.info("Email notify queued for follower: {} (offered={}) subject='{}'", u.getEmail(), offered, subject);
-            if (!offered) {
-                try {
-                    emailQueue.enqueue(dto); // block if full to avoid dropping
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    logger.warn("Interrupted while enqueuing email task for {}", u.getEmail());
-                }
-            }
-        }
     }
 
     public void deleteAnswer(Long answerId) {

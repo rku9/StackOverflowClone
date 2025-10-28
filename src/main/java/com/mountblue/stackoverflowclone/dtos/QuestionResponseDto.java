@@ -16,6 +16,7 @@ public record QuestionResponseDto(
         LocalDateTime updatedAt,
         Long viewCount,
         int score,
+        int answerCount,
 //        List<AnswerResponseDto> answers,
         List<Comment> comments,
         @JsonManagedReference("question-tags")

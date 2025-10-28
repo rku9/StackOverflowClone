@@ -15,8 +15,8 @@ public class Follow extends BaseModel {
     private User user;
 
     @Column(name = "object_type", nullable = false)
-    private String objectType; // "question" or "tag"
+    private String objectType;
 
     @Column(name = "object_id", nullable = false)
-    private Long objectId; // ID of the question or tag
+    private Long objectId;
 }

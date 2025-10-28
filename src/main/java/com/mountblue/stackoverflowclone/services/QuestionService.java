@@ -141,21 +141,26 @@ public class QuestionService {
      */
     public Page<QuestionResponseDto> search(String query, Pageable pageable) {
         Page<Question> results = getSeachedQuestions(pageable, query);
-        return results.map(question -> new QuestionResponseDto(
-                question.getId(),
-                question.getAuthor().getName(),
-                question.getAuthor().getEmail(),
-                question.getTitle(),
-                question.getBody(),
-                question.getCreatedAt(),
-                question.getUpdatedAt(),
-                question.getViewCount(),
-                question.getScore(),
-                question.getComments(),
-                question.getTags().stream()
-                        .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
-                        .collect(Collectors.toList())
-        ));
+        return results.map(question -> {
+            int answerCount = question.getAnswers() != null ? question.getAnswers().size() : 0;
+
+            return new QuestionResponseDto(
+                    question.getId(),
+                    question.getAuthor().getName(),
+                    question.getAuthor().getEmail(),
+                    question.getTitle(),
+                    question.getBody(),
+                    question.getCreatedAt(),
+                    question.getUpdatedAt(),
+                    question.getViewCount(),
+                    question.getScore(),
+                    answerCount,
+                    question.getComments(),
+                    question.getTags().stream()
+                            .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
+                            .collect(Collectors.toList())
+            );
+        });
     }
 
     /**
