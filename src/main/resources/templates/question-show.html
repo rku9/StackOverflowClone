@@ -1162,7 +1162,15 @@
     // Single submit hook used by onsubmit attribute
     function prepareNewAnswerContent() {
         const markdown = newAnswerEditor.getMarkdown();
-        document.getElementById('newAnswerContent').value = markdown;
+        const trimmed = markdown ? markdown.trim() : '';
+
+        if (!trimmed.length) {
+            alert('Answer body cannot be empty. Please add some content before submitting.');
+            newAnswerEditor.focus();
+            return false;
+        }
+
+        document.getElementById('newAnswerContent').value = trimmed;
         return true;
     }
 
