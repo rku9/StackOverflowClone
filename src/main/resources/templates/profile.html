@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${profileUser.name} + ' - User Profile'">User Profile</title>
+
+    <!-- Include layout styles -->
+    <th:block th:replace="fragments/layout :: styles"></th:block>
+
+    <style>
+        .page-wrapper {
+            max-width: 1264px;
+            margin: 0 auto !important;
+            padding: calc(var(--navbar-height) + 20px) 16px 24px;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 24px;
+            padding: 24px 0;
+            border-bottom: 1px solid #e3e6e8;
+            margin-bottom: 24px;
+        }
+
+        .profile-avatar {
+            width: 128px;
+            height: 128px;
+            border-radius: 8px;
+            background: #e1ecf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #0074cc;
+            font-weight: bold;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-username {
+            font-size: 34px;
+            font-weight: 400;
+            margin: 0 0 8px 0;
+            color: #232629;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .profile-stat {
+            font-size: 13px;
+            color: #6a737c;
+        }
+
+        .profile-stat strong {
+            color: #232629;
+            font-size: 17px;
+        }
+
+        .profile-edit-btn {
+            background: #fff;
+            border: 1px solid #9fa6ad;
+            color: #3b4045;
+            padding: 8px 10px;
+            border-radius: 3px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .profile-edit-btn:hover {
+            background: #f8f9f9;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            border: 1px solid #d6d9dc;
+            border-radius: 5px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-card-number {
+            font-size: 17px;
+            font-weight: 600;
+            color: #232629;
+            display: block;
+        }
+
+        .stat-card-label {
+            font-size: 12px;
+            color: #6a737c;
+            margin-top: 4px;
+        }
+
+        .impact-card {
+            background: #d9eaf7;
+            border: 1px solid #a6ceed;
+            padding: 16px;
+            border-radius: 5px;
+            margin-bottom: 24px;
+        }
+
+        .impact-stat {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .impact-number {
+            font-size: 24px;
+            font-weight: 600;
+            color: #232629;
+        }
+
+        .impact-label {
+            font-size: 13px;
+            color: #525960;
+        }
+
+        .section-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid #e3e6e8;
+            margin-bottom: 16px;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #525960;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+            color: #0074cc;
+        }
+
+        .tab-button.active {
+            color: #0074cc;
+            border-bottom-color: #f48024;
+            font-weight: 600;
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .question-item, .answer-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e3e6e8;
+        }
+
+        .question-stats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 6px;
+            border-radius: 3px;
+            background: #f1f2f3;
+            color: #6a737c;
+        }
+
+        .stat-badge.has-votes {
+            border: 1px solid #5fba7d;
+            background: #5fba7d;
+            color: white;
+        }
+
+        .question-title-link {
+            color: #0074cc;
+            text-decoration: none;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .question-title-link:hover {
+            color: #0056b3;
+        }
+
+        .tag-item {
+            display: inline-block;
+            background: #e1ecf4;
+            color: #39739d;
+            border: 1px solid #cde9fe;
+            padding: 4px 6px;
+            font-size: 12px;
+            border-radius: 3px;
+            margin: 4px 4px 4px 0;
+        }
+
+        .tag-count {
+            font-size: 11px;
+            color: #6a737c;
+            margin-left: 4px;
+        }
+
+        .badge-section {
+            margin-top: 24px;
+        }
+
+        .badge-card {
+            border: 1px solid #d6d9dc;
+            border-radius: 5px;
+            padding: 16px;
+            text-align: center;
+            background: #f8f9f9;
+        }
+
+        .badge-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .badge-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #232629;
+        }
+
+        .badge-desc {
+            font-size: 12px;
+            color: #6a737c;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar -->
+<div th:replace="fragments/layout :: navbar"></div>
+
+<!-- Include left sidebar -->
+<div th:replace="fragments/layout :: sidebar"></div>
+
+<!-- Main content -->
+<div class="page-wrapper">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-avatar" th:text="${#strings.substring(profileUser.name, 0, 1)}">
+            S
+        </div>
+
+        <div class="profile-info">
+            <h1 class="profile-username" th:text="${profileUser.name}">Username</h1>
+
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <strong th:text="${profileUser.reputation ?: 1}">1</strong>
+                    <span>reputation</span>
+                </div>
+                <div class="profile-stat">
+                    <span>Member for </span>
+                    <strong th:text="${#temporals.format(profileUser.createdAt, 'yyyy')} + ' years, ' +
+                                        ${#temporals.format(profileUser.createdAt, 'M')} + ' months'">
+                        3 years, 2 months
+                    </strong>
+                </div>
+                <div class="profile-stat">
+                    <span>Last seen </span>
+                    <strong th:text="${#temporals.format(profileUser.lastSeen ?: profileUser.createdAt, 'MMM dd, yyyy')}">
+                        this week
+                    </strong>
+                </div>
+            </div>
+
+            <!-- Edit button (only for own profile) -->
+            <div style="margin-top: 12px;" sec:authorize="isAuthenticated()">
+                <button class="profile-edit-btn"
+                        th:if="${#authentication.name == profileUser.email}">
+                    Edit profile
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-card-number" th:text="${totalAnswers}">0</span>
+            <div class="stat-card-label">answers</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-card-number" th:text="${totalQuestions}">1</span>
+            <div class="stat-card-label">questions</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-card-number">0</span>
+            <div class="stat-card-label">reached</div>
+        </div>
+    </div>
+
+    <!-- Impact Stats -->
+    <div class="impact-card">
+        <div class="impact-stat">
+            <span class="impact-number">~35</span>
+            <span class="impact-label">people reached</span>
+        </div>
+    </div>
+
+    <!-- Profile Content Sections -->
+    <div class="profile-content">
+        <!-- Summary Section (Active by default) -->
+        <div class="section" id="summary-section">
+            <h3 style="font-size: 21px; margin-bottom: 16px;">Summary</h3>
+
+            <!-- Questions -->
+            <div style="margin-bottom: 24px;">
+                <div class="section-tabs">
+                    <button class="tab-button"
+                            th:classappend="${activeSection == null or activeSection == 'questions' ? 'active' : ''}"
+                            data-section="questions">
+                        Questions <span th:text="${totalQuestions}">1</span>
+                    </button>
+                    <button class="tab-button"
+                            th:classappend="${activeSection == 'answers' ? 'active' : ''}"
+                            data-section="answers">
+                        Answers <span th:text="${totalAnswers}">0</span>
+                    </button>
+                    <button class="tab-button"
+                            th:classappend="${activeSection == 'tags' ? 'active' : ''}"
+                            data-section="tags">
+                        Tags
+                    </button>
+                </div>
+
+                <!-- Questions Content -->
+                <div class="section-content"
+                     th:classappend="${activeSection == null or activeSection == 'questions' ? 'active' : ''}"
+                     id="questions-content">
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                        <button class="tab-button"
+                                th:class="${currentTab == 'score' ? 'tab-button active' : 'tab-button'}"
+                                onclick="loadQuestions('score')">Score</button>
+                        <button class="tab-button"
+                                th:class="${currentTab == 'activity' ? 'tab-button active' : 'tab-button'}"
+                                onclick="loadQuestions('activity')">Activity</button>
+                        <button class="tab-button"
+                                th:class="${currentTab == 'newest' or currentTab == null or currentTab == '' ? 'tab-button active' : 'tab-button'}"
+                                onclick="loadQuestions('newest')">Newest</button>
+                    </div>
+
+                    <div th:if="${questions != null and !questions.isEmpty()}">
+                        <div class="question-item" th:each="question : ${questions}">
+                            <div class="question-stats">
+                                    <span class="stat-badge"
+                                          th:classappend="${question.score > 0 ? 'has-votes' : ''}"
+                                          th:text="${question.score} + ' score'">
+                                        0 score
+                                    </span>
+                                <span class="stat-badge" th:text="${#lists.size(question.answers)} + ' answers'">
+                                        0 answers
+                                    </span>
+                                <span class="stat-badge" th:text="${question.viewCount} + ' views'">
+                                        0 views
+                                    </span>
+                            </div>
+                            <a class="question-title-link"
+                               th:href="@{/questions/{id}(id=${question.id})}"
+                               th:text="${question.title}">
+                                How to convert the following output...
+                            </a>
+                            <div style="margin-top: 6px; font-size: 12px; color: #9199a1;">
+                                    <span th:text="'asked ' + ${#temporals.format(question.createdAt, 'MMM dd, yyyy')}">
+                                        asked Aug 11, 2022
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p th:unless="${questions != null and !questions.isEmpty()}"
+                       style="color: #6a737c; padding: 16px 0;">
+                        You have not asked any questions yet.
+                    </p>
+                </div>
+
+                <!-- Answers Content -->
+                <div class="section-content"
+                     th:classappend="${activeSection == 'answers' ? 'active' : ''}"
+                     id="answers-content">
+                    <div th:if="${answers != null and !answers.isEmpty()}">
+                        <div class="answer-item" th:each="answer : ${answers}">
+                            <!-- Answer stats -->
+                            <div class="question-stats">
+                                <span class="stat-badge"
+                                      th:classappend="${answer.score > 0 ? 'has-votes' : ''}"
+                                      th:text="${answer.score} + ' score'">
+                                    0 score
+                                </span>
+                                <span class="stat-badge"
+                                      th:classappend="${answer.accepted ? 'has-votes' : ''}"
+                                      th:if="${answer.accepted}">
+                                    ✓ accepted
+                                </span>
+                            </div>
+
+                            <!-- The question this answer belongs to -->
+                            <a class="question-title-link"
+                               th:href="@{/questions/{id}(id=${answer.question.id})}"
+                               th:text="${answer.question.title}">
+                                Question title that was answered
+                            </a>
+
+                            <!-- Answer preview (first 150 chars) -->
+                            <div style="margin-top: 8px; font-size: 13px; color: #6a737c;">
+                                <span th:utext="${#strings.abbreviate(answer.body, 150)}">
+                                    Answer preview text...
+                                </span>
+                            </div>
+
+                            <!-- Answer date -->
+                            <div style="margin-top: 6px; font-size: 12px; color: #9199a1;">
+                                <span th:text="'answered ' + ${#temporals.format(answer.createdAt, 'MMM dd, yyyy')}">
+                                    answered Aug 15, 2022
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p th:unless="${answers != null and !answers.isEmpty()}"
+                       style="color: #6a737c; padding: 16px 0;">
+                        You have not answered any questions
+                    </p>
+                </div>
+
+
+                <!-- Tags Content -->
+                <div class="section-content"
+                     th:classappend="${activeSection == 'tags' ? 'active' : ''}"
+                     id="tags-content">
+                    <div th:if="${tagsWithCount != null and !tagsWithCount.isEmpty()}">
+                        <div th:each="entry : ${tagsWithCount}" style="margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e3e6e8;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <a th:href="@{/questions/tagged/{tag}(tag=${entry.key.name})}"
+                                   class="tag-item"
+                                   style="font-size: 13px; padding: 6px 8px;"
+                                   th:text="${entry.key.name}">
+                                    java
+                                </a>
+                                <div style="font-size: 12px; color: #6a737c;">
+                    <span th:text="${entry.value} + ' question' + (${entry.value} > 1 ? 's' : '')">
+                        5 questions
+                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p th:unless="${tagsWithCount != null and !tagsWithCount.isEmpty()}"
+                       style="color: #6a737c; padding: 16px 0;">
+                        You have not used any tags yet
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include footer -->
+<div th:replace="fragments/layout :: footer"></div>
+<script th:replace="fragments/layout :: navbar-script"></script>
+
+<script>
+    // Tab switching functionality
+    document.querySelectorAll('.tab-button[data-section]').forEach(button => {
+        button.addEventListener('click', function() {
+            const section = this.getAttribute('data-section');
+            const userId = [[${profileUser.id}]];
+
+            // Navigate to the appropriate endpoint
+            switch(section) {
+                case 'questions':
+                    window.location.href = '/users/' + userId + '/questions';
+                    break;
+                case 'answers':
+                    window.location.href = '/users/' + userId + '/answers';
+                    break;
+                case 'tags':
+                    window.location.href = '/users/' + userId + '/tags';
+                    break;
+                case 'badges':
+                    window.location.href = '/users/' + userId + '/badges';
+                    break;
+            }
+        });
+    });
+
+    function loadQuestions(sortBy) {
+        const userId = [[${profileUser.id}]];
+        window.location.href = '/users/' + userId + '/questions?sortBy=' + sortBy;
+    }
+
+    function loadAnswers(sortBy) {
+        const userId = [[${profileUser.id}]];
+        window.location.href = '/users/' + userId + '/answers?sortBy=' + sortBy;
+    }
+</script>
+</body>
+</html>
