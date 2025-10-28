@@ -4,6 +4,7 @@ import com.mountblue.stackoverflowclone.models.Follow;
 import com.mountblue.stackoverflowclone.models.User;
 import com.mountblue.stackoverflowclone.repositories.FollowRepository;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +22,18 @@ public class FollowService {
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
     private final EmailQueue emailQueue;
+    private final String appBaseUrl;
     private static final Logger logger = LoggerFactory.getLogger(FollowService.class);
 
-    public FollowService(FollowRepository followRepository, UserRepository userRepository, EmailQueue emailQueue) {
+    public FollowService(FollowRepository followRepository,
+                         UserRepository userRepository,
+                         EmailQueue emailQueue,
+                         @Value("${app.base-url:http://localhost:8080}") String appBaseUrl) {
         this.followRepository = followRepository;
         this.userRepository = userRepository;
         this.emailQueue = emailQueue;
+        // Normalize: remove trailing slash to avoid double slashes
+        this.appBaseUrl = appBaseUrl != null && appBaseUrl.endsWith("/") ? appBaseUrl.substring(0, appBaseUrl.length() - 1) : appBaseUrl;
     }
 
     public boolean isFollowingQuestion(Long userId, Long questionId) {
@@ -64,18 +71,22 @@ public class FollowService {
         if (followers == null || followers.isEmpty()) return;
 
         String subject = "New answer on: " + title;
-        String link = "/questions/" + questionId;
+        String link = appBaseUrl + "/questions/" + questionId + "#answer-" + answer.getId();
 
         String answerAuthorEmail = answer.getAuthor() != null ? answer.getAuthor().getEmail() : null;
 
         for (User u : followers) {
             if (u == null || u.getEmail() == null) continue;
-            if (answerAuthorEmail != null && answerAuthorEmail.equalsIgnoreCase(u.getEmail())) continue;
-            String personalizedBody = "Hi " + u.getEmail() + ",\n\n" +
-                    "An answer has been submitted to a question you follow.\n" +
-                    "Title: " + title + "\n" +
-                    "Link: " + link + "\n\n" +
-                    "You received this because you follow this question.\n--\nStackOverflowClone";
+//            if (answerAuthorEmail != null && answerAuthorEmail.equalsIgnoreCase(u.getEmail())) continue;
+            String personalizedBody =
+                    "<div style=\"font-family: Arial, sans-serif; font-size: 14px; color: #333;\">" +
+                            "<p>Hi " + u.getEmail() + ",</p>" +
+                            "<p>An answer has been submitted to a question you follow.</p>" +
+                            "<p><strong>Title:</strong> " + title + "</p>" +
+                            "<p><a href=\"" + link + "\" style=\"color:#0a95ff;\">View the new answer</a></p>" +
+                            "<hr style=\"border:none;border-top:1px solid #eee;\"/>" +
+                            "<p style=\"color:#555;\">You received this because you follow this question.<br/>--<br/>StackOverflowClone</p>" +
+                            "</div>";
             EmailTaskDto dto = new EmailTaskDto(u.getEmail(), subject, personalizedBody);
             boolean offered = emailQueue.offer(dto);
             logger.info("Email notify queued for follower: {} (offered={}) subject='{}'", u.getEmail(), offered, subject);

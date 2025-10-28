@@ -662,6 +662,8 @@
                     <article th:utext="${questionHtml}">
                         <p>Question body content...</p>
                     </article>
+                    <!-- Hidden original markdown for AI request -->
+                    <textarea id="question-markdown" style="display:none;" th:text="${question.body}"></textarea>
                 </div>
             </div>
 
@@ -1006,6 +1008,12 @@
         </div>
         <aside class="sidebar">
             <div class="card">
+                <h4>AI Suggestion</h4>
+                <div id="ai-suggestion-status" style="display:none; color:#6a737c; font-size: 12px; margin-top: 6px;">Generating...</div>
+                <div id="ai-suggestion-content" style="white-space: pre-wrap; font-size: 13px; color: #2f3337; margin-top: 8px;"></div>
+                <button id="ai-suggestion-button" class="btn btn-outline" style="margin-top: 10px;" onclick="generateAISuggestion()">Generate Suggestion</button>
+            </div>
+            <div class="card">
                 <h4>Related Questions</h4>
                 <div th:if="${relatedQuestions != null and !relatedQuestions.isEmpty()}">
                     <ul style="list-style: none; padding: 0; margin: 0;">
@@ -1044,8 +1052,7 @@
 <!-- Toast UI Editor -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
-<script>
-
+<script th:inline="javascript">
     // NEW ANSWER EDITOR
 
     const newAnswerEditor = new toastui.Editor({
@@ -1254,6 +1261,43 @@
         form.appendChild(returnUrlInput);
         document.body.appendChild(form);
         form.submit();
+    }
+
+    // AI SUGGESTION ON DEMAND
+    async function generateAISuggestion() {
+        const btn = document.getElementById('ai-suggestion-button');
+        const status = document.getElementById('ai-suggestion-status');
+        const contentDiv = document.getElementById('ai-suggestion-content');
+        try {
+            btn.disabled = true;
+            status.style.display = 'block';
+            status.textContent = 'Generating...';
+            contentDiv.textContent = '';
+
+            // Derive questionId from URL like /questions/{id}
+            const match = (location.pathname || '').match(/\/questions\/(\d+)/);
+            const questionId = match ? match[1] : '';
+            if (!questionId) {
+                throw new Error('Cannot determine question id from URL');
+            }
+
+            const resp = await fetch(`/api/ai/suggestion/${questionId}`, {
+                method: 'GET'
+            });
+            const contentType = resp.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
+                const data = await resp.json();
+                contentDiv.textContent = data?.aiResponse || 'No suggestion returned.';
+            } else {
+                const text = await resp.text();
+                contentDiv.textContent = text || 'No suggestion returned.';
+            }
+        } catch (e) {
+            contentDiv.textContent = 'Failed to generate suggestion: ' + (e?.message || e);
+        } finally {
+            status.style.display = 'none';
+            btn.disabled = false;
+        }
     }
 </script>
 </body>

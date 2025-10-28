@@ -35,7 +35,7 @@ public class EmailService {
     public boolean sendEmail(String toEmail, String subject, String body) {
         Email from = new Email(fromEmail, fromName);
         Email to = new Email(toEmail);
-        Content content = new Content("text/plain", body);
+        Content content = new Content("text/html", body);
         Mail mail = new Mail(from, subject, to, content);
 
         Request request = new Request();
