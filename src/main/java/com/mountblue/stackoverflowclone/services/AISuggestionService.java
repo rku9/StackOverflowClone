@@ -94,7 +94,10 @@ public class AISuggestionService {
                 }
             }
             String out = sb.toString().trim();
-            return out.isEmpty() ? "AI returned an empty response." : out;
+            if (out.isEmpty()) return "AI returned an empty response.";
+            // Convert AI Markdown to HTML so UI can render like question content
+            String aiHtml = renderer.render(parser.parse(out));
+            return aiHtml;
         } catch (HttpClientErrorException.TooManyRequests ex) {
             String retryAfter = ex.getResponseHeaders() != null ? ex.getResponseHeaders().getFirst("Retry-After") : null;
             if (retryAfter != null && retryAfter.isBlank()) retryAfter = null;
@@ -108,18 +111,19 @@ public class AISuggestionService {
 
     private String buildPrompt(String title, String bodyPlainText) {
         return """
-            You are a helpful StackOverflow assistant. Analyze the user's programming question and respond with:
-            - A very brief summary of the issue.
+            You are a helpful StackOverflow assistant.
+            Respond ONLY in GitHub-Flavored Markdown (no HTML tags).
+            Requirements:
+            - A brief summary of the issue.
             - Likely cause(s).
-            - Concrete steps to fix.
-            - If code is needed, include a minimal snippet.
+            - Concrete, step-by-step fixes.
+            - Use fenced code blocks with an explicit language (e.g., ```java, ```js) for any code.
+            - Keep it concise and actionable.
 
             Question Title: %s
 
             Question Details:
             %s
-
-            Keep it concise and actionable.
             """.formatted(title == null ? "" : title.trim(),
                 bodyPlainText == null ? "" : bodyPlainText.trim());
     }

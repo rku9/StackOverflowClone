@@ -197,6 +197,58 @@
             white-space: pre;
         }
 
+        /* AI suggestion content — mirror question/answer styles */
+        .ai-suggestion pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 16px 18px;
+            margin: 12px 0;
+            overflow: auto;
+            white-space: pre;
+            line-height: 1.55;
+            font-size: 14px;
+            tab-size: 4;
+            max-width: 100%;
+            box-sizing: border-box;
+            font-family: "Fira Code", "Source Code Pro", Consolas, monospace;
+        }
+        .ai-suggestion code {
+            font-family: "Fira Code", "Source Code Pro", Consolas, monospace;
+            white-space: pre-wrap;
+            background: #f3f4f6;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 12.5px;
+            color: #2f3337;
+        }
+        .ai-suggestion pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+            white-space: pre;
+        }
+        .ai-suggestion img {
+            max-width: 100% !important;
+            width: auto !important;
+            height: auto;
+            display: block;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .ai-suggestion ul {
+            list-style: disc;
+            margin-left: 1.25rem;
+            padding-left: 1.25rem;
+        }
+        .ai-suggestion ol {
+            list-style: decimal;
+            margin-left: 1.25rem;
+            padding-left: 1.25rem;
+        }
+        .ai-suggestion li { margin: 6px 0; }
+
         /* Restore list bullets and indentation in rendered content */
         .question-body ul,
         .answer-body ul {
@@ -1010,7 +1062,7 @@
             <div class="card">
                 <h4>AI Suggestion</h4>
                 <div id="ai-suggestion-status" style="display:none; color:#6a737c; font-size: 12px; margin-top: 6px;">Generating...</div>
-                <div id="ai-suggestion-content" style="white-space: pre-wrap; font-size: 13px; color: #2f3337; margin-top: 8px;"></div>
+                <div id="ai-suggestion-content" class="ai-suggestion" style="font-size: 13px; color: #2f3337; margin-top: 8px;"></div>
                 <button id="ai-suggestion-button" class="btn btn-outline" style="margin-top: 10px;" onclick="generateAISuggestion()">Generate Suggestion</button>
             </div>
             <div class="card">
@@ -1287,10 +1339,17 @@
             const contentType = resp.headers.get('content-type') || '';
             if (contentType.includes('application/json')) {
                 const data = await resp.json();
-                contentDiv.textContent = data?.aiResponse || 'No suggestion returned.';
+                contentDiv.innerHTML = data?.aiResponse || 'No suggestion returned.';
             } else {
                 const text = await resp.text();
-                contentDiv.textContent = text || 'No suggestion returned.';
+                contentDiv.innerHTML = text || 'No suggestion returned.';
+            }
+
+            // Re-highlight any code blocks inside the AI suggestion
+            if (window.hljs) {
+                contentDiv.querySelectorAll('pre code').forEach(block => {
+                    try { hljs.highlightElement(block); } catch (_) {}
+                });
             }
         } catch (e) {
             contentDiv.textContent = 'Failed to generate suggestion: ' + (e?.message || e);
