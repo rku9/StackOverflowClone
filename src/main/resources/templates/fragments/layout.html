@@ -91,7 +91,11 @@
 
             <!-- Show only when authenticated -->
             <div sec:authorize="isAuthenticated()" style="display: flex; gap: 12px; align-items: center;">
-                <span style="font-size: 13px; color: #3b4045;" th:text="${#authentication?.principal?.displayName}">User</span>
+                <a th:href="@{/users/{userId}(userId=${#authentication.principal.id})}"
+                   style="text-decoration: none; color: #3b4045; font-size: 13px; transition: color 0.2s;"
+                   onmouseover="this.style.color='#0074cc'"
+                   onmouseout="this.style.color='#3b4045'"
+                   th:text="${#authentication.principal.displayName}">User</a>
                 <form th:action="@{/logout}" method="post" style="display:inline; margin:0;">
                     <button type="submit"
                             style="background: transparent; color: #6a737c; border: 1px solid #d6d9dc; padding: 6px 12px; border-radius: 3px; font-size: 13px; cursor: pointer;">
@@ -233,7 +237,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-item">
+                <a href="/users" class="nav-item">
                     <svg width="18" height="18" viewBox="0 0 18 18">
                         <circle cx="9" cy="6" r="3" fill="currentColor"/>
                         <path d="M3 16c0-3.5 2.5-6 6-6s6 2.5 6 6" fill="currentColor"/>
@@ -340,23 +344,23 @@
         }
 
         :root {
-            --navbar-height: 50px; /* measure your actual navbar height and set here */
+            --navbar-height: 50px;
         }
 
-        /* Main container to center everything */
+        /* Main container */
         .container-fluid {
             max-width: 1264px;
             margin: 0 auto;
             padding: 0 16px;
         }
 
-        /* Flex layout for proper alignment */
+        /* Flex layout */
         .d-flex.row {
             display: flex;
             justify-content: center;
         }
 
-        /* Fixed widths for sidebars */
+        /* Sidebars */
         .sidebar-left {
             width: 164px;
             min-width: 164px;
@@ -369,20 +373,21 @@
             flex-shrink: 0;
         }
 
-        /* Center content with proper width */
+        /* Center content */
         .content-center {
             max-width: 727px;
             margin: 0 16px;
+            flex: 1;
         }
 
-        /* Page wrapper - add padding for fixed navbar */
+        /* Page wrapper */
         .page-wrapper {
             position: relative;
-            margin-left: 164px; /* Space for left sidebar */
-            padding-top: 50px; /* Space for fixed navbar */
+            margin-left: 164px;
+            padding-top: 50px;
             min-height: 100vh;
-            max-width: calc(1264px - 164px); /* Max width minus sidebar */
-            margin-right: auto; /* Center the content */
+            max-width: calc(1264px - 164px);
+            margin-right: auto;
             padding-left: 24px;
             padding-right: 24px;
         }
@@ -400,7 +405,7 @@
             display: flex;
             align-items: center;
             padding: 0 12px;
-            position: fixed; /* Navbar stays fixed */
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
@@ -414,7 +419,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding-left: 164px; /* Offset for sidebar */
+            padding-left: 164px;
         }
 
         .logo {
@@ -467,12 +472,12 @@
             background: #0074cc;
         }
 
-        /* Left Sidebar - FIXED */
+        /* Left Sidebar */
         .left-sidebar {
             width: 164px;
             background: #f8f9f9;
             border-right: 1px solid #d6d9dc;
-            position: absolute; /* Changed from fixed to absolute */
+            position: absolute;
             top: 50px;
             left: 0;
             min-height: calc(100vh - 50px);
@@ -609,18 +614,18 @@
 
         /* Main content area */
         .page-container, .question-container {
-            padding-top: 70px; /* 50px navbar + 20px spacing */
+            padding-top: 70px;
             padding-left: 12px;
             padding-right: 12px;
         }
 
-        /* Footer - extend full width */
+        /* Footer */
         footer {
             background: #232629;
             color: #9199a1;
             padding: 32px 12px;
             margin-top: 48px;
-            margin-left: -164px; /* Extend back to full width */
+            margin-left: -164px;
             width: calc(100% + 164px);
         }
 
@@ -629,6 +634,7 @@
             margin: 0 auto;
             display: flex;
             gap: 48px;
+            flex-wrap: wrap;
         }
 
         .footer-section h5 {
@@ -665,9 +671,133 @@
             display: flex;
             justify-content: space-between;
             font-size: 11px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* Large tablets and below (hide right sidebar) */
+        @media screen and (max-width: 1100px) {
+            .sidebar-right {
+                display: none;
+            }
+
+            .content-center {
+                max-width: 100%;
+            }
+        }
+
+        /* Tablets and below (hide left sidebar, adjust layout) */
+        @media screen and (max-width: 980px) {
+            .left-sidebar {
+                display: none;
+            }
+
+            .page-wrapper {
+                margin-left: 0;
+                max-width: 100%;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .navbar-content {
+                padding-left: 0;
+            }
+
+            footer {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        /* Small tablets and large phones */
+        @media screen and (max-width: 768px) {
+            .navbar-content {
+                gap: 8px;
+            }
+
+            .nav-search {
+                max-width: 400px;
+            }
+
+            .nav-btn {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+
+            .nav-items {
+                gap: 2px;
+            }
+
+            .page-wrapper {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Mobile phones */
+        @media screen and (max-width: 640px) {
+            .navbar {
+                padding: 0 8px;
+            }
+
+            .nav-search {
+                max-width: 200px;
+            }
+
+            .nav-search input {
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+
+            /* Hide some nav buttons on mobile */
+            .nav-items .nav-btn:not(.primary) {
+                display: none;
+            }
+
+            .page-wrapper {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            .page-container, .question-container {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            .container-fluid {
+                padding: 0 8px;
+            }
+        }
+
+        /* Extra small phones */
+        @media screen and (max-width: 480px) {
+            .navbar-content {
+                flex-wrap: wrap;
+                height: auto;
+            }
+
+            .nav-search {
+                order: 3;
+                max-width: 100%;
+                width: 100%;
+                margin-top: 8px;
+            }
+
+            .logo {
+                padding: 0 4px;
+            }
         }
     </style>
 </th:block>
-
 </body>
 </html>

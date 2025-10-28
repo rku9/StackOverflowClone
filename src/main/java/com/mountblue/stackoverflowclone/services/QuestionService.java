@@ -135,10 +135,6 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    /**
-     * Controller expects Page<QuestionResponseDto> from service for search.
-     * Reuse getSeachedQuestions(...) and map to DTOs.
-     */
     public Page<QuestionResponseDto> search(String query, Pageable pageable) {
         Page<Question> results = getSeachedQuestions(pageable, query);
         return results.map(question -> {
@@ -163,10 +159,6 @@ public class QuestionService {
         });
     }
 
-    /**
-     * Unified filtering + sorting + pagination used by QuestionsController.
-     * Applies: keyword search, tag intersection, checkbox filters, min age (daysOld), and sort.
-     */
     public Page<Question> getFilteredQuestions(
             Pageable pageable,
             String query,
@@ -324,11 +316,6 @@ public class QuestionService {
         return working;
     }
 
-    /**
-     * Note the intentional method name to match existing usage in search().
-     * Parses the raw query, selects a base result set from repository, applies
-     * in-memory filters, sorts by Newest (createdAt desc), and paginates.
-     */
     private Page<Question> getSeachedQuestions(Pageable pageable, String rawQuery) {
         SearchQuery searchQuery = searchQueryParser.parse(rawQuery);
 

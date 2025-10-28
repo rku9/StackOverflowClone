@@ -19,6 +19,19 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Override
     Optional<Question> findById(Long questionId);
 
+    @Query("SELECT DISTINCT q FROM Question q " +
+            "LEFT JOIN FETCH q.tags " +
+            "LEFT JOIN FETCH q.author " +
+            "WHERE q.author.id = :userId " +
+            "ORDER BY q.createdAt DESC")
+    List<Question> findByAuthorIdWithTags(@Param("userId") Long userId);
+
+    @Query("SELECT DISTINCT q FROM Question q " +
+            "JOIN q.tags t " +
+            "WHERE t.name = :tagName " +
+            "ORDER BY q.createdAt DESC")
+    List<Question> findByTagName(@Param("tagName") String tagName);
+
     @Query("""
         SELECT q
         FROM Question q

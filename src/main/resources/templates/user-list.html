@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Users - Stack Overflow Clone</title>
+
+    <!-- Include layout styles -->
+    <th:block th:replace="fragments/layout :: styles"></th:block>
+
+    <style>
+        .page-wrapper {
+            max-width: 1264px;
+            margin: 0 auto !important;
+            padding: calc(var(--navbar-height) + 20px) 16px 24px;
+        }
+
+        .users-header {
+            margin-bottom: 24px;
+        }
+
+        .users-header h1 {
+            font-size: 27px;
+            font-weight: 400;
+            margin: 0 0 16px 0;
+            color: #232629;
+        }
+
+        .users-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #babfc4;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #6cbbf7;
+            box-shadow: 0 0 0 4px rgba(0, 116, 204, 0.15);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 4px;
+            border: 1px solid #9fa6ad;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .filter-tab {
+            background: #fff;
+            border: none;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #6a737c;
+            cursor: pointer;
+            border-right: 1px solid #9fa6ad;
+        }
+
+        .filter-tab:last-child {
+            border-right: none;
+        }
+
+        .filter-tab:hover {
+            background: #f8f9f9;
+        }
+
+        .filter-tab.active {
+            background: #e3e6e8;
+            color: #3b4045;
+            font-weight: 600;
+        }
+
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .user-card {
+            border: 1px solid #d6d9dc;
+            border-radius: 5px;
+            padding: 12px;
+            display: flex;
+            gap: 12px;
+            background: #fff;
+            transition: box-shadow 0.2s;
+        }
+
+        .user-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 3px;
+            background: #e1ecf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #0074cc;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-size: 13px;
+            color: #0074cc;
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-name:hover {
+            color: #0056b3;
+        }
+
+        .user-location {
+            font-size: 11px;
+            color: #6a737c;
+            margin-bottom: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        .user-stat {
+            color: #6a737c;
+        }
+
+        .user-stat strong {
+            color: #232629;
+            font-weight: 600;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 24px;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 8px 12px;
+            border: 1px solid #d6d9dc;
+            border-radius: 3px;
+            text-decoration: none;
+            color: #6a737c;
+            font-size: 13px;
+        }
+
+        .pagination a:hover {
+            background: #f8f9f9;
+        }
+
+        .pagination .active {
+            background: #f48024;
+            color: white;
+            border-color: #f48024;
+        }
+
+        @media (max-width: 768px) {
+            .users-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .users-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Include navbar -->
+<div th:replace="fragments/layout :: navbar"></div>
+
+<!-- Include left sidebar -->
+<div th:replace="fragments/layout :: sidebar"></div>
+
+<!-- Main content -->
+<div class="page-wrapper">
+    <div class="users-header">
+        <h1>Users</h1>
+    </div>
+
+    <div class="users-controls">
+        <!-- Search box -->
+        <div class="search-box">
+            <form action="/users" method="get">
+                <input type="text"
+                       name="filter"
+                       class="search-input"
+                       placeholder="Filter by user"
+                       th:value="${filter}"
+                       autocomplete="off">
+                <input type="hidden" name="tab" th:value="${currentTab}">
+            </form>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab"
+                    th:classappend="${currentTab == 'reputation' ? 'active' : ''}"
+                    onclick="window.location.href='/users?tab=reputation'">
+                Reputation
+            </button>
+            <button class="filter-tab"
+                    th:classappend="${currentTab == 'newusers' ? 'active' : ''}"
+                    onclick="window.location.href='/users?tab=newusers'">
+                New users
+            </button>
+            <button class="filter-tab"
+                    th:classappend="${currentTab == 'voters' ? 'active' : ''}"
+                    onclick="window.location.href='/users?tab=voters'">
+                Voters
+            </button>
+            <button class="filter-tab"
+                    th:classappend="${currentTab == 'questions' ? 'active' : ''}"
+                    onclick="window.location.href='/users?tab=questions'">
+                Questions
+            </button>
+            <button class="filter-tab"
+                    th:classappend="${currentTab == 'answers' ? 'active' : ''}"
+                    onclick="window.location.href='/users?tab=answers'">
+                Answers
+            </button>
+        </div>
+    </div>
+
+    <!-- Users grid -->
+    <div class="users-grid">
+        <div class="user-card" th:each="userDTO : ${users}">
+            <div class="user-avatar" th:text="${#strings.substring(userDTO.user().name, 0, 1)}">
+                U
+            </div>
+            <div class="user-info">
+                <a class="user-name"
+                   th:href="@{/users/{id}(id=${userDTO.user().id})}"
+                   th:text="${userDTO.user().name}">
+                    Username
+                </a>
+                <div class="user-stats">
+                    <span class="user-stat">
+                        <strong th:text="${userDTO.user().reputation}">1</strong>Reputation
+                    </span>
+                    <span class="user-stat">
+                        <strong th:text="${userDTO.voteCount()}">0</strong> votes
+                    </span>
+                </div>
+                <div class="user-stats" style="margin-top: 4px;">
+                    <span class="user-stat">
+                        <strong th:text="${userDTO.questionCount()}">0</strong> questions
+                    </span>
+                    <span class="user-stat">
+                        <strong th:text="${userDTO.answerCount()}">0</strong> answers
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" th:if="${totalPages > 1}">
+        <!-- Previous button -->
+        <a th:if="${currentPage > 0}"
+           th:href="@{/users(page=${currentPage - 1}, tab=${currentTab}, filter=${filter})}">
+            Previous
+        </a>
+
+        <!-- Page numbers -->
+        <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:if="${i != currentPage}"
+               th:href="@{/users(page=${i}, tab=${currentTab}, filter=${filter})}"
+               th:text="${i + 1}">
+                1
+            </a>
+            <span th:if="${i == currentPage}"
+                  class="active"
+                  th:text="${i + 1}">
+                1
+            </span>
+        </th:block>
+
+        <!-- Next button -->
+        <a th:if="${currentPage < totalPages - 1}"
+           th:href="@{/users(page=${currentPage + 1}, tab=${currentTab}, filter=${filter})}">
+            Next
+        </a>
+    </div>
+</div>
+
+<!-- Include footer -->
+<div th:replace="fragments/layout :: footer"></div>
+
+<script th:replace="fragments/layout :: navbar-script"></script>
+
+<script>
+    // Auto-submit search on input
+    document.querySelector('.search-input').addEventListener('input', function() {
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => {
+            this.form.submit();
+        }, 500);
+    });
+</script>
+</body>
+</html>
