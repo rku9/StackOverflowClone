@@ -3,6 +3,9 @@ package com.mountblue.stackoverflowclone.controllers;
 import com.mountblue.stackoverflowclone.dtos.SignUpRequestDto;
 import com.mountblue.stackoverflowclone.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -61,4 +64,33 @@ public class UserController {
             return "signup";
         }
     }
+
+    @GetMapping("/users")
+    public String showAllUsers(
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(defaultValue = "reputation") String tab,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "36") int size,
+            Model model) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<com.mountblue.stackoverflowclone.dto.UserWithStatsDTO> userDTOPage;
+
+        // Fetch users with all stats
+        if (!filter.isEmpty()) {
+            userDTOPage = userService.searchUsersWithStats(filter, pageable, tab);
+        } else {
+            userDTOPage = userService.getAllUsersWithStats(pageable, tab);
+        }
+
+        model.addAttribute("usersPage", userDTOPage);
+        model.addAttribute("users", userDTOPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", userDTOPage.getTotalPages());
+        model.addAttribute("filter", filter);
+        model.addAttribute("currentTab", tab);
+
+        return "user-list";
+    }
+
 }
