@@ -10,6 +10,7 @@ import com.mountblue.stackoverflowclone.repositories.UserRepository;
 import com.mountblue.stackoverflowclone.repositories.VoteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -345,6 +346,23 @@ public class QuestionService {
 
         // Paginate according to request
         return paginate(filtered, pageable);
+    }
+
+    public List<Question> getRelatedQuestions(Long questionId, int limit) {
+        Question currentQuestion = questionRepository.findById(questionId)
+                .orElseThrow(() -> new NoSuchElementException("Question not found"));
+
+        if (currentQuestion.getTags() == null || currentQuestion.getTags().isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Set<Tag> tagSet = new HashSet<>(currentQuestion.getTags());
+
+        return questionRepository.findRelatedQuestionsByTags(
+                tagSet,
+                questionId,
+                PageRequest.of(0, limit)
+        );
     }
 
     private Page<Question> paginate(List<Question> items, Pageable pageable) {

@@ -201,6 +201,9 @@ public class QuestionController {
                     answer.isAccepted());
         }).toList();
 
+        List<Question> relatedQuestions = questionService.getRelatedQuestions(id, 10);
+        model.addAttribute("relatedQuestions", relatedQuestions);
+
         String markdown = questionResponseDto.body();
         String html = renderer.render(parser.parse(markdown));
         model.addAttribute("questionHtml", html);

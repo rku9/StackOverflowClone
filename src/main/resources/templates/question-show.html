@@ -62,6 +62,15 @@
             margin-bottom: 16px;
         }
 
+        /* Related Questions Specific Styles - ADD TO YOUR EXISTING <style> */
+        .sidebar .card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar .card ul li a:hover {
+            color: #0056b3;
+        }
+
         /* Left voting column */
         .vote-col {
             width: 40px;
@@ -832,7 +841,7 @@
                                             </form>
 
                                             <!-- Accept answer button, only visible to question author and only if not accepted -->
-                                            <div sec:authorize="isAuthenticated()" th:if="${#authentication.name == question.authorEmail}">
+                                            <div th:if="${#authentication.name == question.authorEmail}">
                                                 <form th:action="@{/answers/accept/{id}(id=${answer.answerId})}" method="post" style="display:inline; margin-left: 6px;">
                                                     <input type="hidden" name="questionId" th:value="${question.id}" />
                                                     <button type="submit" th:if="${!answer.accepted}" class="btn btn-success"
@@ -995,6 +1004,34 @@
                 </div>
             </div>
         </div>
+        <aside class="sidebar">
+            <div class="card">
+                <h4>Related Questions</h4>
+                <div th:if="${relatedQuestions != null and !relatedQuestions.isEmpty()}">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li th:each="relatedQ : ${relatedQuestions}"
+                            style="padding: 10px 0; border-bottom: 1px solid #e3e6e8;">
+                            <a th:href="@{/questions/{id}(id=${relatedQ.id})}"
+                               th:text="${relatedQ.title}"
+                               style="color: #0074cc; text-decoration: none; font-size: 13px; display: block; margin-bottom: 6px;">
+                            </a>
+                            <div style="display: flex; gap: 8px; font-size: 11px;">
+                                <span style="background: #f1f2f3; color: #6a737c; padding: 2px 6px; border-radius: 3px;"
+                                      th:text="${#lists.size(relatedQ.answers)} + ' answers'">
+                                </span>
+                                <span style="background: #f1f2f3; color: #6a737c; padding: 2px 6px; border-radius: 3px;"
+                                      th:text="${relatedQ.score} + ' votes'">
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <p th:unless="${relatedQuestions != null and !relatedQuestions.isEmpty()}"
+                   style="color: #6a737c; font-size: 13px; margin: 0;">
+                    No related questions found.
+                </p>
+            </div>
+        </aside>
     </div>
 </div>
 <div th:replace="fragments/layout :: footer"></div>
