@@ -1,0 +1,36 @@
+# Maven
+/target/
+/.mvn/
+/mvnw
+/mvnw.cmd
+
+# Logs
+/logs/
+*.log
+
+# VCS
+/.git/
+.gitignore
+
+# IDE
+/.idea/
+/.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node (just in case)
+/node_modules/
+
+# Misc
+/tmp/
+/build/
+/.gradle/
+/out/
+
+# Env files & secrets
+.env
+.env.*
+/secrets/

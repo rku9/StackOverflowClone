@@ -366,3 +366,8 @@ Caused by: java.lang.IllegalStateException: Cannot load driver class: org.postgr
 2025-10-28T11:08:38.416+05:30  INFO 55954 --- [StackOverflowClone] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-10-28T11:08:38.417+05:30  INFO 55954 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2025-10-28T11:08:38.420+05:30  INFO 55954 --- [StackOverflowClone] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-10-28T11:49:15.576+05:30  INFO 55954 --- [StackOverflowClone] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-28T11:49:15.583+05:30  INFO 55954 --- [StackOverflowClone] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-28T11:49:15.593+05:30  INFO 55954 --- [StackOverflowClone] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-28T11:49:15.612+05:30  INFO 55954 --- [StackOverflowClone] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-28T11:49:17.949+05:30  INFO 55954 --- [StackOverflowClone] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
