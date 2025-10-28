@@ -158,6 +158,8 @@ public class QuestionController {
     public String getQuestion(@PathVariable Long id,
                               Model model,
                               Principal principal){
+        // Increment view count for this hit
+        questionService.incrementViewCount(id);
         Question question = questionService.findById(id).get();
 
         List<Tag> tags = question.getTags();

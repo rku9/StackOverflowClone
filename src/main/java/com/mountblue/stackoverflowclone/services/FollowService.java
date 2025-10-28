@@ -28,12 +28,19 @@ public class FollowService {
     public FollowService(FollowRepository followRepository,
                          UserRepository userRepository,
                          EmailQueue emailQueue,
-                         @Value("${app.base-url:http://localhost:8080}") String appBaseUrl) {
+                         @Value("${app.base-url}") String appBaseUrl) {
         this.followRepository = followRepository;
         this.userRepository = userRepository;
         this.emailQueue = emailQueue;
-        // Normalize: remove trailing slash to avoid double slashes
-        this.appBaseUrl = appBaseUrl != null && appBaseUrl.endsWith("/") ? appBaseUrl.substring(0, appBaseUrl.length() - 1) : appBaseUrl;
+        // Normalize and validate base URL
+        if (appBaseUrl == null || appBaseUrl.trim().isEmpty()) {
+            throw new IllegalStateException("Property 'app.base-url' must be set (e.g., https://your-domain)");
+        }
+        String base = appBaseUrl.trim();
+        if (base.endsWith("/")) {
+            base = base.substring(0, base.length() - 1);
+        }
+        this.appBaseUrl = base;
     }
 
     public boolean isFollowingQuestion(Long userId, Long questionId) {

@@ -69,6 +69,11 @@ public class QuestionService {
         return questionRepository.findById(id);
     }
 
+    @Transactional
+    public void incrementViewCount(Long id) {
+        questionRepository.incrementViewCount(id);
+    }
+
     public void deleteQuestion(Long id) {
         questionRepository.deleteById(id);
     }
