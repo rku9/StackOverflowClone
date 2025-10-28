@@ -11,11 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping("/users")
+// @Controller // disabled: merged into UserController
+// @RequestMapping("/users")
 public class UserProfileController {
 
     @Autowired
@@ -30,7 +31,10 @@ public class UserProfileController {
     @GetMapping("/{userId}")
     public String showUserProfile(@PathVariable Long userId,
                                   @RequestParam(required = false, defaultValue = "newest") String tab,
+                                  Principal principal,
                                   Model model) {
+        maybeIncrementProfileViewCount(userId, principal);
+
         // Get user details
         User user = userService.findById(userId);
 
@@ -47,13 +51,14 @@ public class UserProfileController {
         userQuestions = sortQuestions(userQuestions, tab);
 
         // Add attributes to model
-        model.addAttribute("profileUser", user);
         model.addAttribute("questions", userQuestions);
         model.addAttribute("answers", userAnswers);
         model.addAttribute("tagsWithCount", userTagsWithCount);
         model.addAttribute("totalQuestions", userQuestions.size());
         model.addAttribute("totalAnswers", userAnswers.size());
-        model.addAttribute("currentTab", tab);
+        model.addAttribute("activeSection", "tags");
+        model.addAttribute("profileViews", user.getProfileViewCount());
+        model.addAttribute("peopleReached", userProfileService.calculatePeopleReached(userId));
 
         return "profile";
     }
@@ -64,7 +69,9 @@ public class UserProfileController {
     @GetMapping("/{userId}/questions")
     public String showUserQuestions(@PathVariable Long userId,
                                     @RequestParam(defaultValue = "newest") String sortBy,
+                                    Principal principal,
                                     Model model) {
+        maybeIncrementProfileViewCount(userId, principal);
         User user = userService.findById(userId);
         List<Question> questions = userProfileService.getUserQuestions(userId);
 
@@ -83,6 +90,8 @@ public class UserProfileController {
         model.addAttribute("totalAnswers", userAnswers.size());
         model.addAttribute("currentTab", sortBy);
         model.addAttribute("activeSection", "questions");
+        model.addAttribute("profileViews", user.getProfileViewCount());
+        model.addAttribute("peopleReached", userProfileService.calculatePeopleReached(userId));
 
         return "profile";
     }
@@ -93,7 +102,9 @@ public class UserProfileController {
     @GetMapping("/{userId}/answers")
     public String showUserAnswers(@PathVariable Long userId,
                                   @RequestParam(defaultValue = "newest") String sortBy,
+                                  Principal principal,
                                   Model model) {
+        maybeIncrementProfileViewCount(userId, principal);
         User user = userService.findById(userId);
         List<Answer> answers = userProfileService.getUserAnswersWithQuestions(userId);
 
@@ -112,6 +123,8 @@ public class UserProfileController {
         model.addAttribute("totalAnswers", answers.size());
         model.addAttribute("currentTab", sortBy);
         model.addAttribute("activeSection", "answers");
+        model.addAttribute("profileViews", user.getProfileViewCount());
+        model.addAttribute("peopleReached", userProfileService.calculatePeopleReached(userId));
 
         return "profile";
     }
@@ -122,7 +135,9 @@ public class UserProfileController {
     @GetMapping("/{userId}/tags")
     public String showUserTags(@PathVariable Long userId,
                                @RequestParam(defaultValue = "popular") String sortBy,
+                               Principal principal,
                                Model model) {
+        maybeIncrementProfileViewCount(userId, principal);
         User user = userService.findById(userId);
         Map<Tag, Long> userTagsWithCount = userProfileService.getUserTagsWithCount(userId);
 
@@ -136,11 +151,25 @@ public class UserProfileController {
         model.addAttribute("questions", userQuestions);
         model.addAttribute("answers", userAnswers);
         model.addAttribute("tagsWithCount", userTagsWithCount);
-        model.addAttribute("totalQuestions", userQuestions.size());
         model.addAttribute("totalAnswers", userAnswers.size());
         model.addAttribute("activeSection", "tags");
 
         return "profile";
+    }
+    
+    private void maybeIncrementProfileViewCount(Long profileUserId, Principal principal) {
+        if (shouldCountProfileView(profileUserId, principal)) {
+            userService.incrementProfileViewCount(profileUserId);
+        }
+    }
+
+    private boolean shouldCountProfileView(Long profileUserId, Principal principal) {
+        if (principal == null) {
+            return true;
+        }
+        return userService.findByEmail(principal.getName())
+                .map(viewer -> !viewer.getId().equals(profileUserId))
+                .orElse(true);
     }
     /**
      * Helper method to sort questions

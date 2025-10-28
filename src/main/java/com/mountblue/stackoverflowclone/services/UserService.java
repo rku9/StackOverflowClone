@@ -66,6 +66,14 @@ public class UserService {
                 .orElseThrow(() -> new NoSuchElementException("User not found with id: " + userId));
     }
 
+    @Transactional
+    public void incrementProfileViewCount(Long userId) {
+        int updated = userRepository.incrementProfileViewCount(userId);
+        if (updated == 0) {
+            throw new NoSuchElementException("User not found with id: " + userId);
+        }
+    }
+
     public Page<User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
     }

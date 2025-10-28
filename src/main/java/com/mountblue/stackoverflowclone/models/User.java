@@ -30,6 +30,9 @@ public class User extends BaseModel {
     @Column
     private String name;
 
+    @Column(name = "profile_view_count", nullable = false)
+    private Long profileViewCount = 0L;
+
     @OneToMany(
             mappedBy = "author",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},

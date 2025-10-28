@@ -305,6 +305,10 @@
                         this week
                     </strong>
                 </div>
+                <div class="profile-stat">
+                    <strong th:text="${profileViews}">0</strong>
+                    <span>profile views</span>
+                </div>
             </div>
 
             <!-- Edit button (only for own profile) -->
@@ -328,8 +332,8 @@
             <div class="stat-card-label">questions</div>
         </div>
         <div class="stat-card">
-            <span class="stat-card-number">0</span>
-            <div class="stat-card-label">reached</div>
+            <span class="stat-card-number" th:text="${peopleReached}">0</span>
+            <div class="stat-card-label">people reached</div>
         </div>
     </div>
 
