@@ -319,10 +319,6 @@
                         this week
                     </strong>
                 </div>
-                <div class="profile-stat">
-                    <strong th:text="${profileViews}">0</strong>
-                    <span>profile views</span>
-                </div>
             </div>
 
             <!-- Edit button (only for own profile) -->
@@ -361,7 +357,7 @@
     <!-- Impact Stats -->
     <div class="impact-card">
         <div class="impact-stat">
-            <span class="impact-number">~35</span>
+            <span class="impact-number" th:text="${peopleReached}">0</span>
             <span class="impact-label">people reached</span>
         </div>
     </div>
