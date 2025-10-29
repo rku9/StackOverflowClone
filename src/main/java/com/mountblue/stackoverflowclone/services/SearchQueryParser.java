@@ -12,12 +12,13 @@ public class SearchQueryParser {
 
     // 1) Either: "quoted phrase"  2) Or: any non-space token
     private static final Pattern TOKEN_PATTERN = Pattern.compile("\"([^\"]+)\"|(\\S+)");
-    // unquoted tokens become tags; allow letters, digits, hyphens
-    private static final Pattern TAG_PATTERN = Pattern.compile("[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*");
+    // unquoted tokens become tags; allow letters, digits, hyphens, plus, dot, hash, underscore
+    // examples covered: c#, c++, node.js, asp.net, python-3.x, machine_learning
+    private static final Pattern TAG_PATTERN = Pattern.compile("[A-Za-z0-9][A-Za-z0-9.+#_-]*");
 
     // configure your supported filters
     private static final Set<String> NUMERIC_FILTER_KEYS = Set.of("score", "answers", "views");
-    private static final Set<String> STRING_FILTER_KEYS  = Set.of("user", "tag");
+    private static final Set<String> STRING_FILTER_KEYS  = Set.of("user", "tag", "isaccepted");
 
     public SearchQuery parse(String raw) {
         if (raw == null || raw.isBlank()) {
@@ -47,6 +48,17 @@ public class SearchQueryParser {
                 String key = token.substring(0, idx).toLowerCase(Locale.ROOT);
                 String val = token.substring(idx + 1);
 
+                // alias support: is:accepted => isaccepted:yes
+                if ("is".equals(key) && "accepted".equalsIgnoreCase(val)) {
+                    stringFilters.put("isaccepted", "yes");
+                    continue;
+                }
+                // alias: accepted:true|yes|1 => isaccepted:...
+                if ("accepted".equals(key)) {
+                    stringFilters.put("isaccepted", val);
+                    continue;
+                }
+
                 if (NUMERIC_FILTER_KEYS.contains(key)) {
                     try {
                         numericFilters.put(key, Integer.parseInt(val));
@@ -71,11 +83,13 @@ public class SearchQueryParser {
                 // If key is unknown, treat whole token as a plain tag (least surprise).
             }
 
-            // Unquoted, not key:value => tag
+            // Unquoted, not key:value => prefer tag; otherwise treat as keyword
             String t = normalizeTag(token);
-            // If it doesn't look like a tag, still keep it as a tag to honor the rule,
-            // but normalization filters out obvious junk.
-            tags.add(t != null ? t : token.toLowerCase(Locale.ROOT));
+            if (t != null) {
+                tags.add(t);
+            } else {
+                keywords.add(token);
+            }
         }
 
         return new SearchQuery(keywords, numericFilters, stringFilters, tags);

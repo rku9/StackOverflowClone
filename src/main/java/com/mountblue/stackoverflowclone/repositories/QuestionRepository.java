@@ -42,6 +42,8 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Page<Question> findByAuthor_Name(Pageable pageable, String name);
 
+    Page<Question> findByAuthor_Id(Pageable pageable, Long id);
+
     @Query("""
         SELECT q
         FROM Question q
@@ -51,10 +53,10 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findQuestionsByMinScore(@Param("minScore") int minScore, Pageable pageable);
 
     @Query("""
-        SELECT DISTINCT q FROM Question q LEFT JOIN q.tags t
+        SELECT q
+        FROM Question q
         WHERE LOWER(q.title) LIKE LOWER(CONCAT('%', :keyword, '%'))
         OR LOWER(q.body) LIKE LOWER(CONCAT('%', :keyword, '%'))
-        OR LOWER(t.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
         ORDER BY q.createdAt DESC
     """)
     Page<Question> searchQuestionsByKeyword(@Param("keyword") String keyword, Pageable pageable);

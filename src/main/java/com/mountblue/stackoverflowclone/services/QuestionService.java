@@ -170,30 +170,31 @@ public class QuestionService {
             Integer daysOld,
             String sortParam
     ) {
-        // Load all then filter in-memory (keeps repository unchanged)
-        List<Question> working = new ArrayList<>(questionRepository.findAll());
+        // Parse structured query and merge with UI-provided tags
+        SearchQuery parsed = searchQueryParser.parse(query);
+        List<String> combinedTags = new ArrayList<>();
+        if (parsed.getTags() != null) combinedTags.addAll(parsed.getTags());
+        if (tags != null) combinedTags.addAll(tags);
+        combinedTags = combinedTags.stream()
+                .filter(Objects::nonNull)
+                .map(s -> s.trim().toLowerCase(Locale.ROOT))
+                .filter(s -> !s.isEmpty())
+                .distinct()
+                .toList();
 
-        // Keyword filter (simple contains across title/body/tags)
-        if (query != null && !query.isBlank()) {
-            String needle = query.toLowerCase(Locale.ROOT);
-            working = working.stream()
-                    .filter(q -> {
-                        boolean inTitle = q.getTitle() != null && q.getTitle().toLowerCase(Locale.ROOT).contains(needle);
-                        boolean inBody = q.getBody() != null && q.getBody().toLowerCase(Locale.ROOT).contains(needle);
-                        boolean inTags = q.getTags() != null && q.getTags().stream()
-                                .map(t -> t.getName() == null ? "" : t.getName().toLowerCase(Locale.ROOT))
-                                .anyMatch(name -> name.contains(needle));
-                        return inTitle || inBody || inTags;
-                    })
-                    .collect(Collectors.toList());
-        }
+        SearchQuery augmented = new SearchQuery(
+                parsed.getKeywords(),
+                parsed.getNumericFilters(),
+                parsed.getStringFilters(),
+                combinedTags
+        );
 
-        // Tag filter (must contain all provided tags)
-        if (tags != null && !tags.isEmpty()) {
-            working = working.stream()
-                    .filter(q -> questionHasAllTags(q, tags))
-                    .collect(Collectors.toList());
-        }
+        // Use repository to narrow base set, then apply remaining filters in-memory
+        Page<Question> base = selectBaseResult(augmented);
+        List<Question> working = new ArrayList<>(base.getContent());
+
+        // Apply structured filters (tags, numeric, string incl. isaccepted, keywords)
+        working = applyFilters(working, augmented);
 
         // Checkbox filters
         boolean requireNoAnswers = filterTypes != null && filterTypes.contains(FilterType.NO_ANSWERS);
@@ -249,8 +250,16 @@ public class QuestionService {
         List<String> keywords = searchQuery.getKeywords();
 
         if (stringFilters.containsKey("user")) {
-            String username = stringFilters.get("user");
-            return questionRepository.findByAuthor_Name(Pageable.unpaged(), username);
+            String userToken = stringFilters.get("user");
+            if (userToken != null) {
+                try {
+                    Long userId = Long.parseLong(userToken.trim());
+                    return questionRepository.findByAuthor_Id(Pageable.unpaged(), userId);
+                } catch (NumberFormatException ignore) {
+                    // not a numeric id; treat as username
+                }
+                return questionRepository.findByAuthor_Name(Pageable.unpaged(), userToken);
+            }
         }
 
         if (!tags.isEmpty()) {
@@ -308,6 +317,32 @@ public class QuestionService {
             working = working.stream()
                     .filter(q -> q.getScore() >= minScore)
                     .collect(Collectors.toList());
+        }
+
+        if (numericFilters.containsKey("views")) {
+            int minViews = numericFilters.get("views");
+            working = working.stream()
+                    .filter(q -> q.getViewCount() != null && q.getViewCount() >= minViews)
+                    .collect(Collectors.toList());
+        }
+
+        // isaccepted: yes|no|true|false|1|0
+        if (stringFilters.containsKey("isaccepted")) {
+            String val = stringFilters.get("isaccepted");
+            boolean wantAccepted = val != null && (
+                    val.equalsIgnoreCase("yes") ||
+                    val.equalsIgnoreCase("true") ||
+                    val.equals("1")
+            );
+            if (wantAccepted) {
+                working = working.stream()
+                        .filter(q -> q.getAnswers() != null && q.getAnswers().stream().anyMatch(Answer::isAccepted))
+                        .collect(Collectors.toList());
+            } else {
+                working = working.stream()
+                        .filter(q -> q.getAnswers() == null || q.getAnswers().stream().noneMatch(Answer::isAccepted))
+                        .collect(Collectors.toList());
+            }
         }
 
         if (!keywords.isEmpty()) {
@@ -402,11 +437,8 @@ public class QuestionService {
             return true;
         }
 
-        return question.getTags().stream()
-                .map(Tag::getName)
-                .filter(Objects::nonNull)
-                .map(name -> name.toLowerCase(Locale.ROOT))
-                .anyMatch(tagName -> tagName.contains(needle));
+        // Do not match tags for keyword searches; tags are handled by tag filters.
+        return false;
     }
 
 }
