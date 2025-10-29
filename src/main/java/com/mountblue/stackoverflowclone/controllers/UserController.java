@@ -1,6 +1,7 @@
 package com.mountblue.stackoverflowclone.controllers;
 
 import com.mountblue.stackoverflowclone.dtos.SignUpRequestDto;
+import com.mountblue.stackoverflowclone.dtos.UserWithStatsDTO;
 import com.mountblue.stackoverflowclone.models.Answer;
 import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.Tag;
@@ -93,7 +94,7 @@ public class UserController {
             Model model) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<com.mountblue.stackoverflowclone.dto.UserWithStatsDTO> userDTOPage;
+        Page<UserWithStatsDTO> userDTOPage;
 
         // Fetch users with all stats
         if (!filter.isEmpty()) {

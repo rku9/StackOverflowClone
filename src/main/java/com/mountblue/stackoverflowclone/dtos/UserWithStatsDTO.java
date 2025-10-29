@@ -1,4 +1,4 @@
-package com.mountblue.stackoverflowclone.dto;
+package com.mountblue.stackoverflowclone.dtos;
 
 import com.mountblue.stackoverflowclone.models.User;
 

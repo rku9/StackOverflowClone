@@ -77,9 +77,6 @@ public class QuestionService {
         questionRepository.deleteById(id);
     }
 
-    /**
-     * Splits the comma-separated tag string, normalizes, fetches existing or creates new tags
-     */
     private List<Tag> extractTags(String tagListString) {
         if (tagListString == null || tagListString.isBlank()) {
             return new ArrayList<>();

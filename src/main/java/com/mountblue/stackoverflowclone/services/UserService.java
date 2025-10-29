@@ -1,5 +1,6 @@
 package com.mountblue.stackoverflowclone.services;
 
+import com.mountblue.stackoverflowclone.dtos.UserWithStatsDTO;
 import com.mountblue.stackoverflowclone.models.User;
 import com.mountblue.stackoverflowclone.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.mountblue.stackoverflowclone.dtos.UserWithStatsDTO;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -78,7 +80,7 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public Page<com.mountblue.stackoverflowclone.dto.UserWithStatsDTO> getAllUsersWithStats(Pageable pageable, String tab) {
+    public Page<UserWithStatsDTO> getAllUsersWithStats(Pageable pageable, String tab) {
         Page<Object[]> results;
 
         switch (tab.toLowerCase()) {
@@ -100,8 +102,8 @@ public class UserService {
                 break;
         }
 
-        List<com.mountblue.stackoverflowclone.dto.UserWithStatsDTO> userDTOs = results.getContent().stream()
-                .map(result -> new com.mountblue.stackoverflowclone.dto.UserWithStatsDTO(
+        List<UserWithStatsDTO> userDTOs = results.getContent().stream()
+                .map(result -> new com.mountblue.stackoverflowclone.dtos.UserWithStatsDTO(
                         (User) result[0],
                         ((Number) result[1]).longValue(),  // voteCount
                         ((Number) result[2]).longValue(),  // questionCount
@@ -112,7 +114,7 @@ public class UserService {
         return new PageImpl<>(userDTOs, pageable, results.getTotalElements());
     }
 
-    public Page<com.mountblue.stackoverflowclone.dto.UserWithStatsDTO> searchUsersWithStats(String searchTerm, Pageable pageable, String tab) {
+    public Page<UserWithStatsDTO> searchUsersWithStats(String searchTerm, Pageable pageable, String tab) {
         Page<Object[]> results;
 
         switch (tab.toLowerCase()) {
@@ -134,8 +136,8 @@ public class UserService {
                 break;
         }
 
-        List<com.mountblue.stackoverflowclone.dto.UserWithStatsDTO> userDTOs = results.getContent().stream()
-                .map(result -> new com.mountblue.stackoverflowclone.dto.UserWithStatsDTO(
+        List<UserWithStatsDTO> userDTOs = results.getContent().stream()
+                .map(result -> new UserWithStatsDTO(
                         (User) result[0],
                         ((Number) result[1]).longValue(),
                         ((Number) result[2]).longValue(),

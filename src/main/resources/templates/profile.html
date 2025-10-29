@@ -308,10 +308,9 @@
                     <span>reputation</span>
                 </div>
                 <div class="profile-stat">
-                    <span>Member for </span>
-                    <strong th:text="${#temporals.format(profileUser.createdAt, 'yyyy')} + ' years, ' +
-                                        ${#temporals.format(profileUser.createdAt, 'M')} + ' months'">
-                        3 years, 2 months
+                    <span>Member from </span>
+                    <strong th:text="${#temporals.format(profileUser.createdAt, 'MMMM dd, yyyy hh:mm a')}">
+                        January 15, 2025 02:30 PM
                     </strong>
                 </div>
                 <div class="profile-stat">
@@ -328,10 +327,6 @@
 
             <!-- Edit button (only for own profile) -->
             <div style="margin-top: 12px;" sec:authorize="isAuthenticated()">
-                <button class="profile-edit-btn"
-                        th:if="${#authentication.name == profileUser.email}">
-                    Edit profile
-                </button>
                 <form th:if="${#authentication.name == profileUser.email}"
                       th:action="@{/users/{id}/avatar(id=${profileUser.id})}"
                       method="post" enctype="multipart/form-data" style="margin-top: 8px; display:flex; gap:8px; align-items:center;">
