@@ -16,6 +16,12 @@ public class User extends BaseModel {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
+
+    @Column(name = "profile_image_public_id")
+    private String profileImagePublicId;
+
     private int reputation;
 
     @Column(name = "last_seen")
@@ -30,7 +36,7 @@ public class User extends BaseModel {
     @Column
     private String name;
 
-    @Column(name = "profile_view_count", nullable = false)
+    @Column(name = "profile_view_count")
     private Long profileViewCount = 0L;
 
     @OneToMany(

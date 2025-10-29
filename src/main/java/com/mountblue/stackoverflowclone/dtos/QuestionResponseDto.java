@@ -8,8 +8,11 @@ import java.util.List;
 
 public record QuestionResponseDto(
         Long id,
+        Long authorId,
         String authorName,
         String authorEmail,
+        String authorProfileImageUrl,
+        int authorReputation,
         String title,
         String body,
         LocalDateTime createdAt,
@@ -17,7 +20,6 @@ public record QuestionResponseDto(
         Long viewCount,
         int score,
         int answerCount,
-//        List<AnswerResponseDto> answers,
         List<Comment> comments,
         @JsonManagedReference("question-tags")
         List<TagResponseDto> tags

@@ -29,6 +29,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/questions/new").authenticated()
                         .requestMatchers(HttpMethod.POST, "/questions/vote/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/answers/vote/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/users/*/avatar").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/users/*/avatar/delete").authenticated()
                         .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults());      // can be removed; keeps no login page

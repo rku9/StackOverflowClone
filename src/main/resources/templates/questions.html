@@ -248,9 +248,19 @@
                                style="display: inline-block; background: #e1ecf4; color: #39739d; border-radius: 3px; padding: 4px 6px; font-size: 12px; margin-right: 4px; text-decoration: none;">
                             </a>
                         </div>
-                        <div style="font-size: 12px; color: #6a737c;">
-                            <span th:text="${question.authorName}" style="color: #0074cc;">username</span>
-                            asked <span th:text="${#temporals.format(question.createdAt, 'MMM dd, yyyy')}">Oct 24, 2025</span>
+                        <div style="font-size: 12px; color: #6a737c; display: flex; align-items: center; gap: 8px;">
+                            <img th:if="${question.authorProfileImageUrl != null}" th:src="${question.authorProfileImageUrl}"
+                                 alt="avatar" style="width: 24px; height: 24px; border-radius: 3px; object-fit: cover;">
+                            <div th:if="${question.authorProfileImageUrl == null}"
+                                 style="width: 24px; height: 24px; border-radius: 3px; background: #e1ecf4; color: #39739d; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+                                <span th:text="${#strings.substring(question.authorName, 0, 1)}">U</span>
+                            </div>
+                            <div>
+                                <a th:href="@{'/users/' + ${question.authorId}}" th:text="${question.authorName}"
+                                   style="color: #0074cc; text-decoration: none; font-weight: 500;"></a>
+                                <span>asked</span>
+                                <span th:text="${#temporals.format(question.createdAt, 'MMM dd, yyyy')}">Oct 24, 2025</span>
+                            </div>
                         </div>
                     </div>
                 </div>

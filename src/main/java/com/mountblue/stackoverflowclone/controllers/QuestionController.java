@@ -90,14 +90,21 @@ public class QuestionController {
 
         // Convert to DTO
         Page<QuestionResponseDto> questionResponseDtoPage = questionPage.map(question -> {
-            String markdown = question.getBody();
+            List<TagResponseDto> tagResponseDtoList = question.getTags().stream()
+                    .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
+                    .collect(Collectors.toList());
+
+            String markdown = question.getBody() != null ? question.getBody() : "";
             String html = renderer.render(parser.parse(markdown));
             String truncatedHtml = truncateHtml(html, 150);
 
             return new QuestionResponseDto(
                     question.getId(),
+                    question.getAuthor().getId(),
                     question.getAuthor().getName(),
                     question.getAuthor().getEmail(),
+                    question.getAuthor().getProfileImageUrl(),
+                    question.getAuthor().getReputation(),
                     question.getTitle(),
                     truncatedHtml,
                     question.getCreatedAt(),
@@ -106,9 +113,7 @@ public class QuestionController {
                     question.getScore(),
                     question.getAnswers() != null ? question.getAnswers().size() : 0,
                     question.getComments(),
-                    question.getTags().stream()
-                            .map(tag -> new TagResponseDto(tag.getId(), tag.getName(), Collections.emptyList()))
-                            .collect(Collectors.toList())
+                    tagResponseDtoList
             );
         });
 
@@ -171,8 +176,11 @@ public class QuestionController {
                 .collect(Collectors.toList());
 
         QuestionResponseDto questionResponseDto = new QuestionResponseDto(id,
+                question.getAuthor().getId(),
                 question.getAuthor().getName(),
                 question.getAuthor().getEmail(),
+                question.getAuthor().getProfileImageUrl(),
+                question.getAuthor().getReputation(),
                 question.getTitle(),
                 question.getBody(),
                 question.getCreatedAt(),

@@ -6,6 +6,7 @@ import com.mountblue.stackoverflowclone.models.Question;
 import com.mountblue.stackoverflowclone.models.Tag;
 import com.mountblue.stackoverflowclone.models.User;
 import com.mountblue.stackoverflowclone.services.UserProfileService;
+import com.mountblue.stackoverflowclone.services.ImageUploadService;
 import com.mountblue.stackoverflowclone.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
@@ -15,28 +16,33 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-//@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
     private final UserDetailsService userDetailsService;
     private final UserProfileService userProfileService;
+    private final ImageUploadService imageUploadService;
 
     public UserController(UserService userService,
                           UserDetailsService userDetailsService,
-                          UserProfileService userProfileService) {
+                          UserProfileService userProfileService,
+                          ImageUploadService imageUploadService) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
         this.userProfileService = userProfileService;
+        this.imageUploadService = imageUploadService;
     }
 
     @GetMapping("/login")
@@ -262,6 +268,62 @@ public class UserController {
                 answers.sort((a1, a2) -> a2.getCreatedAt().compareTo(a1.getCreatedAt()));
         }
         return answers;
+    }
+
+    @PostMapping(value = "/users/{userId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String uploadAvatar(@PathVariable Long userId,
+                               @RequestParam("avatar") MultipartFile avatar,
+                               Principal principal,
+                               RedirectAttributes redirectAttributes) {
+        // AuthZ: only owner can upload their avatar
+        if (principal == null || userService.findByEmail(principal.getName()).map(u -> !u.getId().equals(userId)).orElse(true)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Not authorized to update this profile.");
+            return "redirect:/users/" + userId;
+        }
+
+        try {
+            User user = userService.findById(userId);
+            // Upload new avatar and get full result
+            java.util.Map<String, Object> result = imageUploadService.uploadImageWithResult(avatar, "stackoverflowclone/avatars");
+            String newUrl = (String) result.get("secure_url");
+            String newPublicId = (String) result.get("public_id");
+
+            // Delete previous avatar if exists
+            if (user.getProfileImagePublicId() != null && !user.getProfileImagePublicId().isBlank()) {
+                try { imageUploadService.deleteByPublicId(user.getProfileImagePublicId()); } catch (Exception ignore) {}
+            }
+
+            user.setProfileImageUrl(newUrl);
+            user.setProfileImagePublicId(newPublicId);
+            userService.save(user);
+            redirectAttributes.addFlashAttribute("successMessage", "Profile picture updated.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/users/" + userId;
+    }
+
+    @PostMapping("/users/{userId}/avatar/delete")
+    public String deleteAvatar(@PathVariable Long userId,
+                               Principal principal,
+                               RedirectAttributes redirectAttributes) {
+        if (principal == null || userService.findByEmail(principal.getName()).map(u -> !u.getId().equals(userId)).orElse(true)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Not authorized to update this profile.");
+            return "redirect:/users/" + userId;
+        }
+        try {
+            User user = userService.findById(userId);
+            if (user.getProfileImagePublicId() != null && !user.getProfileImagePublicId().isBlank()) {
+                try { imageUploadService.deleteByPublicId(user.getProfileImagePublicId()); } catch (Exception ignore) {}
+            }
+            user.setProfileImageUrl(null);
+            user.setProfileImagePublicId(null);
+            userService.save(user);
+            redirectAttributes.addFlashAttribute("successMessage", "Profile picture removed.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/users/" + userId;
     }
 
 }

@@ -100,7 +100,6 @@ public class AnswerService {
                 ? new Vote()
                 : voteRepository.findByUserIdAndPostIdAndPostType(principal.getId(), id, postType).get();
         int newVoteValue = choice.equals("upvote") ? 1 : -1;
-        System.out.println(newVoteValue);
         if (vote.getPostId() == null) {
             // New vote - user hasn't voted before
             vote.setUser(user);

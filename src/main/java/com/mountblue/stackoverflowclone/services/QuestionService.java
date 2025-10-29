@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionService {
 
-    //temp userRepo
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
     private final TagRepository tagRepository;
@@ -108,7 +107,6 @@ public class QuestionService {
                 ? new Vote()
                 : voteRepository.findByUserIdAndPostIdAndPostType(principal.getId(), id, postType).get();
         int newVoteValue = choice.equals("upvote") ? 1 : -1;
-        System.out.println(newVoteValue);
         if (vote.getPostId() == null) {
             // New vote - user hasn't voted before
             vote.setUser(user);
@@ -147,8 +145,11 @@ public class QuestionService {
 
             return new QuestionResponseDto(
                     question.getId(),
+                    question.getAuthor().getId(),
                     question.getAuthor().getName(),
                     question.getAuthor().getEmail(),
+                    question.getAuthor().getProfileImageUrl(),
+                    question.getAuthor().getReputation(),
                     question.getTitle(),
                     question.getBody(),
                     question.getCreatedAt(),
@@ -240,8 +241,8 @@ public class QuestionService {
         }
         working.sort(cmp);
 
-        // Paginate and return Page (not just page content)
-        return paginate(working, pageable);  // Changed from page.getContent() to just page
+        // Paginate and return Page
+        return paginate(working, pageable);
     }
 
     private Page<Question> selectBaseResult(SearchQuery searchQuery) {

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -71,29 +70,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
                                           @Param("tagCount") long tagCount,
                                           Pageable pageable);
 
-    @Query("""
-        SELECT DISTINCT q FROM Question q
-        LEFT JOIN q.tags t
-        WHERE (:keyword IS NULL OR
-              LOWER(q.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR 
-              LOWER(q.body) LIKE LOWER(CONCAT('%', :keyword, '%')) OR 
-              LOWER(t.name) LIKE LOWER(CONCAT('%', :keyword, '%')))
-        AND (:minScore IS NULL OR q.score >= :minScore)
-        AND (:hasNoAnswers = false OR SIZE(q.answers) = 0)
-        AND (:hasNoUpvotedOrAccepted = false OR 
-             (SELECT COUNT(ans) FROM Answer ans 
-              WHERE ans.question = q 
-              AND (ans.accepted = true OR ans.score > 0)) = 0)
-        AND (:cutoffDate IS NULL OR q.createdAt <= :cutoffDate)
-    """)
-    Page<Question> searchQuestionsWithFilters(
-            @Param("keyword") String keyword,
-            @Param("minScore") Integer minScore,
-            @Param("hasNoAnswers") boolean hasNoAnswers,
-            @Param("hasNoUpvotedOrAccepted") boolean hasNoUpvotedOrAccepted,
-            @Param("cutoffDate") LocalDateTime cutoffDate,
-            Pageable pageable
-    );
+    
 
     @Query("SELECT DISTINCT q FROM Question q JOIN q.tags t WHERE t IN :tags AND q.id != :questionId ORDER BY q.createdAt DESC")
     List<Question> findRelatedQuestionsByTags(@Param("tags") Set<Tag> tags, @Param("questionId") Long questionId, Pageable pageable);

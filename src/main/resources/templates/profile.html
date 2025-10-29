@@ -36,6 +36,18 @@
             font-weight: bold;
         }
 
+        .profile-avatar img {
+            width: 128px;
+            height: 128px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .alert { padding: 10px 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px; }
+        .alert.success { background: #e6f4ea; color: #256029; border: 1px solid #b7e1c0; }
+        .alert.error { background: #fdecea; color: #611a15; border: 1px solid #f5c6cb; }
+
         .profile-info {
             flex: 1;
         }
@@ -278,10 +290,13 @@
 
 <!-- Main content -->
 <div class="page-wrapper">
+    <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
     <!-- Profile Header -->
     <div class="profile-header">
-        <div class="profile-avatar" th:text="${#strings.substring(profileUser.name, 0, 1)}">
-            S
+        <div class="profile-avatar">
+            <img th:if="${profileUser.profileImageUrl != null}" th:src="${profileUser.profileImageUrl}" alt="Avatar"/>
+            <span th:if="${profileUser.profileImageUrl == null}" th:text="${#strings.substring(profileUser.name, 0, 1)}">S</span>
         </div>
 
         <div class="profile-info">
@@ -317,6 +332,17 @@
                         th:if="${#authentication.name == profileUser.email}">
                     Edit profile
                 </button>
+                <form th:if="${#authentication.name == profileUser.email}"
+                      th:action="@{/users/{id}/avatar(id=${profileUser.id})}"
+                      method="post" enctype="multipart/form-data" style="margin-top: 8px; display:flex; gap:8px; align-items:center;">
+                    <input type="file" name="avatar" accept="image/*" required style="font-size: 13px;"/>
+                    <button type="submit" class="profile-edit-btn">Upload picture</button>
+                </form>
+                <form th:if="${#authentication.name == profileUser.email && profileUser.profileImageUrl != null}"
+                      th:action="@{/users/{id}/avatar/delete(id=${profileUser.id})}"
+                      method="post" style="margin-top: 8px;">
+                    <button type="submit" class="profile-edit-btn">Remove picture</button>
+                </form>
             </div>
         </div>
     </div>
