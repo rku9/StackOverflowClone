@@ -240,16 +240,7 @@
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="private" name="post_option" value="private" checked>
-                            <label for="private">Get private feedback</label>
-                            <ul>
-                                <li>I want experienced community mentors</li>
-                                <li>I want to improve my question</li>
-                                <li>I can wait for answers</li>
-                            </ul>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="public" name="post_option" value="public">
-                            <label for="public">Post question now</label>
+                            <label for="private">Post question now</label>
                             <ul>
                                 <li>I'm sure my question follows guidelines</li>
                                 <li>I don't need private feedback</li>
@@ -265,7 +256,6 @@
                         th:text="${questionForm != null and questionForm.id != null} ? 'Save edits' : 'Review your question'">
                     Review your question
                 </button>
-                <button type="reset" class="btn-secondary">Discard draft</button>
             </form>
         </div>
 
