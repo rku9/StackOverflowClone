@@ -6,3 +6,6 @@ services:
     dockerfilePath: Dockerfile
     dockerContext: .
     autoDeploy: true
+    envVars:
+      - key: APP_BASE_URL
+        value: https://stackoverflowclone-amvi.onrender.com

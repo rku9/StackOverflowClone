@@ -1632,3 +1632,92 @@ Caused by: java.net.ConnectException: Connection refused
 2025-10-29T09:23:42.456+05:30  WARN 39615 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][profile] Deprecated unwrapped fragment expression "fragments/layout :: sidebar" found in template profile, line 289, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: sidebar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
 2025-10-29T09:23:42.848+05:30  WARN 39615 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][profile] Deprecated unwrapped fragment expression "fragments/layout :: footer" found in template profile, line 533, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: footer}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
 2025-10-29T09:23:42.855+05:30  WARN 39615 --- [StackOverflowClone] [http-nio-8080-exec-2] actStandardFragmentInsertionTagProcessor : [THYMELEAF][http-nio-8080-exec-2][profile] Deprecated unwrapped fragment expression "fragments/layout :: navbar-script" found in template profile, line 534, col 9. Please use the complete syntax of fragment expressions instead ("~{fragments/layout :: navbar-script}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2025-10-29T09:26:51.243+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 39615 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-29T09:26:51.246+05:30 DEBUG 39615 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-29T09:26:51.248+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-29T09:26:52.519+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-29T09:26:52.646+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 121 ms. Found 8 JPA repository interfaces.
+2025-10-29T09:26:53.538+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-29T09:26:53.550+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-29T09:26:53.553+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-29T09:26:53.618+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-29T09:26:53.619+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2360 ms
+2025-10-29T09:26:53.924+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-29T09:26:53.940+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-29T09:26:53.988+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-29T09:26:53.992+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-10-29T09:26:56.156+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@8528cf8
+2025-10-29T09:26:56.162+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-10-29T09:26:56.451+05:30  WARN 39615 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-29T09:26:57.245+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 17.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-29T09:26:58.468+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-29T09:27:16.053+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-29T09:27:16.419+05:30  WARN 39615 --- [StackOverflowClone] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'answerController' defined in file [/home/paddy/Desktop/StackOverflowClone/target/classes/com/mountblue/stackoverflowclone/controllers/AnswerController.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-10-29T09:27:16.419+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-29T09:27:16.420+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2025-10-29T09:27:18.854+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2025-10-29T09:27:18.856+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-10-29T09:27:18.873+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-29T09:27:18.957+05:30 ERROR 39615 --- [StackOverflowClone] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.mountblue.stackoverflowclone.controllers.AnswerController required a bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.mountblue.stackoverflowclone.services.AnswerService' in your configuration.
+
+2025-10-29T09:27:20.434+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Starting StackOverflowCloneApplication using Java 21.0.4 with PID 39615 (/home/paddy/Desktop/StackOverflowClone/target/classes started by paddy in /home/paddy/Desktop/StackOverflowClone)
+2025-10-29T09:27:20.435+05:30 DEBUG 39615 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-29T09:27:20.435+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : No active profile set, falling back to 1 default profile: "default"
+2025-10-29T09:27:20.970+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-29T09:27:21.031+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 8 JPA repository interfaces.
+2025-10-29T09:27:21.470+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-29T09:27:21.473+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-29T09:27:21.474+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-29T09:27:21.495+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-10-29T09:27:21.496+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1056 ms
+2025-10-29T09:27:21.595+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-29T09:27:21.599+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-29T09:27:21.608+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-29T09:27:21.610+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2025-10-29T09:27:24.175+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@56abe797
+2025-10-29T09:27:24.177+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2025-10-29T09:27:24.482+05:30  WARN 39615 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-29T09:27:25.308+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 17.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-29T09:27:25.515+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-29T09:27:43.448+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-29T09:27:43.799+05:30  WARN 39615 --- [StackOverflowClone] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-29T09:27:43.813+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-29T09:27:43.813+05:30  WARN 39615 --- [StackOverflowClone] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-29T09:27:44.214+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-10-29T09:27:44.237+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-29T09:27:44.242+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] c.m.s.StackOverflowCloneApplication      : Started StackOverflowCloneApplication in 23.867 seconds (process running for 321.349)
+2025-10-29T09:27:44.245+05:30  INFO 39615 --- [StackOverflowClone] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-10-29T09:36:55.087+05:30  INFO 39615 --- [StackOverflowClone] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-29T09:36:55.089+05:30  INFO 39615 --- [StackOverflowClone] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-29T09:36:55.092+05:30  INFO 39615 --- [StackOverflowClone] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-29T09:36:55.093+05:30  INFO 39615 --- [StackOverflowClone] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2025-10-29T09:36:57.851+05:30  INFO 39615 --- [StackOverflowClone] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.

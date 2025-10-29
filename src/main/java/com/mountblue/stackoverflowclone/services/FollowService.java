@@ -80,7 +80,7 @@ public class FollowService {
         String subject = "New answer on: " + title;
         String link = appBaseUrl + "/questions/" + questionId + "#answer-" + answer.getId();
 
-        String answerAuthorEmail = answer.getAuthor() != null ? answer.getAuthor().getEmail() : null;
+//        String answerAuthorEmail = answer.getAuthor() != null ? answer.getAuthor().getEmail() : null;
 
         for (User u : followers) {
             if (u == null || u.getEmail() == null) continue;
