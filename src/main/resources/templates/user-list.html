@@ -119,6 +119,23 @@
             color: #0074cc;
             font-weight: bold;
             flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 3px;
+            display: block;
+        }
+
+        .user-avatar-initial {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .user-info {
@@ -269,8 +286,15 @@
     <!-- Users grid -->
     <div class="users-grid">
         <div class="user-card" th:each="userDTO : ${users}">
-            <div class="user-avatar" th:text="${#strings.substring(userDTO.user().name, 0, 1)}">
-                U
+            <div class="user-avatar">
+                <img th:if="${userDTO.user().profileImageUrl != null and !#strings.isEmpty(userDTO.user().profileImageUrl)}"
+                     th:src="${userDTO.user().profileImageUrl}"
+                     th:alt="${userDTO.user().name + ' profile picture'}"/>
+                <span class="user-avatar-initial"
+                      th:if="${userDTO.user().profileImageUrl == null or #strings.isEmpty(userDTO.user().profileImageUrl)}"
+                      th:text="${#strings.substring((userDTO.user().name != null and userDTO.user().name.length() > 0) ? userDTO.user().name : 'U', 0, 1)}">
+                    U
+                </span>
             </div>
             <div class="user-info">
                 <a class="user-name"
