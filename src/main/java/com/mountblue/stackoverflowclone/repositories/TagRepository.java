@@ -13,6 +13,10 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     Optional<Tag> findByName(String name);
 
+    Optional<Tag> findFirstByNameIgnoreCase(String name);
+
+    Optional<Tag> findFirstByNameIgnoreCaseOrderByIdAsc(String name);
+
     @Query("SELECT DISTINCT t FROM Tag t " +
             "JOIN t.questions q " +
             "WHERE q.author.id = :userId " +

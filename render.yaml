@@ -9,3 +9,4 @@ services:
     envVars:
       - key: APP_BASE_URL
         value: https://stackoverflowclone-amvi.onrender.com
+    runtime: docker

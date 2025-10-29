@@ -89,7 +89,7 @@ public class QuestionService {
                 .filter(s -> !s.isEmpty())
                 .map(s -> {
                     String normalized = s.toLowerCase();
-                    return tagRepository.findByName(normalized)
+                    return tagRepository.findFirstByNameIgnoreCaseOrderByIdAsc(normalized)
                             .orElseGet(() -> {
                                 // create Tag manually instead of using builder
                                 Tag tag = new Tag();
